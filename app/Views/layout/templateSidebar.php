@@ -22,7 +22,7 @@
         </li>
         <li class="xn-title">Main Menu</li>
         <li>
-            <a href="/home"><span class="fa fa-globe"></span> <span class="xn-text">Tunggakan</span></a>
+            <a href="/tunggakan"><span class="fa fa-globe"></span> <span class="xn-text">Tunggakan</span></a>
         </li>
 
     </ul>
