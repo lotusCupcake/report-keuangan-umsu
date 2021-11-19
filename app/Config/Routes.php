@@ -39,6 +39,32 @@ $routes->get('/logout', 'Login::logout');
 
 // Route Home
 $routes->get('/home/(:any)', 'Home::index');
+$routes->add('/logoAppEdit/(:num)/edit', 'Home::logoAppEdit/$1');
+$routes->add('/logoRuangdengarEdit/(:num)/edit', 'Home::logoRuangdengarEdit/$1');
+$routes->add('/logoHomescreenEdit/(:num)/edit', 'Home::logoHomescreenEdit/$1');
+$routes->add('/flayerDefaultsiaranEdit/(:num)/edit', 'Home::flayerDefaultsiaranEdit/$1');
+$routes->add('/streamEdit/(:num)/edit', 'Home::streamEdit/$1');
+$routes->add('/livechatEdit/(:num)/edit', 'Home::livechatEdit/$1');
+$routes->add('/whatsappEdit/(:num)/edit', 'Home::whatsappEdit/$1');
+
+// Route Penyiar
+$routes->delete('/penyiar/(:num)', 'Penyiar::delete/$1');
+$routes->get('/penyiar/(:any)', 'Penyiar::index');
+$routes->post('/penyiar', 'Penyiar::add');
+$routes->add('/penyiar/(:num)/edit', 'Penyiar::edit/$1');
+
+// Route Acara
+$routes->delete('/acara/(:num)', 'Acara::delete/$1');
+$routes->post('/acara', 'Acara::add');
+$routes->get('/acara/(:any)', 'Acara::index');
+$routes->add('/acara/(:num)/edit', 'Acara::edit/$1');
+
+// Route Endorsement
+$routes->delete('/endorsement/(:num)', 'Endorsement::delete/$1');
+$routes->post('/endorsement', 'Endorsement::add');
+$routes->get('/endorsement/(:any)', 'Endorsement::index');
+$routes->add('/endorsement/(:num)/edit', 'Endorsement::edit/$1');
+
 
 
 
