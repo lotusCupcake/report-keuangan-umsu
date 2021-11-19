@@ -22,17 +22,7 @@
         </li>
         <li class="xn-title">Main Menu</li>
         <li>
-            <a href="/home"><span class="fa fa-globe"></span> <span class="xn-text">Dashboard</span></a>
-        </li>
-        <li class="xn-title">Control Panel</li>
-        <li>
-            <a href="/penyiar"><span class="fa fa-users"></span> <span class="xn-text">Penyiar</span></a>
-        </li>
-        <li>
-            <a href="/acara"><span class="fa fa-desktop"></span> <span class="xn-text">Acara</span></a>
-        </li>
-        <li>
-            <a href="/endorsement"><span class="fa fa-inbox"></span> <span class="xn-text">Endorsement</span></a>
+            <a href="/home"><span class="fa fa-globe"></span> <span class="xn-text">Tunggakan</span></a>
         </li>
 
     </ul>

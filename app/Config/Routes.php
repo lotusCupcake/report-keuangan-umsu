@@ -65,6 +65,9 @@ $routes->post('/endorsement', 'Endorsement::add');
 $routes->get('/endorsement/(:any)', 'Endorsement::index');
 $routes->add('/endorsement/(:num)/edit', 'Endorsement::edit/$1');
 
+// Route  Tunggakan
+$routes->get('/tunggakan/(:any)', 'Tunggakan::index');
+
 
 
 
