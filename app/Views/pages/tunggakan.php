@@ -16,9 +16,9 @@
             <li><a href="/home"><?= $breadcrumb[0]; ?></a></li>
             <li class="active"><?= $breadcrumb[1]; ?></li>
         </ul>
-        <!-- END BREADCRUMB -->
+        <!-- END BREADCRUMB  ->getBody()-->
 
-        
+    
     </div>
     <!-- END PAGE CONTENT -->
 </div>
