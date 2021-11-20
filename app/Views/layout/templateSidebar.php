@@ -20,6 +20,10 @@
                 </div>
             </div>
         </li>
+        <li class="xn-title">Home</li>
+        <li>
+            <a href="/home"><span class="fa fa-home"></span><span class="xn-text">Dashboard</span></a>
+        </li>
         <li class="xn-title">Jenis Laporan</li>
         <li>
             <a href="/tunggakan"><span class="fa fa-ban"></span><span class="xn-text">Tunggakan</span></a>
