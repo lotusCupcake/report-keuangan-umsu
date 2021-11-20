@@ -42,11 +42,16 @@
                             </div>     
                             <ul class="panel-controls" >
                                 <button type="submit" class="btn btn-success">Cari</button>
-                                <?php if ($termYear != null && $entryYear != null) :?>
-                                <a href="/tunggakan/<?= $termYear.'/'.$entryYear?>" class="btn btn-info">Export</a>
-                                <?php endif ?>
                             </ul>
                         </form>
+
+                        <?php if ($termYear != null && $entryYear != null) :?>
+                            <form action="/tunggakan/cetak" method="post">
+                                <input type="hidden" name="tahunAjar" value="<?= $termYear;?>">
+                                <input type="hidden" name="tahunAngkatan" value="<?= $entryYear;?>">
+                                <button type="submit" class="btn btn-info">Export</button>
+                            </form>
+                        <?php endif ?>
                     </div>
                     <div class="panel-body col-md-12">
                         <div class="table-responsive">

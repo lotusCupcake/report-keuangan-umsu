@@ -59,15 +59,16 @@ class Tunggakan extends BaseController
             'validation' => \Config\Services::validation(),
         ];
 
-        $this->cetakTunggakan($term_year_id, $entry_year_id);
+        // $this->cetakTunggakan($term_year_id, $entry_year_id);
 
         return view('pages/tunggakan', $data);
     }
 
-    public function cetakTunggakan($term_year_id, $entry_year_id)
+    public function cetakTunggakan()
     {
-        // $term_year_id = $this->request->getPost('tahunAjar');
-        // $entry_year_id = $this->request->getPost('tahunAngkatan');
+        // dd($_POST);
+        $term_year_id = $this->request->getPost('tahunAjar');
+        $entry_year_id = $this->request->getPost('tahunAngkatan');
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
 			"headers" => [
@@ -106,6 +107,7 @@ class Tunggakan extends BaseController
                         ->setCellValue('H' . $column, number_to_currency($data->NOMINAL, 'IDR'));
             $column++;
         }
+
         $spreadsheet->setActiveSheetIndex(0)->setCellValue('H' . $column, number_to_currency($total, 'IDR'));
 
         $writer = new Xlsx($spreadsheet);
