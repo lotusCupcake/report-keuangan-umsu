@@ -120,32 +120,35 @@ class Tunggakan extends BaseController
         $konten = 0;
         foreach ($prodi as $prd) {
             $konten = $default + $konten;
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, $prd)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, $prd)->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
             $konten = $konten + 1;
             $spreadsheet->setActiveSheetIndex(0)
                 ->setCellValue('A' . $konten, 'No Register')
-                ->setCellValue('B' . $konten, 'NPM')
-                ->setCellValue('C' . $konten, 'Nama Lengkap')
-                ->setCellValue('D' . $konten, 'Nama Prodi')
-                ->setCellValue('E' . $konten, 'Angkatan')
-                ->setCellValue('F' . $konten, 'Nama Biaya')
-                ->setCellValue('G' . $konten, 'Tahap')
-                ->setCellValue('H' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
+                ->setCellValue('B' . $konten, 'No Register')
+                ->setCellValue('C' . $konten, 'NPM')
+                ->setCellValue('D' . $konten, 'Nama Lengkap')
+                ->setCellValue('E' . $konten, 'Nama Prodi')
+                ->setCellValue('F' . $konten, 'Angkatan')
+                ->setCellValue('G' . $konten, 'Nama Biaya')
+                ->setCellValue('H' . $konten, 'Tahap')
+                ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
 
             $konten = $konten + 1;
             $total = 0;
+            $no=1;
             foreach (json_decode($response->getBody())->data as $data) {
                 if ($prd == $data->NAMA_PRODI) {
                     $total = $total + $data->NOMINAL;
                     $spreadsheet->setActiveSheetIndex(0)
-                        ->setCellValue('A' . $konten, $data->NO_REGISTER)
-                        ->setCellValue('B' . $konten, $data->Npm)
-                        ->setCellValue('C' . $konten, $data->NAMA_LENGKAP)
-                        ->setCellValue('D' . $konten, $data->NAMA_PRODI)
-                        ->setCellValue('E' . $konten, $data->ANGKATAN)
-                        ->setCellValue('F' . $konten, $data->NAMA_BIAYA)
-                        ->setCellValue('G' . $konten, $data->TAHAP)
-                        ->setCellValue('H' . $konten, number_to_currency($data->NOMINAL, 'IDR'));
+                        ->setCellValue('A' . $konten, $no++)
+                        ->setCellValue('B' . $konten, $data->NO_REGISTER)
+                        ->setCellValue('C' . $konten, $data->Npm)
+                        ->setCellValue('D' . $konten, $data->NAMA_LENGKAP)
+                        ->setCellValue('E' . $konten, $data->NAMA_PRODI)
+                        ->setCellValue('F' . $konten, $data->ANGKATAN)
+                        ->setCellValue('G' . $konten, $data->NAMA_BIAYA)
+                        ->setCellValue('H' . $konten, $data->TAHAP)
+                        ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'));
                     $konten++;
                     $konten++;
                 }
