@@ -87,7 +87,7 @@ class Tunggakan extends BaseController
             ->setCellValue('E1', 'Angkatan')
             ->setCellValue('F1', 'Nama Biaya')
             ->setCellValue('G1', 'Tahap')
-            ->setCellValue('H1', 'Nominal');
+            ->setCellValue('H1', 'Nominal')->getStyle("A1:H1")->getFont()->setBold(true);
 
         $column = 2;
         $total = 0;
@@ -105,7 +105,7 @@ class Tunggakan extends BaseController
             $column++;
         }
 
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('H' . $column, number_to_currency($total, 'IDR'))->getStyle('H' . $column)->getFont()->setBold( true );
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('H' . $column, number_to_currency($total, 'IDR'))->getStyle('H' . $column)->getFont()->setBold(true);
 
         $writer = new Xlsx($spreadsheet);
         $fileName = 'Data Tunggakan Mahasiswa';
