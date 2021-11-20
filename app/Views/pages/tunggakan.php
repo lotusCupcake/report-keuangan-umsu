@@ -42,6 +42,9 @@
                             </div>     
                             <ul class="panel-controls" >
                                 <button type="submit" class="btn btn-success">Cari</button>
+                                <?php if ($termYear != null && $entryYear != null) :?>
+                                <a href="/tunggakan/" class="btn btn-info">Export</a>
+                                <?php endif ?>
                             </ul>
                         </form>
                     </div>
