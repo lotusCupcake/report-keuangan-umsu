@@ -116,31 +116,34 @@ class Tunggakan extends BaseController
 
         $spreadsheet = new Spreadsheet();
 
+        $default=1;
+        $konten = 0;
         foreach ($prodi as $prd) {
             $spreadsheet->setActiveSheetIndex(0)
-                    ->setCellValue('A1', 'No Register')
-                    ->setCellValue('B1', 'NPM')
-                    ->setCellValue('C1', 'Nama Lengkap')
-                    ->setCellValue('D1', 'Nama Prodi')
-                    ->setCellValue('E1', 'Angkatan')
-                    ->setCellValue('F1', 'Nama Biaya')
-                    ->setCellValue('G1', 'Tahap')
-                    ->setCellValue('H1', 'Nominal')->getStyle("A1:H1")->getFont()->setBold( true );
+                    ->setCellValue('A'.$default+$konten, 'No Register')
+                    ->setCellValue('B'.$default+$konten, 'NPM')
+                    ->setCellValue('C'.$default+$konten, 'Nama Lengkap')
+                    ->setCellValue('D'.$default+$konten, 'Nama Prodi')
+                    ->setCellValue('E'.$default+$konten, 'Angkatan')
+                    ->setCellValue('F'.$default+$konten, 'Nama Biaya')
+                    ->setCellValue('G'.$default+$konten, 'Tahap')
+                    ->setCellValue('H'.$default+$konten, 'Nominal')->getStyle("A1:H1")->getFont()->setBold( true );
 
-            $column = 2;
-            $total =0;
+            $konten = $konten+1;
+            $total = 0;
             foreach(json_decode($response->getBody())->data as $data) {
                 $total=$total+$data->NOMINAL;
                 $spreadsheet->setActiveSheetIndex(0)
-                            ->setCellValue('A' . $column, $data->NO_REGISTER)
-                            ->setCellValue('B' . $column, $data->Npm)
-                            ->setCellValue('C' . $column, $data->NAMA_LENGKAP)
-                            ->setCellValue('D' . $column, $data->NAMA_PRODI)
-                            ->setCellValue('E' . $column, $data->ANGKATAN)
-                            ->setCellValue('F' . $column, $data->NAMA_BIAYA)
-                            ->setCellValue('G' . $column, $data->TAHAP)
-                            ->setCellValue('H' . $column, number_to_currency($data->NOMINAL, 'IDR'));
-                $column++;
+                            ->setCellValue('A' . $konten, $data->NO_REGISTER)
+                            ->setCellValue('B' . $konten, $data->Npm)
+                            ->setCellValue('C' . $konten, $data->NAMA_LENGKAP)
+                            ->setCellValue('D' . $konten, $data->NAMA_PRODI)
+                            ->setCellValue('E' . $konten, $data->ANGKATAN)
+                            ->setCellValue('F' . $konten, $data->NAMA_BIAYA)
+                            ->setCellValue('G' . $konten, $data->TAHAP)
+                            ->setCellValue('H' . $konten, number_to_currency($data->NOMINAL, 'IDR'));
+                $konten++;
+                $konten++;
             }
 
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('H' . $column, number_to_currency($total, 'IDR'))->getStyle('H' . $column)->getFont()->setBold( true );
