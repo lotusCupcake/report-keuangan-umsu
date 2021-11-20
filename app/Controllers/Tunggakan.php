@@ -58,7 +58,6 @@ class Tunggakan extends BaseController
             'entryYear' => $entry_year_id,
             'validation' => \Config\Services::validation(),
         ];
-        $this->cetakTunggakan($term_year_id, $entry_year_id);
 
         return view('pages/tunggakan', $data);
     }
