@@ -59,6 +59,8 @@ class Tunggakan extends BaseController
             'validation' => \Config\Services::validation(),
         ];
 
+        $this->cetakTunggakan($term_year_id, $entry_year_id);
+
         return view('pages/tunggakan', $data);
     }
 
@@ -90,8 +92,9 @@ class Tunggakan extends BaseController
                 ->setCellValue('H1', 'Nominal');
 
         $column = 2;
-
+        $total =0;
         foreach(json_decode($response->getBody())->data as $data) {
+            $total=$total+$data->NOMINAL;
             $spreadsheet->setActiveSheetIndex(0)
                         ->setCellValue('A' . $column, $data->NO_REGISTER)
                         ->setCellValue('B' . $column, $data->Npm)
@@ -103,6 +106,7 @@ class Tunggakan extends BaseController
                         ->setCellValue('H' . $column, number_to_currency($data->NOMINAL, 'IDR'));
             $column++;
         }
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('H' . $column, number_to_currency($total, 'IDR'));
 
         $writer = new Xlsx($spreadsheet);
         $fileName = 'Data Tunggakan Mahasiswa';
