@@ -105,7 +105,7 @@ class Tunggakan extends BaseController
             $column++;
         }
 
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('H' . $column, number_to_currency($total, 'IDR'));
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('H' . $column, number_to_currency($total, 'IDR'))->getStyle('H' . $column)->getFont()->setBold( true );
 
         $writer = new Xlsx($spreadsheet);
         $fileName = 'Data Tunggakan Mahasiswa';
