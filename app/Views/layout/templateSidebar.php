@@ -20,11 +20,19 @@
                 </div>
             </div>
         </li>
-        <li class="xn-title">Main Menu</li>
+        <li class="xn-title">Jenis Laporan</li>
         <li>
             <a href="/tunggakan"><span class="fa fa-ban"></span><span class="xn-text">Tunggakan</span></a>
         </li>
-
+        <li class="xn-openable">
+            <a href=" /#"><span class="fa fa-money"></span><span class="xn-text">Pembayaran</span></a>
+            <ul>
+                <li><a href="#"><span class="xn-text"></span>Per Prodi (BSM) </a></li>
+                <li><a href="#"><span class="xn-text"></span>Per Prodi (BRIS) </a></li>
+                <li><a href="#"><span class="xn-text"></span>Per Prodi (BNI) </a></li>
+                <li><a href="#"><span class="xn-text"></span>Per Prodi (Semua) </a></li>
+            </ul>
+        </li>
     </ul>
     <!-- END X-NAVIGATION -->
 </div>

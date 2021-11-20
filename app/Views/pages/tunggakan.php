@@ -24,7 +24,7 @@
                         <h5 class="panel-title">Filter</h5>
                     </div>
                     <div class="panel-body col-md-12">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label><strong>Tahun Ajaran</strong></label>
                             <select class="form-control select">
                                 <option>Option 1</option>
@@ -34,8 +34,8 @@
                                 <option>Option 5</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            <label><strong>Tahun Ajaran</strong></label>
+                        <div class="col-md-4">
+                            <label><strong>Tahun Angkatam</strong></label>
                             <select class="form-control select">
                                 <option>Option 1</option>
                                 <option>Option 2</option>
@@ -44,18 +44,8 @@
                                 <option>Option 5</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            <label><strong>Tahun Ajaran</strong></label>
-                            <select class="form-control select">
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                <option>Option 4</option>
-                                <option>Option 5</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label><strong>Tahun Ajaran</strong></label>
+                        <div class="col-md-4">
+                            <label><strong>Tunggakan Tahap</strong></label>
                             <select class="form-control select">
                                 <option>Option 1</option>
                                 <option>Option 2</option>
