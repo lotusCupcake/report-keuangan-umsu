@@ -120,7 +120,7 @@ class Tunggakan extends BaseController
         $konten = 0;
         foreach ($prodi as $prd) {
             $konten = $default + $konten;
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, $prd)->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, $prd)->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true)->getBorder()->getOutline();
             $konten = $konten + 1;
             $spreadsheet->setActiveSheetIndex(0)
                 ->setCellValue('A' . $konten, 'No Register')
@@ -131,7 +131,7 @@ class Tunggakan extends BaseController
                 ->setCellValue('F' . $konten, 'Angkatan')
                 ->setCellValue('G' . $konten, 'Nama Biaya')
                 ->setCellValue('H' . $konten, 'Tahap')
-                ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
+                ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true)->getBorder()->getOutline();
 
             $konten = $konten + 1;
             $total = 0;
