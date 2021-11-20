@@ -60,14 +60,11 @@ class Tunggakan extends BaseController
         ];
         $this->cetakTunggakan($term_year_id, $entry_year_id);
 
-        // $this->cetakTunggakan($term_year_id, $entry_year_id);
-
         return view('pages/tunggakan', $data);
     }
 
     public function cetakTunggakan()
     {
-        // dd($_POST);
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
 
