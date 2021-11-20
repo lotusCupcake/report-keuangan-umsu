@@ -152,7 +152,7 @@ class Tunggakan extends BaseController
                     $konten++;
                 }
             }
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . ($konten - 1), number_to_currency($total, 'IDR'))->getStyle('I' . ($konten - 1))->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . ($konten - 2), number_to_currency($total, 'IDR'))->getStyle('I' . ($konten - 2))->getFont()->setBold(true);
         }
 
         $writer = new Xlsx($spreadsheet);
