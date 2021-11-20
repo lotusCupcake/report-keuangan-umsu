@@ -21,59 +21,65 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <div class="col-md-4">
-                            <label><strong>Tahun Ajaran</strong></label>
-                            <select class="form-control select">
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                <option>Option 4</option>
-                                <option>Option 5</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label><strong>Tahun Angkatam</strong></label>
-                            <select class="form-control select">
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                <option>Option 4</option>
-                                <option>Option 5</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label><strong>Tunggakan Tahap</strong></label>
-                            <select class="form-control select">
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                <option>Option 4</option>
-                                <option>Option 5</option>
-                            </select>
-                        </div>
+                        <form action="/tunggakan" method="POST">
+                            <div class="col-md-3">
+                                <select class="form-control select" name="tahunAjar">
+                                    <option>Tahun Ajar</option>
+                                    <option value="20211">2021 Ganjil</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control select" name="tahunAngkatan">
+                                    <option>Tahun Angkatan</option>
+                                    <option value="2019">2019</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control select" name="tahap">
+                                    <option>Tunggakan Tahap</option>
+                                    <option value="1">Tahap 1</option>
+                                </select>
+                            </div>     
+                            <ul class="panel-controls" >
+                                <button type="submit" class="btn btn-success">Cari</button>
+                            </ul>
+                        </form>
                     </div>
                     <div class="panel-body col-md-12">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-actions">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
+                                        <th>No Register</th>
+                                        <th>NPM</th>
+                                        <th>Nama Lengkap</th>
+                                        <th>Nama Prodi</th>
+                                        <th>Angkatan</th>
+                                        <th>Nama Biaya</th>
+                                        <th>Tahap</th>
+                                        <th>Nominal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
-                                    </tr>
+                                    <?php if (count($tunggakan)>0) :?>
+                                    <?php foreach ($tunggakan as $rows) :?>
+                                        <tr>
+                                            <td><?= $rows->NO_REGISTER ?></td>
+                                            <td><?= $rows->Npm ?></td>
+                                            <td><?= $rows->NAMA_LENGKAP ?></td>
+                                            <td><?= $rows->NAMA_PRODI ?></td>
+                                            <td><?= $rows->ANGKATAN ?></td>
+                                            <td><?= $rows->NAMA_BIAYA ?></td>
+                                            <td><?= $rows->TAHAP ?></td>
+                                            <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                    <?php else :?>
+                                        <tr>
+                                            <td colspan=8 style="text-align:center">Tidak ada data</td>
+                                        </tr>
+                                    <?php endif ?>
+                                    
                                 </tbody>
                             </table>
                         </div>
