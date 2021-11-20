@@ -87,7 +87,7 @@ class Tunggakan extends BaseController
                 ->setCellValue('E1', 'Angkatan')
                 ->setCellValue('F1', 'Nama Biaya')
                 ->setCellValue('G1', 'Tahap')
-                ->setCellValue('H1', 'Nominal');
+                ->setCellValue('H1', 'Nominal')->getStyle("A1:H1")->getFont()->setBold( true );
 
         $column = 2;
         $total =0;
