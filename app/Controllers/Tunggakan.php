@@ -150,7 +150,6 @@ class Tunggakan extends BaseController
                         ->setCellValue('H' . $konten, $data->TAHAP)
                         ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'));
                     $konten++;
-                    $konten++;
                 }
             }
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . ($konten - 1), number_to_currency($total, 'IDR'))->getStyle('I' . ($konten - 1))->getFont()->setBold(true);
