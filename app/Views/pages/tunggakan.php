@@ -31,13 +31,17 @@
                             <div class="col-md-3">
                                 <select class="form-control select" name="tahunAngkatan">
                                     <option>Tahun Angkatan</option>
-                                    <option value="2019">2019</option>
+                                    <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
+                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                    <?php endfor ?>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <select class="form-control select" name="tahap">
                                     <option>Tunggakan Tahap</option>
-                                    <option value="1">Tahap 1</option>
+                                    <?php for ($i = 1; $i <= 4; $i++) : ?>
+                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                    <?php endfor ?>
                                 </select>
                             </div>
                             <ul class="panel-controls">
@@ -45,10 +49,11 @@
                             </ul>
                         </form>
 
-                        <?php if ($termYear != null && $entryYear != null) : ?>
+                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
                             <form action="/tunggakan/cetak" method="post">
                                 <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
                                 <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
+                                <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
                                 <button type="submit" class="btn btn-info">Export</button>
                             </form>
                         <?php endif ?>
@@ -61,6 +66,7 @@
                                         <th>No Register</th>
                                         <th>NPM</th>
                                         <th>Nama Lengkap</th>
+                                        <th>Fakultas</th>
                                         <th>Nama Prodi</th>
                                         <th>Angkatan</th>
                                         <th>Nama Biaya</th>
@@ -75,6 +81,7 @@
                                                 <td><?= $rows->NO_REGISTER ?></td>
                                                 <td><?= $rows->Npm ?></td>
                                                 <td><?= $rows->NAMA_LENGKAP ?></td>
+                                                <td><?= $rows->FAKULTAS ?></td>
                                                 <td><?= $rows->NAMA_PRODI ?></td>
                                                 <td><?= $rows->ANGKATAN ?></td>
                                                 <td><?= $rows->NAMA_BIAYA ?></td>
