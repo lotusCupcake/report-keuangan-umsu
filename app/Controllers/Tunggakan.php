@@ -27,6 +27,7 @@ class Tunggakan extends BaseController
             'tunggakan' => [],
             'termYear' => null,
             'entryYear' => null,
+            'paymentOrder' => null,
             'validation' => \Config\Services::validation(),
         ];
 
@@ -38,6 +39,7 @@ class Tunggakan extends BaseController
     {
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
+        $payment_order = $this->request->getPost('tahap');
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
 			"headers" => [
@@ -45,7 +47,8 @@ class Tunggakan extends BaseController
             ],
             "form_params" =>[
                 "entryYearId" => $entry_year_id,
-                "termYearId" => $term_year_id
+                "termYearId" => $term_year_id,
+                "tahap" => $payment_order
             ]
 		]);
         
@@ -56,6 +59,7 @@ class Tunggakan extends BaseController
             'tunggakan' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
+            'paymentOrder' => $payment_order,
             'validation' => \Config\Services::validation(),
         ];
 
@@ -66,6 +70,7 @@ class Tunggakan extends BaseController
     {
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
+        $payment_order = $this->request->getPost('tahap');
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
 			"headers" => [
@@ -73,7 +78,8 @@ class Tunggakan extends BaseController
             ],
             "form_params" =>[
                 "entryYearId" => $entry_year_id,
-                "termYearId" => $term_year_id
+                "termYearId" => $term_year_id,
+                "tahap" => $payment_order
             ]
 		]);
 
