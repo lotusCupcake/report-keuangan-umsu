@@ -18,6 +18,7 @@ class Tunggakan extends BaseController
     }
 
 
+
     public function index()
     {
         $data = [
@@ -28,11 +29,25 @@ class Tunggakan extends BaseController
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
+            'listTermYear' => $this->getTermYear(),
+            'prodi' => [],
             'validation' => \Config\Services::validation(),
         ];
-
+        // dd($data);
 
         return view('pages/tunggakan', $data);
+    }
+
+    public function getTermYear()
+    {
+        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getTermYear", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+
+        ]);
+
+        return json_decode($response->getBody())->data;
     }
 
     public function prosesTunggakan()
@@ -52,6 +67,13 @@ class Tunggakan extends BaseController
             ]
         ]);
 
+        $prodi = [];
+        foreach (json_decode($response->getBody())->data as $k) {
+            if (!in_array($k->NAMA_PRODI, $prodi)) {
+                array_push($prodi, $k->NAMA_PRODI);
+            }
+        }
+
         $data = [
             'title' => "Tunggakan",
             'appName' => "UMSU FM",
@@ -60,6 +82,8 @@ class Tunggakan extends BaseController
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
+            'listTermYear' => $this->getTermYear(),
+            'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
         ];
 
@@ -83,35 +107,51 @@ class Tunggakan extends BaseController
             ]
         ]);
 
-        $spreadsheet = new Spreadsheet();
-
-        $spreadsheet->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'No Register')
-            ->setCellValue('B1', 'NPM')
-            ->setCellValue('C1', 'Nama Lengkap')
-            ->setCellValue('D1', 'Nama Prodi')
-            ->setCellValue('E1', 'Angkatan')
-            ->setCellValue('F1', 'Nama Biaya')
-            ->setCellValue('G1', 'Tahap')
-            ->setCellValue('H1', 'Nominal')->getStyle("A1:H1")->getFont()->setBold(true);
-
-        $column = 2;
-        $total = 0;
-        foreach (json_decode($response->getBody())->data as $data) {
-            $total = $total + $data->NOMINAL;
-            $spreadsheet->setActiveSheetIndex(0)
-                ->setCellValue('A' . $column, $data->NO_REGISTER)
-                ->setCellValue('B' . $column, $data->Npm)
-                ->setCellValue('C' . $column, $data->NAMA_LENGKAP)
-                ->setCellValue('D' . $column, $data->NAMA_PRODI)
-                ->setCellValue('E' . $column, $data->ANGKATAN)
-                ->setCellValue('F' . $column, $data->NAMA_BIAYA)
-                ->setCellValue('G' . $column, $data->TAHAP)
-                ->setCellValue('H' . $column, number_to_currency($data->NOMINAL, 'IDR'));
-            $column++;
+        $prodi = [];
+        foreach (json_decode($response->getBody())->data as $k) {
+            if (!in_array($k->NAMA_PRODI, $prodi)) {
+                array_push($prodi, $k->NAMA_PRODI);
+            }
         }
 
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('H' . $column, number_to_currency($total, 'IDR'))->getStyle('H' . $column)->getFont()->setBold(true);
+        $spreadsheet = new Spreadsheet();
+
+        $default = 1;
+        $konten = 0;
+        foreach ($prodi as $prd) {
+            $konten = $default + $konten;
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, $prd)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
+            $konten = $konten + 1;
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $konten, 'No Register')
+                ->setCellValue('B' . $konten, 'NPM')
+                ->setCellValue('C' . $konten, 'Nama Lengkap')
+                ->setCellValue('D' . $konten, 'Nama Prodi')
+                ->setCellValue('E' . $konten, 'Angkatan')
+                ->setCellValue('F' . $konten, 'Nama Biaya')
+                ->setCellValue('G' . $konten, 'Tahap')
+                ->setCellValue('H' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
+
+            $konten = $konten + 1;
+            $total = 0;
+            foreach (json_decode($response->getBody())->data as $data) {
+                if ($prd == $data->NAMA_PRODI) {
+                    $total = $total + $data->NOMINAL;
+                    $spreadsheet->setActiveSheetIndex(0)
+                        ->setCellValue('A' . $konten, $data->NO_REGISTER)
+                        ->setCellValue('B' . $konten, $data->Npm)
+                        ->setCellValue('C' . $konten, $data->NAMA_LENGKAP)
+                        ->setCellValue('D' . $konten, $data->NAMA_PRODI)
+                        ->setCellValue('E' . $konten, $data->ANGKATAN)
+                        ->setCellValue('F' . $konten, $data->NAMA_BIAYA)
+                        ->setCellValue('G' . $konten, $data->TAHAP)
+                        ->setCellValue('H' . $konten, number_to_currency($data->NOMINAL, 'IDR'));
+                    $konten++;
+                    $konten++;
+                }
+            }
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('H' . ($konten - 1), number_to_currency($total, 'IDR'))->getStyle('H' . ($konten - 1))->getFont()->setBold(true);
+        }
 
         $writer = new Xlsx($spreadsheet);
         $fileName = 'Data Tunggakan Mahasiswa';
