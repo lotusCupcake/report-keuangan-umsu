@@ -116,11 +116,20 @@ class Tunggakan extends BaseController
 
         $spreadsheet = new Spreadsheet();
 
+        $styleArray = [
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                    'color' => ['argb' => 'FFFF0000'],
+                ],
+            ],
+        ];
+
         $default = 1;
         $konten = 0;
         foreach ($prodi as $prd) {
             $konten = $default + $konten;
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, $prd)->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true)->getBorder()->getOutline();
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, $prd)->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true)->applyFromArray($styleArray);
             $konten = $konten + 1;
             $spreadsheet->setActiveSheetIndex(0)
                 ->setCellValue('A' . $konten, 'No Register')
@@ -131,7 +140,7 @@ class Tunggakan extends BaseController
                 ->setCellValue('F' . $konten, 'Angkatan')
                 ->setCellValue('G' . $konten, 'Nama Biaya')
                 ->setCellValue('H' . $konten, 'Tahap')
-                ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true)->getBorder()->getOutline();
+                ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true)->applyFromArray($styleArray);
 
             $konten = $konten + 1;
             $total = 0;
@@ -148,11 +157,13 @@ class Tunggakan extends BaseController
                         ->setCellValue('F' . $konten, $data->ANGKATAN)
                         ->setCellValue('G' . $konten, $data->NAMA_BIAYA)
                         ->setCellValue('H' . $konten, $data->TAHAP)
-                        ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'));
+                        ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "H" . $konten)->applyFromArray($styleArray);
                     $konten++;
                 }
             }
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . $konten , number_to_currency($total, 'IDR'))->getStyle('I' . $konten )->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "H" . $konten)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true)->applyFromArray($styleArray);
+            $konten = $konten+1;
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . $konten , number_to_currency($total, 'IDR'))->getStyle('I' . $konten )->getFont()->setBold(true)->applyFromArray($styleArray);
         }
 
         $writer = new Xlsx($spreadsheet);
