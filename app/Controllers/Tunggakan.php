@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\TunggakanModel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
 class Tunggakan extends BaseController
@@ -53,7 +55,60 @@ class Tunggakan extends BaseController
             'validation' => \Config\Services::validation(),
         ];
         // dd($data);
+        $this->cetakTunggakan($term_year_id, $entry_year_id);
 
         return view('pages/tunggakan', $data);
+    }
+
+    public function cetakTunggakan($term_year_id,$entry_year_id)
+    {
+        // $term_year_id = $this->request->getPost('tahunAjar');
+        // $entry_year_id = $this->request->getPost('tahunAngkatan');
+
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
+			"headers" => [
+				"Accept" => "application/json"
+            ],
+            "form_params" =>[
+                "entryYearId" => $entry_year_id,
+                "termYearId" => $term_year_id
+            ]
+		]);
+
+        $spreadsheet = new Spreadsheet();
+
+        $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A1', 'No Register')
+                ->setCellValue('B1', 'NPM')
+                ->setCellValue('C1', 'Nama Lengkap')
+                ->setCellValue('D1', 'Nama Prodi')
+                ->setCellValue('E1', 'Angkatan')
+                ->setCellValue('F1', 'Nama Biaya')
+                ->setCellValue('G1', 'Tahap')
+                ->setCellValue('H1', 'Nominal');
+
+        $column = 2;
+
+        foreach(json_decode($response->getBody())->data as $data) {
+            $spreadsheet->setActiveSheetIndex(0)
+                        ->setCellValue('A' . $column, $data->NO_REGISTER)
+                        ->setCellValue('B' . $column, $data->Npm)
+                        ->setCellValue('C' . $column, $data->NAMA_LENGKAP)
+                        ->setCellValue('D' . $column, $data->NAMA_PRODI)
+                        ->setCellValue('E' . $column, $data->ANGKATAN)
+                        ->setCellValue('F' . $column, $data->NAMA_BIAYA)
+                        ->setCellValue('G' . $column, $data->TAHAP)
+                        ->setCellValue('H' . $column, number_to_currency($data->NOMINAL, 'IDR'));
+            $column++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'Data Tunggakan Mahasiswa';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename='.$fileName.'.xlsx');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
     }
 }
