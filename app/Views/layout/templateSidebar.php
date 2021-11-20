@@ -20,21 +20,23 @@
                 </div>
             </div>
         </li>
-        <li class="xn-title">Main Menu</li>
+        <li class="xn-title">Home</li>
         <li>
-            <a href="/home"><span class="fa fa-globe"></span> <span class="xn-text">Dashboard</span></a>
+            <a href="/home"><span class="fa fa-home"></span><span class="xn-text">Dashboard</span></a>
         </li>
-        <li class="xn-title">Control Panel</li>
+        <li class="xn-title">Jenis Laporan</li>
         <li>
-            <a href="/penyiar"><span class="fa fa-users"></span> <span class="xn-text">Penyiar</span></a>
+            <a href="/tunggakan"><span class="fa fa-ban"></span><span class="xn-text">Tunggakan</span></a>
         </li>
-        <li>
-            <a href="/acara"><span class="fa fa-desktop"></span> <span class="xn-text">Acara</span></a>
+        <li class="xn-openable">
+            <a href=" /#"><span class="fa fa-money"></span><span class="xn-text">Pembayaran</span></a>
+            <ul>
+                <li><a href="#"><span class="xn-text"></span>Per Prodi (BSM) </a></li>
+                <li><a href="#"><span class="xn-text"></span>Per Prodi (BRIS) </a></li>
+                <li><a href="#"><span class="xn-text"></span>Per Prodi (BNI) </a></li>
+                <li><a href="#"><span class="xn-text"></span>Per Prodi (Semua) </a></li>
+            </ul>
         </li>
-        <li>
-            <a href="/endorsement"><span class="fa fa-inbox"></span> <span class="xn-text">Endorsement</span></a>
-        </li>
-
     </ul>
     <!-- END X-NAVIGATION -->
 </div>
