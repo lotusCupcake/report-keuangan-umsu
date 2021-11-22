@@ -30,6 +30,11 @@
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
                     </div>
+                <?php endif; ?> <?php if ($validation->hasError('tahunAngkatan')) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Failed ! </strong><?= $validation->getError('tahunAngkatan'); ?>
+                    </div>
                 <?php endif; ?> <?php if ($validation->hasError('tahap')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -53,18 +58,27 @@
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
                                     <option value="">-- Select --</option>
+                                    <?php foreach ($listTermYear as $rows) : ?>
+                                        <option value="<?= $rows->Term_Year_Id ?>"><?= $rows->Term_Year_Name ?></option>
+                                    <?php endforeach ?>
                                 </select>
                             </div>
                             <div class="col-md-2">
                                 <label>Tahun Angkatan</label>
                                 <select class="form-control select" name="tahunAngkatan">
                                     <option value="">-- Select --</option>
+                                    <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
+                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                    <?php endfor ?>
                                 </select>
                             </div>
                             <div class="col-md-2">
                                 <label>Pembayaran Tahap</label>
                                 <select class="form-control select" name="tahap">
                                     <option value="">-- Select --</option>
+                                    <?php for ($i = 1; $i <= 4; $i++) : ?>
+                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                    <?php endfor ?>
                                 </select>
                             </div>
                             <div class="col-md-2">
