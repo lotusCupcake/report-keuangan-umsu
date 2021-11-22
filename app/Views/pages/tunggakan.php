@@ -19,12 +19,34 @@
         <!-- END BREADCRUMB  ->getBody()-->
         <div class="row">
             <div class="col-md-12">
+                <?php if (!empty(session()->getFlashdata('success'))) : ?>
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <?php echo session()->getFlashdata('success'); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($validation->hasError('tahunAngkatan')) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Failed ! </strong><?= $validation->getError('tahunAngkatan'); ?>
+                    </div>
+                <?php endif; ?> <?php if ($validation->hasError('tahunAjar')) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
+                    </div>
+                <?php endif; ?> <?php if ($validation->hasError('tahap')) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Failed ! </strong><?= $validation->getError('tahap'); ?>
+                    </div>
+                <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <form action="/tunggakan" method="POST">
                             <div class="col-md-3">
                                 <select class="form-control select" name="tahunAjar">
-                                    <option value="0">-- Select Tahun Ajar --</option>
+                                    <option value="">-- Tahun Ajar --</option>
                                     <?php foreach ($listTermYear as $rows) : ?>
                                         <option value="<?= $rows->Term_Year_Id ?>"><?= $rows->Term_Year_Name ?></option>
                                     <?php endforeach ?>
@@ -32,7 +54,7 @@
                             </div>
                             <div class="col-md-3">
                                 <select class="form-control select" name="tahunAngkatan">
-                                    <option value="0">-- Tahun Angkatan --</option>
+                                    <option value="">-- Tahun Angkatan --</option>
                                     <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
                                         <option value="<?= $i ?>"><?= $i ?></option>
                                     <?php endfor ?>
@@ -40,7 +62,7 @@
                             </div>
                             <div class="col-md-3">
                                 <select class="form-control select" name="tahap">
-                                    <option value="0">-- Tunggakan Tahap --</option>
+                                    <option value="">-- Tunggakan Tahap --</option>
                                     <?php for ($i = 1; $i <= 4; $i++) : ?>
                                         <option value="<?= $i ?>"><?= $i ?></option>
                                     <?php endfor ?>
