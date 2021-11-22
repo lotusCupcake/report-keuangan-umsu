@@ -28,4 +28,9 @@ class UbahTanggalTahap extends BaseController
 
         return view('pages/ubahTanggalTahap', $data);
     }
+
+    public function proses()
+    {
+        
+    }
 }
