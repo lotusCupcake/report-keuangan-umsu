@@ -86,6 +86,7 @@
                         <?php endif ?>
                     </div>
                     <div class="panel-body col-md-12">
+                        <?php if ($prodi !=null) :?>
                         <?php foreach ($prodi as $prd) : ?>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -114,7 +115,7 @@
                                                         <?php if ($rows->NAMA_PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
                                                             <tr>
                                                                 <td><?= $no++ ?></td>
-                                                                <td><?= $rows->NO_REGISTER ?></td>
+                                                                <td><?= $rows->NO_REGISTER." ".count($tunggakan) ?></td>
                                                                 <td><?= $rows->Npm ?></td>
                                                                 <td><?= $rows->NAMA_LENGKAP ?></td>
                                                                 <td><?= $rows->ANGKATAN ?></td>
@@ -141,6 +142,11 @@
                             </div>
 
                         <?php endforeach ?>
+                        <?php else :?>
+                            <center>
+                                <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json" background="transparent"  speed="1"  style="width: 500px; height: 500px;" loop autoplay></lottie-player>     
+                            </center>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
