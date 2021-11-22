@@ -84,6 +84,7 @@ class UbahTanggalTahap extends BaseController
         ])) {
             return redirect()->to('ubahTanggalTahap')->withInput();
         }
+
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
@@ -98,6 +99,7 @@ class UbahTanggalTahap extends BaseController
                 "tahap" => $payment_order
             ]
         ]);
+
         $data = [
             'title' => "Ubah Tanggal Tahap",
             'appName' => "UMSU",
@@ -109,6 +111,7 @@ class UbahTanggalTahap extends BaseController
             'validation' => \Config\Services::validation(),
         ];
 
-        dd($data);
+        session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');
+        return view('pages/ubahTanggalTahap', $data);
     }
 }
