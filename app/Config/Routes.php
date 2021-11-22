@@ -85,7 +85,7 @@ $routes->get('/pembayaranSemua/(:any)', 'PembayaranSemua::index');
 
 // Route UbahTanggalTahap
 $routes->get('/ubahTanggalTahap/(:any)', 'UbahTanggalTahap::index');
-$routes->post('/ubahTanggalTahap',"UbahTanggalTahap::proses")
+$routes->post('/ubahTanggalTahap', "UbahTanggalTahap::proses");
 
 
 

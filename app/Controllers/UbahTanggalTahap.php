@@ -31,6 +31,33 @@ class UbahTanggalTahap extends BaseController
 
     public function proses()
     {
-        
+        if (!$this->validate([
+            'tahap' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Pembayaran Tahap Harus Diisi !',
+                ]
+            ],
+            'tahunAjar' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tahun Ajar Harus Diisi !',
+                ]
+            ],
+            'tahapTanggalAwal' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tanggal Awal Harus Diisi !',
+                ]
+            ],
+            'tahapTanggalAkhir' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tanggal Akhir Harus Diisi !',
+                ]
+            ],
+        ])) {
+            return redirect()->to('tunggakan')->withInput();
+        }
     }
 }
