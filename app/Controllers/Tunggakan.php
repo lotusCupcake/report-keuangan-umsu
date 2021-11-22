@@ -52,9 +52,34 @@ class Tunggakan extends BaseController
 
     public function prosesTunggakan()
     {
+        if (!$this->validate([
+            'tahunAngkatan' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tahun Angkatan Harus Diisi !',
+                ]
+            ],
+            'tahunAjar' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tahun Ajar Harus Diisi !',
+                ]
+            ],
+            'tahap' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tunggakan Tahap Harus Diisi !',
+                ]
+            ],
+        ])) {
+            return redirect()->to('tunggakan')->withInput();
+        }
+
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
+        // dd($term_year_id);
+
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
             "headers" => [
@@ -66,6 +91,7 @@ class Tunggakan extends BaseController
                 "tahap" => $payment_order
             ]
         ]);
+
 
         $prodi = [];
         foreach (json_decode($response->getBody())->data as $k) {
@@ -86,7 +112,7 @@ class Tunggakan extends BaseController
             'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
         ];
-
+        session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan !');
         return view('pages/tunggakan', $data);
     }
 
