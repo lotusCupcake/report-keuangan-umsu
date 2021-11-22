@@ -52,13 +52,19 @@
                             <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
-                                    <option value="0">-- Select --</option>
+                                    <option value="">-- Select --</option>
+                                    <?php foreach ($listTermYear as $rows) : ?>
+                                        <option value="<?= $rows->Term_Year_Id ?>"><?= $rows->Term_Year_Name ?></option>
+                                    <?php endforeach ?>
                                 </select>
                             </div>
                             <div class="col-md-2">
                                 <label>Pembayaran Tahap</label>
                                 <select class="form-control select" name="tahap">
-                                    <option value="0">-- Select --</option>
+                                    <option value="">-- Select --</option>
+                                    <?php for ($i = 1; $i <= 4; $i++) : ?>
+                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                    <?php endfor ?>
                                 </select>
                             </div>
                             <div class="col-md-2">
