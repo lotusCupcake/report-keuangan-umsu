@@ -31,11 +31,15 @@
         <li class="xn-openable">
             <a href=" /#"><span class="fa fa-money"></span><span class="xn-text">Pembayaran</span></a>
             <ul>
-                <li><a href="#"><span class="xn-text"></span>Per Prodi (BSM) </a></li>
-                <li><a href="#"><span class="xn-text"></span>Per Prodi (BRIS) </a></li>
-                <li><a href="#"><span class="xn-text"></span>Per Prodi (BNI) </a></li>
-                <li><a href="#"><span class="xn-text"></span>Per Prodi (Semua) </a></li>
+                <li><a href="/pembayaranBsm"><span class="xn-text"></span>Per Prodi (BSM) </a></li>
+                <li><a href="/pembayaranBris"><span class="xn-text"></span>Per Prodi (BRIS) </a></li>
+                <li><a href="/pembayaranBni"><span class="xn-text"></span>Per Prodi (BNI) </a></li>
+                <li><a href="/pembayaranSemua"><span class="xn-text"></span>Per Prodi (Semua) </a></li>
             </ul>
+        </li>
+        <li class="xn-title">Setting</li>
+        <li>
+            <a href="#"><span class="fa fa-edit"></span><span class="xn-text">Ubah Tanggal Tahap</span></a>
         </li>
     </ul>
     <!-- END X-NAVIGATION -->

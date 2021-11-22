@@ -23,7 +23,7 @@ class Tunggakan extends BaseController
     {
         $data = [
             'title' => "Tunggakan",
-            'appName' => "UMSU FM",
+            'appName' => "UMSU",
             'breadcrumb' => ['Home', 'Tunggakan'],
             'tunggakan' => [],
             'termYear' => null,
@@ -144,7 +144,7 @@ class Tunggakan extends BaseController
 
             $konten = $konten + 1;
             $total = 0;
-            $no=1;
+            $no = 1;
             foreach (json_decode($response->getBody())->data as $data) {
                 if ($prd == $data->NAMA_PRODI) {
                     $total = $total + $data->NOMINAL;
@@ -162,8 +162,8 @@ class Tunggakan extends BaseController
                 }
             }
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "H" . $konten)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . $konten , number_to_currency($total, 'IDR'))->getStyle('I' . $konten )->getFont()->setBold(true);
-            $konten = $konten+1;
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . $konten, number_to_currency($total, 'IDR'))->getStyle('I' . $konten)->getFont()->setBold(true);
+            $konten = $konten + 1;
         }
 
         $writer = new Xlsx($spreadsheet);
@@ -175,5 +175,4 @@ class Tunggakan extends BaseController
 
         $writer->save('php://output');
     }
-
 }
