@@ -25,35 +25,30 @@
                         <?php echo session()->getFlashdata('success'); ?>
                     </div>
                 <?php endif; ?>
-                <?php if ($validation->hasError('tahunAjar')) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
-                    </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahunAngkatan')) : ?>
+                <?php if ($validation->hasError('tahunAngkatan')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahunAngkatan'); ?>
+                    </div>
+                <?php endif; ?> <?php if ($validation->hasError('tahunAjar')) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
                     </div>
                 <?php endif; ?> <?php if ($validation->hasError('tahap')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahap'); ?>
                     </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahapTanggalAwal')) : ?>
+                <?php endif; ?> <?php if ($validation->hasError('bank')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Failed ! </strong><?= $validation->getError('tahapTanggalAwal'); ?>
-                    </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahapTanggalAkhir')) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Failed ! </strong><?= $validation->getError('tahapTanggalAkhir'); ?>
+                        <strong>Failed ! </strong><?= $validation->getError('bank'); ?>
                     </div>
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form class="form-horizontal" action="/ubahTanggalTahap" method="POST">
+                        <form action="/pembayaran" method="POST">
                             <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
@@ -82,22 +77,14 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <label>Tanggal Awal</label>
-                                <div class="input-group date" id="dp-2" data-date="17-08-2021" data-date-format="dd-mm-yyyy">
-                                    <input type="text" class="form-control datepicker" value="" name="tahapTanggalAwal" />
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Tanggal Akhir</label>
-                                <div class="input-group date" id="dp-2" data-date="17-08-2021" data-date-format="dd-mm-yyyy">
-                                    <input type="text" class="form-control datepicker" value="" name="tahapTanggalAkhir" />
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
+                                <label>Pilih Bank</label>
+                                <select class="form-control select" name="bank">
+                                    <option value="">-- Select --</option>
+                                </select>
                             </div>
                             <ul class="panel-controls">
-                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-success"><span class="fa fa-arrow-circle-right"></span>
-                                    Proses</button>
+                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-success"><span class="fa fa-search"></span>
+                                    Cari</button>
                             </ul>
                         </form>
                     </div>
