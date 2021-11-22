@@ -52,13 +52,19 @@
                             <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
-                                    <option value="0">-- Select --</option>
+                                    <option value="">-- Select --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Tahun Angkatan</label>
+                                <select class="form-control select" name="tahunAngkatan">
+                                    <option value="">-- Select --</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
                                 <label>Pembayaran Tahap</label>
                                 <select class="form-control select" name="tahap">
-                                    <option value="0">-- Select --</option>
+                                    <option value="">-- Select --</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
