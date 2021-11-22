@@ -83,6 +83,10 @@ $routes->get('/pembayaranBni/(:any)', 'PembayaranBni::index');
 // Route PembayaranSemua
 $routes->get('/pembayaranSemua/(:any)', 'PembayaranSemua::index');
 
+// Route UbahTanggalTahap
+$routes->get('/ubahTanggalTahap/(:any)', 'UbahTanggalTahap::index');
+
+
 
 /*
  * --------------------------------------------------------------------

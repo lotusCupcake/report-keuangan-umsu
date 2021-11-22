@@ -3,7 +3,7 @@
     <!-- START X-NAVIGATION -->
     <ul class="x-navigation">
         <li class="xn-logo">
-            <a href="/home">ATLANT</a>
+            <a href="/home">UMSU</a>
             <a href="#!" class="x-navigation-control"></a>
         </li>
         <li class="xn-profile">
@@ -39,7 +39,7 @@
         </li>
         <li class="xn-title">Setting</li>
         <li>
-            <a href="#"><span class="fa fa-edit"></span><span class="xn-text">Ubah Tanggal Tahap</span></a>
+            <a href="/ubahTanggalTahap"><span class="fa fa-edit"></span><span class="xn-text">Ubah Tanggal Tahap</span></a>
         </li>
     </ul>
     <!-- END X-NAVIGATION -->
