@@ -174,6 +174,5 @@ class Tunggakan extends BaseController
         header('Cache-Control: max-age=0');
 
         $writer->save('php://output');
-        return $this->index();
     }
 }
