@@ -71,17 +71,9 @@ $routes->post('/tunggakan/cetak', 'Tunggakan::cetakTunggakan');
 $routes->post('/tunggakan', 'Tunggakan::prosesTunggakan');
 $routes->get('/test', 'Tunggakan::test');
 
-// Route PembayaranBsm
-$routes->get('/pembayaranBsm/(:any)', 'PembayaranBsm::index');
-
-// Route PembayaranBris
-$routes->get('/pembayaranBris/(:any)', 'PembayaranBris::index');
-
-// Route PembayaranBni
-$routes->get('/pembayaranBni/(:any)', 'PembayaranBni::index');
-
-// Route PembayaranSemua
-$routes->get('/pembayaranSemua/(:any)', 'PembayaranSemua::index');
+// Route Pembayaran
+$routes->get('/pembayaran/(:any)', 'Pembayaran::index');
+$routes->post('/pembayaran', "Pembayaran::prosesPembayaran");
 
 // Route UbahTanggalTahap
 $routes->get('/ubahTanggalTahap/(:any)', 'UbahTanggalTahap::index');

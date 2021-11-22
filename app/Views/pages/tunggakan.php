@@ -72,7 +72,8 @@
                                 </select>
                             </div>
                             <ul class="panel-controls">
-                                <button type="submit" class="btn btn-success">Cari</button>
+                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-success"><span class="fa fa-search"></span>
+                                    Cari</button>
                             </ul>
                         </form>
 
@@ -81,7 +82,8 @@
                                 <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
                                 <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
                                 <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
-                                <button type="submit" class="btn btn-info">Export</button>
+                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                    Export</button>
                             </form>
                         <?php endif ?>
                     </div>
