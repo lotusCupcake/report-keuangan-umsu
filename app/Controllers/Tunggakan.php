@@ -116,14 +116,14 @@ class Tunggakan extends BaseController
 
         $spreadsheet = new Spreadsheet();
 
-        $styleArray = [
-            'borders' => [
-                'outline' => [
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-                    'color' => ['argb' => 'FF000000'],
-                ],
-            ],
-        ];
+        // $styleArray = [
+        //     'borders' => [
+        //         'outline' => [
+        //             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+        //             'color' => ['argb' => 'FF000000'],
+        //         ],
+        //     ],
+        // ];
 
         $default = 1;
         $konten = 0;
