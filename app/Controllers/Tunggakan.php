@@ -120,7 +120,7 @@ class Tunggakan extends BaseController
             'borders' => [
                 'outline' => [
                     'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-                    'color' => ['argb' => 'FFFF0000'],
+                    'color' => ['argb' => 'FF000000'],
                 ],
             ],
         ];
@@ -162,7 +162,7 @@ class Tunggakan extends BaseController
                 }
             }
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "H" . $konten)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true)->applyFromArray($styleArray);
-            $konten = $konten+1;
+            // $konten = $konten+1;
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . $konten , number_to_currency($total, 'IDR'))->getStyle('I' . $konten )->getFont()->setBold(true)->applyFromArray($styleArray);
         }
 
