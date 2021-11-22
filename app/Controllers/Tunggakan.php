@@ -173,8 +173,7 @@ class Tunggakan extends BaseController
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
         header('Cache-Control: max-age=0');
 
-        if ($writer->save('php://output')) {
-            return redirect()->back();
-        }
+        $writer->save('php://output');
+        return $this->index();
     }
 }
