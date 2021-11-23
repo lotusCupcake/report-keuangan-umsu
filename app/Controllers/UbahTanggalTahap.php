@@ -85,9 +85,12 @@ class UbahTanggalTahap extends BaseController
             return redirect()->to('ubahTanggalTahap')->withInput();
         }
 
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
-        $payment_order = $this->request->getPost('tahap');
+            $term_year_id = $this->request->getPost('tahunAjar');
+            $entry_year_id = $this->request->getPost('tahunAngkatan');
+            $payment_order = $this->request->getPost('tahap');
+            $startDate = $this->request->getPost('tahapTanggalAwal').' 00:00:00.000';
+            $endDate = $this->request->getPost('tahapTanggalAkhir').' 23:59:00.000';
+        
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/updTanggalTahap", [
             "headers" => [
