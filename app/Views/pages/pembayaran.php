@@ -48,7 +48,7 @@
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form action="/pembayaran" method="POST">
+                        <form autocomplete="off" action="/pembayaran" method="POST">
                             <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
