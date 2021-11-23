@@ -28,6 +28,7 @@ class UbahTanggalTahap extends BaseController
             'entryYear' => null,
             'paymentOrder' => null,
             'tunggakan' => [],
+            'icon' => 'https://assets10.lottiefiles.com/packages/lf20_s6bvy00o.json',
             'listTermYear' => $this->getTermYear(),
             'validation' => \Config\Services::validation(),
         ];
@@ -91,7 +92,6 @@ class UbahTanggalTahap extends BaseController
             $startDate = $this->request->getPost('tahapTanggalAwal').' 00:00:00.000';
             $endDate = $this->request->getPost('tahapTanggalAkhir').' 23:59:00.000';
         
-
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/updTanggalTahap", [
             "headers" => [
                 "Accept" => "application/json"
@@ -99,7 +99,9 @@ class UbahTanggalTahap extends BaseController
             "form_params" => [
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
-                "tahap" => $payment_order
+                "tahap" => $payment_order,
+                "startDate"=> $startDate,
+                "endDate" => $endDate
             ]
         ]);
 
@@ -111,6 +113,7 @@ class UbahTanggalTahap extends BaseController
             'paymentOrder' => null,
             'dataUbah' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
+            'icon' => (json_decode($response->getBody())->status) ? 'https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json': 'https://assets10.lottiefiles.com/packages/lf20_gO48yV.json',
             'validation' => \Config\Services::validation(),
         ];
 
