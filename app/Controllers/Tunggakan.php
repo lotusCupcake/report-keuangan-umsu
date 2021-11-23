@@ -112,7 +112,7 @@ class Tunggakan extends BaseController
             'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
         ];
-        session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan !');
+        session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');
         return view('pages/tunggakan', $data);
     }
 
@@ -139,6 +139,7 @@ class Tunggakan extends BaseController
                 array_push($prodi, $k->NAMA_PRODI);
             }
         }
+
 
         $spreadsheet = new Spreadsheet();
 
@@ -199,8 +200,8 @@ class Tunggakan extends BaseController
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
         header('Cache-Control: max-age=0');
 
-        $writer->save('php://output');
         // session()->setFlashdata('success', 'Berhasil Export Data Tunggakan !');
-        return $this->index();
+        $writer->save('php://output');
+        return $this->index('tunggakan');
     }
 }
