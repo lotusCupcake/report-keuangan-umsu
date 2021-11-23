@@ -83,12 +83,6 @@ class Pembayaran extends BaseController
                     'required' => 'Tahun Ajar Harus Diisi !',
                 ]
             ],
-            'bank' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Pilih Bank Harus Diisi !',
-                ]
-            ],
         ])) {
             return redirect()->to('pembayaran')->withInput();
         }

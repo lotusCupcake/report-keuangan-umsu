@@ -40,11 +40,6 @@
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahap'); ?>
                     </div>
-                <?php endif; ?> <?php if ($validation->hasError('bank')) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Failed ! </strong><?= $validation->getError('bank'); ?>
-                    </div>
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -109,6 +104,7 @@
                                                         <th>Nama Lengkap</th>
                                                         <th>Angkatan</th>
                                                         <th>Nama Biaya</th>
+                                                        <th>Bank</th>
                                                         <th>Tahap</th>
                                                         <th>Nominal</th>
                                                     </tr>
@@ -126,6 +122,7 @@
                                                                     <td><?= $rows->NAMA_LENGKAP ?></td>
                                                                     <td><?= $rows->ANGKATAN ?></td>
                                                                     <td><?= $rows->NAMA_BIAYA ?></td>
+                                                                    <td><?= $rows->BANK_NAMA ?></td>
                                                                     <td><?= ($rows->TAHAP==0)?"Lunas":"Tahap ".$rows->TAHAP ?></td>
                                                                     <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
                                                                 </tr>
