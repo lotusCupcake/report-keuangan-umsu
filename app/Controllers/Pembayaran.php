@@ -28,12 +28,26 @@ class Pembayaran extends BaseController
             'entryYear' => null,
             'paymentOrder' => null,
             'listTermYear' => $this->getTermYear(),
+            'listBank' => $this->getBank(),
             'prodi' => [],
+            'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'validation' => \Config\Services::validation(),
         ];
         // dd($data);
 
         return view('pages/pembayaran', $data);
+    }
+
+    public function getBank()
+    {
+        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getBank", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+
+        ]);
+
+        return json_decode($response->getBody())->data;
     }
 
     public function getTermYear()
@@ -78,31 +92,48 @@ class Pembayaran extends BaseController
         ])) {
             return redirect()->to('pembayaran')->withInput();
         }
+
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
+        $bank = $this->request->getPost('bank');
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/updTanggalTahap", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [
                 "Accept" => "application/json"
             ],
             "form_params" => [
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
-                "tahap" => $payment_order
+                "tahap" => $payment_order,
+                "bank" => $bank
             ]
         ]);
+        
+        $prodi = [];
+        foreach (json_decode($response->getBody())->data as $k) {
+            if (!in_array($k->PRODI, $prodi)) {
+                array_push($prodi, $k->PRODI);
+            }
+        }
+
+        dd($prodi);
+
+
         $data = [
             'title' => "Pembayaran",
             'appName' => "UMSU",
             'breadcrumb' => ['Home', 'Pembayaran'],
             'termYear' => null,
             'paymentOrder' => null,
-            'dataUbah' => json_decode($response->getBody())->data,
+            'pembayaran' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
+            'listBank' => $this->getBank(),
+            'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
         ];
 
-        dd($data);
+        session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');
+        return view('pages/pembayaran', $data);
     }
 }

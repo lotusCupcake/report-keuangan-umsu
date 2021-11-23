@@ -80,6 +80,9 @@
                                 <label>Pilih Bank</label>
                                 <select class="form-control select" name="bank">
                                     <option value="">-- Select --</option>
+                                    <?php foreach ($listBank as $rows) : ?>
+                                        <option value="<?= $rows->Bank_Id ?>"><?= $rows->Bank_Name ?></option>
+                                    <?php endforeach ?>
                                 </select>
                             </div>
                             <ul class="panel-controls">
@@ -89,6 +92,67 @@
                         </form>
                     </div>
                     <div class="panel-body col-md-12">
+                    <?php if ($prodi != null) : ?>
+                            <?php foreach ($prodi as $prd) : ?>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><?= $prd ?></h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-actions">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>No Register</th>
+                                                        <th>NPM</th>
+                                                        <th>Nama Lengkap</th>
+                                                        <th>Angkatan</th>
+                                                        <th>Nama Biaya</th>
+                                                        <th>Tahap</th>
+                                                        <th>Nominal</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $total = 0;
+                                                    $no = 1;
+                                                    if (count($pembayaran) > 0) : ?>
+                                                        <?php foreach ($pembayaran as $rows) : ?>
+                                                            <?php if ($rows->PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
+                                                                <tr>
+                                                                    <td><?= $no++ ?></td>
+                                                                    <td><?= $rows->NO_REGISTER . " " . count($pembayaran) ?></td>
+                                                                    <td><?= $rows->Npm ?></td>
+                                                                    <td><?= $rows->NAMA_LENGKAP ?></td>
+                                                                    <td><?= $rows->ANGKATAN ?></td>
+                                                                    <td><?= $rows->NAMA_BIAYA ?></td>
+                                                                    <td><?= $rows->TAHAP ?></td>
+                                                                    <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
+                                                                </tr>
+                                                            <?php endif ?>
+                                                        <?php endforeach ?>
+                                                        <tr>
+                                                            <td colspan=7 style="text-align: center;"><strong>Total Amount</strong></td>
+                                                            <td><strong><?= number_to_currency($total, 'IDR') ?></strong></td>
+                                                        </tr>
+                                                    <?php else : ?>
+                                                        <tr>
+                                                            <td colspan=8 style="text-align:center">Tidak ada data</td>
+                                                        </tr>
+                                                    <?php endif ?>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <?php endforeach ?>
+                        <?php else : ?>
+                            <center>
+                                <lottie-player src="<?= $icon ?>" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
+                            </center>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>

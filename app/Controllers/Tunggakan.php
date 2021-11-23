@@ -112,6 +112,7 @@ class Tunggakan extends BaseController
             'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
         ];
+        
         session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');
         return view('pages/tunggakan', $data);
     }
