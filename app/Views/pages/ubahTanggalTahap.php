@@ -83,14 +83,14 @@
                             </div>
                             <div class="col-md-2">
                                 <label>Tanggal Awal</label>
-                                <div class="input-group date" id="dp-2" data-date="17-08-2021" data-date-format="dd-mm-yyyy">
+                                <div class="input-group date" id="dp-2" data-date="2021-17-08" data-date-format="yyyy-mm-dd">
                                     <input type="text" class="form-control datepicker" value="" name="tahapTanggalAwal" />
                                     <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <label>Tanggal Akhir</label>
-                                <div class="input-group date" id="dp-2" data-date="17-08-2021" data-date-format="dd-mm-yyyy">
+                                <div class="input-group date" id="dp-2" data-date="2021-17-08" data-date-format="yyyy-mm-dd">
                                     <input type="text" class="form-control datepicker" value="" name="tahapTanggalAkhir" />
                                     <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
