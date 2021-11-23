@@ -81,7 +81,7 @@
                                 <select class="form-control select" name="bank">
                                     <option value="">-- Select --</option>
                                     <?php foreach ($listBank as $rows) : ?>
-                                        <option value="<?= $rows->Bank_Id ?>"><?= $rows->Bank_Name ?></option>
+                                        <option value="<?= $rows->Bank_Acronym ?>"><?= $rows->Bank_Name ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -126,7 +126,7 @@
                                                                     <td><?= $rows->NAMA_LENGKAP ?></td>
                                                                     <td><?= $rows->ANGKATAN ?></td>
                                                                     <td><?= $rows->NAMA_BIAYA ?></td>
-                                                                    <td><?= $rows->TAHAP ?></td>
+                                                                    <td><?= ($rows->TAHAP==0)?"Lunas":"Tahap ".$rows->TAHAP ?></td>
                                                                     <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
                                                                 </tr>
                                                             <?php endif ?>

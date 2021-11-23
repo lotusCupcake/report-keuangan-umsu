@@ -97,7 +97,7 @@ class Pembayaran extends BaseController
         $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
         $bank = $this->request->getPost('bank');
-
+        
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [
                 "Accept" => "application/json"
@@ -116,9 +116,6 @@ class Pembayaran extends BaseController
                 array_push($prodi, $k->PRODI);
             }
         }
-
-        dd($prodi);
-
 
         $data = [
             'title' => "Pembayaran",
