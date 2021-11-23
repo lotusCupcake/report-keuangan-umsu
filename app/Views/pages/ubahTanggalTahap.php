@@ -53,7 +53,7 @@
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form class="form-horizontal" action="/ubahTanggalTahap" method="POST">
+                        <form autocomplete="off" class="form-horizontal" action="/ubahTanggalTahap" method="POST">
                             <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
