@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UbahTanggalTahapModel extends Model
+class UbahKedokteranModel extends Model
 {
     protected $DBGroup = 'default';
     protected $table = 'acd_student';

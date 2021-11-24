@@ -53,53 +53,76 @@
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form autocomplete="off" class="form-horizontal" action="/ubahTanggalTahap" method="POST">
+                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null && $startDate != null && $endDate != null) : ?>
                             <div class="col-md-2">
                                 <label>Tahun Ajar</label>
-                                <select class="form-control select" name="tahunAjar">
-                                    <option value="">-- Select --</option>
-                                    <?php foreach ($listTermYear as $rows) : ?>
-                                        <option value="<?= $rows->Term_Year_Id ?>"><?= $rows->Term_Year_Name ?></option>
-                                    <?php endforeach ?>
-                                </select>
+                                <input class="form-control" name="tahunAjar" value="<?= $termYear; ?>">
                             </div>
                             <div class="col-md-2">
                                 <label>Tahun Angkatan</label>
-                                <select class="form-control select" name="tahunAngkatan">
-                                    <option value="">-- Select --</option>
-                                    <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
-                                        <option value="<?= $i ?>"><?= $i ?></option>
-                                    <?php endfor ?>
-                                </select>
+                                <input class="form-control" name="tahunAngkatan" value="<?= $entryYear; ?>">
                             </div>
                             <div class="col-md-2">
                                 <label>Pembayaran Tahap</label>
-                                <select class="form-control select" name="tahap">
-                                    <option value="">-- Select --</option>
-                                    <?php for ($i = 1; $i <= 4; $i++) : ?>
-                                        <option value="<?= $i ?>"><?= $i ?></option>
-                                    <?php endfor ?>
-                                </select>
+                                <input class="form-control" name="tahap" value="<?= $paymentOrder; ?>">
                             </div>
                             <div class="col-md-2">
                                 <label>Tanggal Awal</label>
-                                <div class="input-group date" id="dp-2" data-date-format="yyyy-mm-dd">
-                                    <input type="text" class="form-control datepicker" value="" name="tahapTanggalAwal" />
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
+                                <input class="form-control" name="tahap" value="<?= $startDate; ?>">
                             </div>
                             <div class="col-md-2">
                                 <label>Tanggal Akhir</label>
-                                <div class="input-group date" id="dp-2" data-date-format="yyyy-mm-dd">
-                                    <input type="text" class="form-control datepicker" value="" name="tahapTanggalAkhir" />
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
+                                <input class="form-control" name="tahap" value="<?= $endDate; ?>">
                             </div>
-                            <ul class="panel-controls">
-                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-success"><span class="fa fa-arrow-circle-right"></span>
-                                    Proses</button>
-                            </ul>
-                        </form>
+                        <?php else : ?>
+                            <form autocomplete="off" class="form-horizontal" action="/ubahNonKedokteran" method="POST">
+                                <div class="col-md-2">
+                                    <label>Tahun Ajar</label>
+                                    <select class="form-control select" name="tahunAjar">
+                                        <option value="">-- Select --</option>
+                                        <?php foreach ($listTermYear as $rows) : ?>
+                                            <option value="<?= $rows->Term_Year_Id ?>"><?= $rows->Term_Year_Name ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Tahun Angkatan</label>
+                                    <select class="form-control select" name="tahunAngkatan">
+                                        <option value="">-- Select --</option>
+                                        <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
+                                            <option value="<?= $i ?>"><?= $i ?></option>
+                                        <?php endfor ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Pembayaran Tahap</label>
+                                    <select class="form-control select" name="tahap">
+                                        <option value="">-- Select --</option>
+                                        <?php for ($i = 1; $i <= 4; $i++) : ?>
+                                            <option value="<?= $i ?>"><?= $i ?></option>
+                                        <?php endfor ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Tanggal Awal</label>
+                                    <div class="input-group date" id="dp-2" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control datepicker" value="" name="tahapTanggalAwal" />
+                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Tanggal Akhir</label>
+                                    <div class="input-group date" id="dp-2" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control datepicker" value="" name="tahapTanggalAkhir" />
+                                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                                <ul class="panel-controls">
+                                    <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-success"><span class="fa fa-arrow-circle-right"></span>
+                                        Proses</button>
+                                </ul>
+                            </form>
+                        <?php endif ?>
                     </div>
                     <div class="panel-body col-md-12">
                         <center>

@@ -2,17 +2,17 @@
 
 namespace App\Controllers;
 
-use App\Models\UbahTanggalTahapModel;
+use App\Models\UbahNonKedokteranModel;
 
 
-class UbahTanggalTahap extends BaseController
+class UbahNonKedokteran extends BaseController
 {
-    protected $UbahTanggalTahapModel;
+    protected $UbahNonKedokteranModel;
     protected $curl;
 
     public function __construct()
     {
-        $this->UbahTanggalTahapModel = new UbahTanggalTahapModel();
+        $this->UbahNonKedokteranModel = new UbahNonKedokteranModel();
         $this->curl = service('curlrequest');
     }
 
@@ -21,9 +21,9 @@ class UbahTanggalTahap extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Ubah Tanggal Tahap",
+            'title' => "Set. Tanggal Tahap Fak. Non Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Ubah Tanggal Tahap'],
+            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Non Kedokteran'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
@@ -34,7 +34,7 @@ class UbahTanggalTahap extends BaseController
         ];
         // dd($data);
 
-        return view('pages/ubahTanggalTahap', $data);
+        return view('pages/ubahNonKedokteran', $data);
     }
 
     public function getTermYear()
@@ -83,15 +83,15 @@ class UbahTanggalTahap extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to('ubahTanggalTahap')->withInput();
+            return redirect()->to('ubahNonKedokteran')->withInput();
         }
 
-            $term_year_id = $this->request->getPost('tahunAjar');
-            $entry_year_id = $this->request->getPost('tahunAngkatan');
-            $payment_order = $this->request->getPost('tahap');
-            $startDate = $this->request->getPost('tahapTanggalAwal').' 00:00:00.000';
-            $endDate = $this->request->getPost('tahapTanggalAkhir').' 23:59:00.000';
-        
+        $term_year_id = $this->request->getPost('tahunAjar');
+        $entry_year_id = $this->request->getPost('tahunAngkatan');
+        $payment_order = $this->request->getPost('tahap');
+        $startDate = $this->request->getPost('tahapTanggalAwal') . ' 00:00:00.000';
+        $endDate = $this->request->getPost('tahapTanggalAkhir') . ' 23:59:00.000';
+
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/updTanggalTahap", [
             "headers" => [
                 "Accept" => "application/json"
@@ -100,24 +100,27 @@ class UbahTanggalTahap extends BaseController
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
                 "tahap" => $payment_order,
-                "startDate"=> $startDate,
+                "startDate" => $startDate,
                 "endDate" => $endDate
             ]
         ]);
 
         $data = [
-            'title' => "Ubah Tanggal Tahap",
+            'title' => "Set. Tanggal Tahap Fak. Non Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Ubah Tanggal Tahap'],
-            'termYear' => null,
-            'paymentOrder' => null,
+            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Non Kedokteran'],
+            'termYear' => $term_year_id,
+            'entryYear' => $entry_year_id,
+            'paymentOrder' => $payment_order,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
             'dataUbah' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
-            'icon' => (json_decode($response->getBody())->status) ? 'https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json': 'https://assets10.lottiefiles.com/packages/lf20_gO48yV.json',
+            'icon' => (json_decode($response->getBody())->status) ? 'https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json' : 'https://assets10.lottiefiles.com/packages/lf20_gO48yV.json',
             'validation' => \Config\Services::validation(),
         ];
 
         session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');
-        return view('pages/ubahTanggalTahap', $data);
+        return view('pages/ubahNonKedokteran', $data);
     }
 }

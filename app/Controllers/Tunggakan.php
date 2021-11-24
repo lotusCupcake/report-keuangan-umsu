@@ -24,7 +24,7 @@ class Tunggakan extends BaseController
         $data = [
             'title' => "Tunggakan",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Tunggakan'],
+            'breadcrumb' => ['Home', 'Lap. Detail Tunggakan'],
             'tunggakan' => [],
             'termYear' => null,
             'entryYear' => null,
@@ -101,9 +101,9 @@ class Tunggakan extends BaseController
         }
 
         $data = [
-            'title' => "Tunggakan",
+            'title' => "Lap. Detail Tunggakan",
             'appName' => "UMSU FM",
-            'breadcrumb' => ['Home', 'Tunggakan'],
+            'breadcrumb' => ['Home', 'Lap. Detail Tunggakan'],
             'tunggakan' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
@@ -112,7 +112,7 @@ class Tunggakan extends BaseController
             'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
         ];
-        
+
         session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');
         return view('pages/tunggakan', $data);
     }

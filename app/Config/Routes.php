@@ -75,9 +75,21 @@ $routes->get('/test', 'Tunggakan::test');
 $routes->get('/pembayaran/(:any)', 'Pembayaran::index');
 $routes->post('/pembayaran', "Pembayaran::prosesPembayaran");
 
-// Route UbahTanggalTahap
-$routes->get('/ubahTanggalTahap/(:any)', 'UbahTanggalTahap::index');
-$routes->post('/ubahTanggalTahap', "UbahTanggalTahap::proses");
+// Route UbahTanggalTahapAngkatan
+$routes->get('/ubahAngkatan/(:any)', 'UbahAngkatan::index');
+$routes->post('/ubahAngkatan', "UbahAngkatan::proses");
+
+// Route UbahNonKedokteran
+$routes->get('/ubahNonKedokteran/(:any)', 'UbahNonKedokteran::index');
+$routes->post('/ubahNonKedokteran', "UbahNonKedokteran::proses");
+
+// Route UbahKedokteran
+$routes->get('/ubahKedokteran/(:any)', 'UbahKedokteran::index');
+$routes->post('/ubahKedokteran', "UbahKedokteran::proses");
+
+// Route UbahPascasarjana
+$routes->get('/ubahPascasarjana/(:any)', 'UbahPascasarjana::index');
+$routes->post('/ubahPascasarjana', "UbahPascasarjana::proses");
 
 
 

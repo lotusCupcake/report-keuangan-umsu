@@ -32,8 +32,19 @@
             <a href=" /pembayaran"><span class="fa fa-money"></span><span class="xn-text">Lap. Detail Pembayaran</span></a>
         </li>
         <li class="xn-title">Setting</li>
-        <li>
-            <a href="/ubahTanggalTahap"><span class="fa fa-edit"></span><span class="xn-text">Set. Tgl. Tahap/Angkatan</span></a>
+        <li class="xn-openable">
+            <a href="#"><span class="fa fa-edit"></span><span class="xn-text">Set. Tanggal Tahap</span></a>
+            <ul>
+                <li><a href="/ubahAngkatan"><span class="xn-text">Per Angkatan</span></a></li>
+                <li class="xn-openable">
+                    <a href="#"><span class="xn-text">Per Fakultas</span></a>
+                    <ul>
+                        <li><a href="/ubahNonKedokteran"><span class="xn-text">Fak. Non Kedokteran</span></a></li>
+                        <li><a href="/ubahKedokteran"><span class="xn-text">Fak. Kedokteran</span></a></li>
+                        <li><a href="/ubahPascasarjana"><span class="xn-text">Fak. Pascasarjana</span></a></li>
+                    </ul>
+                </li>
+            </ul>
         </li>
     </ul>
     <!-- END X-NAVIGATION -->

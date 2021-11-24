@@ -2,16 +2,17 @@
 
 namespace App\Controllers;
 
-use App\Models\PembayaranModel;
+use App\Models\UbahKedokteranModel;
 
 
-class Pembayaran extends BaseController
+class UbahKedokteran extends BaseController
 {
-    protected $PembayaranModel;
+    protected $UbahKedokteranModel;
     protected $curl;
+
     public function __construct()
     {
-        $this->PembayaranBniModel = new PembayaranModel();
+        $this->UbahKedokteranModel = new UbahKedokteranModel();
         $this->curl = service('curlrequest');
     }
 
@@ -20,34 +21,20 @@ class Pembayaran extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Lap. Detail Pembayaran",
+            'title' => "Set. Tanggal Tahap Fak. Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Lap. Detail Pembayaran'],
-            'pembayaran' => [],
+            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Kedokteran'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
+            'tunggakan' => [],
+            'icon' => 'https://assets10.lottiefiles.com/packages/lf20_s6bvy00o.json',
             'listTermYear' => $this->getTermYear(),
-            'listBank' => $this->getBank(),
-            'prodi' => [],
-            'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'validation' => \Config\Services::validation(),
         ];
         // dd($data);
 
-        return view('pages/pembayaran', $data);
-    }
-
-    public function getBank()
-    {
-        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getBank", [
-            "headers" => [
-                "Accept" => "application/json"
-            ],
-
-        ]);
-
-        return json_decode($response->getBody())->data;
+        return view('pages/ubahKedokteran', $data);
     }
 
     public function getTermYear()
@@ -62,7 +49,7 @@ class Pembayaran extends BaseController
         return json_decode($response->getBody())->data;
     }
 
-    public function prosesPembayaran()
+    public function proses()
     {
         if (!$this->validate([
             'tahap' => [
@@ -83,51 +70,57 @@ class Pembayaran extends BaseController
                     'required' => 'Tahun Ajar Harus Diisi !',
                 ]
             ],
+            'tahapTanggalAwal' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tanggal Awal Harus Diisi !',
+                ]
+            ],
+            'tahapTanggalAkhir' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tanggal Akhir Harus Diisi !',
+                ]
+            ],
         ])) {
-            return redirect()->to('pembayaran')->withInput();
+            return redirect()->to('ubahKedokteran')->withInput();
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
-        $bank = $this->request->getPost('bank');
+        $startDate = $this->request->getPost('tahapTanggalAwal') . ' 00:00:00.000';
+        $endDate = $this->request->getPost('tahapTanggalAkhir') . ' 23:59:00.000';
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/updTanggalTahap", [
             "headers" => [
                 "Accept" => "application/json"
             ],
             "form_params" => [
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
-                // "termYearName" => $term_year_name,
                 "tahap" => $payment_order,
-                "bank" => $bank
+                "startDate" => $startDate,
+                "endDate" => $endDate
             ]
         ]);
 
-        $prodi = [];
-        foreach (json_decode($response->getBody())->data as $k) {
-            if (!in_array($k->PRODI, $prodi)) {
-                array_push($prodi, $k->PRODI);
-            }
-        }
-
         $data = [
-            'title' => "Pembayaran",
+            'title' => "Set. Tanggal Tahap Fak. Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Lap. Detail Pembayaran'],
+            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Kedokteran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
-            'bank' => $bank,
-            'pembayaran' => json_decode($response->getBody())->data,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'dataUbah' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
-            'listBank' => $this->getBank(),
-            'prodi' => $prodi,
+            'icon' => (json_decode($response->getBody())->status) ? 'https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json' : 'https://assets10.lottiefiles.com/packages/lf20_gO48yV.json',
             'validation' => \Config\Services::validation(),
         ];
 
-        session()->setFlashdata('success', 'Berhasil Memuat Data Pembayaran, Klik Export Untuk Download !');
-        return view('pages/pembayaran', $data);
+        session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');
+        return view('pages/ubahKedokteran', $data);
     }
 }
