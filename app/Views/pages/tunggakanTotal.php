@@ -64,8 +64,8 @@
                         </form>
                         <?php if ($termYear != null && $paymentOrder != null) : ?>
                             <form action="/tunggakanTotal/cetak" method="post">
-                                <input class="form-control" name="tahunAjar" value="<?= $termYear; ?>">
-                                <input class="form-control" name="tahap" value="<?= $paymentOrder; ?>">
+                                <input class="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                <input class="hidden" name="tahap" value="<?= $paymentOrder; ?>">
                                 <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                     Export</button>
                             </form>
