@@ -25,11 +25,19 @@
             <a href="/home"><span class="fa fa-home"></span><span class="xn-text">Dashboard</span></a>
         </li>
         <li class="xn-title">Laporan</li>
-        <li>
-            <a href="/tunggakan"><span class="fa fa-ban"></span><span class="xn-text">Lap. Detail Tunggakan</span></a>
+        <li class="xn-openable">
+            <a href=" #"><span class="fa fa-ban"></span><span class="xn-text">Laporan Tunggakan</span></a>
+            <ul>
+                <li><a href="/tunggakanDetail"><span class="xn-text">Detail Tunggakan</span></a></li>
+                <li><a href="/tunggakanTotal"><span class="xn-text">Total Tunggakan</span></a></li>
+            </ul>
         </li>
-        <li>
-            <a href=" /pembayaran"><span class="fa fa-money"></span><span class="xn-text">Lap. Detail Pembayaran</span></a>
+        <li class="xn-openable">
+            <a href="#"><span class="fa fa-money"></span><span class="xn-text">Laporan Pembayaran</span></a>
+            <ul>
+                <li><a href=" /pembayaranDetail"><span class="xn-text">Detail Pembayaran</span></a></li>
+                <li><a href=" /pembayaranTotal"><span class="xn-text">Total Pembayaran</span></a></li>
+            </ul>
         </li>
         <li class="xn-title">Setting</li>
         <li class="xn-openable">

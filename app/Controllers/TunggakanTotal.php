@@ -2,18 +2,18 @@
 
 namespace App\Controllers;
 
-use App\Models\TunggakanModel;
+use App\Models\TunggakanTotalModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
-class Tunggakan extends BaseController
+class TunggakanTotal extends BaseController
 {
-    protected $tunggakanModel;
+    protected $tunggakanTotalModel;
     protected $curl;
     public function __construct()
     {
-        $this->tunggakanModel = new TunggakanModel();
+        $this->tunggakanTotalModel = new TunggakanTotalModel();
         $this->curl = service('curlrequest');
     }
 
@@ -22,9 +22,9 @@ class Tunggakan extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Tunggakan",
+            'title' => "Tunggakan Total",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Lap. Detail Tunggakan'],
+            'breadcrumb' => ['Home', 'Laporan Total Tunggakan'],
             'tunggakan' => [],
             'termYear' => null,
             'entryYear' => null,
@@ -35,7 +35,7 @@ class Tunggakan extends BaseController
         ];
         // dd($data);
 
-        return view('pages/tunggakan', $data);
+        return view('pages/tunggakanTotal', $data);
     }
 
     public function getTermYear()
@@ -50,7 +50,7 @@ class Tunggakan extends BaseController
         return json_decode($response->getBody())->data;
     }
 
-    public function prosesTunggakan()
+    public function prosesTunggakanTotal()
     {
         if (!$this->validate([
             'tahunAngkatan' => [
@@ -72,7 +72,7 @@ class Tunggakan extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to('tunggakan')->withInput();
+            return redirect()->to('tunggakanTotal')->withInput();
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
@@ -101,9 +101,9 @@ class Tunggakan extends BaseController
         }
 
         $data = [
-            'title' => "Lap. Detail Tunggakan",
+            'title' => "Total Tunggakan",
             'appName' => "UMSU FM",
-            'breadcrumb' => ['Home', 'Lap. Detail Tunggakan'],
+            'breadcrumb' => ['Home', 'Laporan Total Tunggakan'],
             'tunggakan' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
@@ -114,10 +114,10 @@ class Tunggakan extends BaseController
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');
-        return view('pages/tunggakan', $data);
+        return view('pages/tunggakanTotal', $data);
     }
 
-    public function cetakTunggakan()
+    public function cetakTunggakanTotal()
     {
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');

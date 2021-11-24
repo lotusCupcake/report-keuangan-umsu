@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class TunggakanModel extends Model
+class PembayaranTotalModel extends Model
 {
     protected $DBGroup = 'default';
     protected $table = 'acd_student';
