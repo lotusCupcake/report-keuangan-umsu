@@ -33,7 +33,7 @@
                 <?php endif; ?> <?php if ($validation->hasError('tahunAngkatan')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Failed ! </strong><?= $validation->getError('tahunNonKedokteran'); ?>
+                        <strong>Failed ! </strong><?= $validation->getError('tahunAngkatan'); ?>
                     </div>
                 <?php endif; ?> <?php if ($validation->hasError('tahap')) : ?>
                     <div class="alert alert-danger" role="alert">
@@ -65,7 +65,7 @@
                             </div>
                             <div class="col-md-2">
                                 <label>Tahun NonKedokteran</label>
-                                <select class="form-control select" name="tahunNonKedokteran">
+                                <select class="form-control select" name="tahunAngkatan">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
                                         <option value="<?= $i ?>"><?= $i ?></option>
@@ -100,15 +100,6 @@
                                     Proses</button>
                             </ul>
                         </form>
-                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null && $startDate != null && $endDate != null) : ?>
-                            <form action="/ubahNonKedokteran/cetak" method="post">
-                                <input class="hidden" name="tahunAjar" value="<?= $termYear; ?>">
-                                <input class="hidden" name="tahunNonKedokteran" value="<?= $entryYear; ?>">
-                                <input class="hidden" name="tahap" value="<?= $paymentOrder; ?>">
-                                <input class="hidden" name="tahap" value="<?= $startDate; ?>">
-                                <input class="hidden" name="tahap" value="<?= $endDate; ?>">
-                            </form>
-                        <?php endif ?>
                     </div>
                     <div class="panel-body col-md-12">
                         <center>

@@ -85,7 +85,7 @@
                                     Cari</button>
                             </ul>
                         </form>
-                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null && $bank != null) : ?>
+                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
                             <form action="/pembayaranDetail/cetak" method="post">
                                 <input class="hidden" name="tahunAjar" value="<?= $termYear; ?>">
                                 <input class="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">

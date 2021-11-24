@@ -100,15 +100,6 @@
                                     Proses</button>
                             </ul>
                         </form>
-                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null && $startDate != null && $endDate != null) : ?>
-                            <form action="/ubahAngkatan/cetak" method="post">
-                                <input class="hidden" name="tahunAjar" value="<?= $termYear; ?>">
-                                <input class="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
-                                <input class="hidden" name="tahap" value="<?= $paymentOrder; ?>">
-                                <input class="hidden" name="tahap" value="<?= $startDate; ?>">
-                                <input class="hidden" name="tahap" value="<?= $endDate; ?>">
-                            </form>
-                        <?php endif ?>
                     </div>
                     <div class="panel-body col-md-12">
                         <center>
