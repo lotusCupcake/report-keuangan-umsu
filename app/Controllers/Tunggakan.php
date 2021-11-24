@@ -2,12 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Models\TunggakanModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
-class TunggakanTotal extends BaseController
+class Tunggakan extends BaseController
 {
+    protected $tunggakanModel;
     protected $curl;
     public function __construct()
     {
@@ -19,21 +21,20 @@ class TunggakanTotal extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Total Tunggakan",
+            'title' => "Tunggakan",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Total Tunggakan'],
+            'breadcrumb' => ['Home', 'Lap. Detail Tunggakan'],
             'tunggakan' => [],
             'termYear' => null,
+            'entryYear' => null,
             'paymentOrder' => null,
             'listTermYear' => $this->getTermYear(),
             'prodi' => [],
-            'fakultas' => [],
-            'angkatan'=> [],
             'validation' => \Config\Services::validation(),
         ];
         // dd($data);
 
-        return view('pages/tunggakanTotal', $data);
+        return view('pages/tunggakan', $data);
     }
 
     public function getTermYear()
@@ -48,9 +49,15 @@ class TunggakanTotal extends BaseController
         return json_decode($response->getBody())->data;
     }
 
-    public function prosesTunggakanTotal()
+    public function prosesTunggakan()
     {
         if (!$this->validate([
+            'tahunAngkatan' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tahun Angkatan Harus Diisi !',
+                ]
+            ],
             'tahunAjar' => [
                 'rules' => 'required',
                 'errors' => [
@@ -64,76 +71,55 @@ class TunggakanTotal extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to('tunggakanTotal')->withInput();
+            return redirect()->to('tunggakan')->withInput();
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
+        $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
-        
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getTotalTunggakan", [
-        "headers" => [
-            "Accept" => "application/json"
-        ],
-        "form_params" => [
-            "termYearId" => $term_year_id,
-            "tahap" => $payment_order
+        // dd($term_year_id);
+
+
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+            "form_params" => [
+                "entryYearId" => $entry_year_id,
+                "termYearId" => $term_year_id,
+                "tahap" => $payment_order
             ]
         ]);
 
-        $fakultas = [];
-        foreach (json_decode($response->getBody())->data as $f) {
-            if (!in_array($f->FAKULTAS, $fakultas)) {
-                array_push($fakultas, $f->FAKULTAS);
-            }
-        }
-        
-        
-        // $prodi = [];
-        // foreach (json_decode($response->getBody())->data as $k) {
-        //     if (!in_array($k->NAMA_PRODI, $prodi)) {
-        //         array_push($prodi, $k->NAMA_PRODI);
-        //     }
-        // }
 
-        $prodi =[];
+        $prodi = [];
         foreach (json_decode($response->getBody())->data as $k) {
-            array_push($prodi,[
-                "fakultas" => $k->FAKULTAS,
-                "prodi" => $k->NAMA_PRODI
-            ]);
-        }
-
-        // dd(array_unique($prodi,SORT_REGULAR));
-
-        $angkatan = [];
-        foreach (json_decode($response->getBody())->data as $a) {
-            if (!in_array($a->ANGKATAN, $angkatan)) {
-                array_push($angkatan, $a->ANGKATAN);
+            if (!in_array($k->NAMA_PRODI, $prodi)) {
+                array_push($prodi, $k->NAMA_PRODI);
             }
         }
-        
 
         $data = [
-            'title' => "Total Tunggakan",
+            'title' => "Lap. Detail Tunggakan",
             'appName' => "UMSU FM",
-            'breadcrumb' => ['Home', 'Laporan Total Tunggakan'],
+            'breadcrumb' => ['Home', 'Lap. Detail Tunggakan'],
             'tunggakan' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
+            'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
             'listTermYear' => $this->getTermYear(),
-            'prodi' => array_unique($prodi,SORT_REGULAR),
-            'fakultas'=>$fakultas,
-            'angkatan'=>$angkatan,
+            'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');
-        return view('pages/tunggakanTotal', $data);
+        return view('pages/tunggakan', $data);
     }
 
-    public function cetakTunggakanTotal()
+    public function cetakTunggakan()
     {
         $term_year_id = $this->request->getPost('tahunAjar');
+        $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
@@ -141,6 +127,7 @@ class TunggakanTotal extends BaseController
                 "Accept" => "application/json"
             ],
             "form_params" => [
+                "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
                 "tahap" => $payment_order
             ]
@@ -155,6 +142,15 @@ class TunggakanTotal extends BaseController
 
 
         $spreadsheet = new Spreadsheet();
+
+        // $styleArray = [
+        //     'borders' => [
+        //         'outline' => [
+        //             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+        //             'color' => ['argb' => 'FF000000'],
+        //         ],
+        //     ],
+        // ];
 
         $default = 1;
         $konten = 0;
