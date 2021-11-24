@@ -65,15 +65,25 @@ $routes->post('/endorsement', 'Endorsement::add');
 $routes->get('/endorsement/(:any)', 'Endorsement::index');
 $routes->add('/endorsement/(:num)/edit', 'Endorsement::edit/$1');
 
-// Route  Tunggakan
-$routes->get('/tunggakan/(:any)', 'Tunggakan::index');
-$routes->post('/tunggakan/cetak', 'Tunggakan::cetakTunggakan');
-$routes->post('/tunggakan', 'Tunggakan::prosesTunggakan');
-$routes->get('/test', 'Tunggakan::test');
+// Route  Tunggakan Detail
+$routes->get('/tunggakanDetail/(:any)', 'TunggakanDetail::index');
+$routes->post('/tunggakanDetail/cetak', 'TunggakanDetail::cetakTunggakanDetail');
+$routes->post('/tunggakanDetail', 'TunggakanDetail::prosesTunggakanDetail');
+$routes->get('/test', 'TunggakanDetail::test');
 
-// Route Pembayaran
-$routes->get('/pembayaran/(:any)', 'Pembayaran::index');
-$routes->post('/pembayaran', "Pembayaran::prosesPembayaran");
+// Route  Tunggakan Total
+$routes->get('/tunggakanTotal/(:any)', 'TunggakanTotal::index');
+$routes->post('/tunggakanTotal/cetak', 'TunggakanTotal::cetakTunggakanTotal');
+$routes->post('/tunggakanTotal', 'TunggakanTotal::prosesTunggakanTotal');
+$routes->get('/test', 'TunggakanTotal::test');
+
+// Route Pembayaran Detail
+$routes->get('/pembayaranDetail/(:any)', 'PembayaranDetail::index');
+$routes->post('/pembayaranDetail', "PembayaranDetail::prosesPembayaranDetail");
+
+// Route Pembayaran Total
+$routes->get('/pembayaranTotal/(:any)', 'PembayaranTotal::index');
+$routes->post('/pembayaranTotal', "PembayaranTotal::prosesPembayaranTotal");
 
 // Route UbahTanggalTahapAngkatan
 $routes->get('/ubahAngkatan/(:any)', 'UbahAngkatan::index');
