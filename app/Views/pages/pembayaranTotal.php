@@ -44,7 +44,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <?php if ($termYear != null && $entryYear != null && $paymentOrder != null && $bank != null) : ?>
-                            <form action="/pembayaran/cetak" method="post">
+                            <form action="/pembayaranTotal/cetak" method="post">
                                 <div class="col-md-2">
                                     <label>Tahun Ajar</label>
                                     <input class="form-control" name="tahunAjar" value="<?= $termYear; ?>">
@@ -67,7 +67,7 @@
                                 </ul>
                             </form>
                         <?php else : ?>
-                            <form autocomplete="off" action="/pembayaran" method="POST">
+                            <form autocomplete="off" action="/pembayaranTotal" method="POST">
                                 <div class="col-md-2">
                                     <label>Tahun Ajar</label>
                                     <select class="form-control select" name="tahunAjar">

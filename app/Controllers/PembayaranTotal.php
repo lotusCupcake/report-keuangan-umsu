@@ -2,16 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Models\PembayaranModel;
 
-
-class Pembayaran extends BaseController
+class PembayaranTotal extends BaseController
 {
-    protected $PembayaranModel;
     protected $curl;
     public function __construct()
     {
-        $this->PembayaranBniModel = new PembayaranModel();
         $this->curl = service('curlrequest');
     }
 
@@ -20,9 +16,9 @@ class Pembayaran extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Lap. Detail Pembayaran",
+            'title' => "Total Pembayaran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Lap. Detail Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Total Pembayaran'],
             'pembayaran' => [],
             'termYear' => null,
             'entryYear' => null,
@@ -35,7 +31,7 @@ class Pembayaran extends BaseController
         ];
         // dd($data);
 
-        return view('pages/pembayaran', $data);
+        return view('pages/pembayaranTotal', $data);
     }
 
     public function getBank()
@@ -62,7 +58,7 @@ class Pembayaran extends BaseController
         return json_decode($response->getBody())->data;
     }
 
-    public function prosesPembayaran()
+    public function prosesPembayaranTotal()
     {
         if (!$this->validate([
             'tahap' => [
@@ -84,7 +80,7 @@ class Pembayaran extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to('pembayaran')->withInput();
+            return redirect()->to('pembayaranTotal')->withInput();
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
@@ -113,9 +109,9 @@ class Pembayaran extends BaseController
         }
 
         $data = [
-            'title' => "Pembayaran",
+            'title' => "Total Pembayaran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Lap. Detail Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Total Pembayaran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
@@ -128,6 +124,6 @@ class Pembayaran extends BaseController
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Pembayaran, Klik Export Untuk Download !');
-        return view('pages/pembayaran', $data);
+        return view('pages/pembayaranTotal', $data);
     }
 }

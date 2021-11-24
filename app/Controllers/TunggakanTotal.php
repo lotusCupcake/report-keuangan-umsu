@@ -2,18 +2,15 @@
 
 namespace App\Controllers;
 
-use App\Models\TunggakanTotalModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
 class TunggakanTotal extends BaseController
 {
-    protected $tunggakanTotalModel;
     protected $curl;
     public function __construct()
     {
-        $this->tunggakanTotalModel = new TunggakanTotalModel();
         $this->curl = service('curlrequest');
     }
 
@@ -22,7 +19,7 @@ class TunggakanTotal extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Tunggakan Total",
+            'title' => "Total Tunggakan",
             'appName' => "UMSU",
             'breadcrumb' => ['Home', 'Laporan Total Tunggakan'],
             'tunggakan' => [],

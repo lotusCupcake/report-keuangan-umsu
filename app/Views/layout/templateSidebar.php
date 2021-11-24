@@ -41,7 +41,7 @@
         </li>
         <li class="xn-title">Setting</li>
         <li class="xn-openable">
-            <a href="#"><span class="fa fa-edit"></span><span class="xn-text">Set. Tanggal Tahap</span></a>
+            <a href="#"><span class="fa fa-edit"></span><span class="xn-text">Setting Tanggal Tahap</span></a>
             <ul>
                 <li><a href="/ubahAngkatan"><span class="xn-text">Per Angkatan</span></a></li>
                 <li class="xn-openable">

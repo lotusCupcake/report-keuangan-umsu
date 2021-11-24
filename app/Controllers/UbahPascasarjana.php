@@ -2,17 +2,14 @@
 
 namespace App\Controllers;
 
-use App\Models\UbahPascasarjanaModel;
 
 
 class UbahPascasarjana extends BaseController
 {
-    protected $UbahPascasarjanaModel;
     protected $curl;
 
     public function __construct()
     {
-        $this->UbahPascasarjanaModel = new UbahPascasarjanaModel();
         $this->curl = service('curlrequest');
     }
 

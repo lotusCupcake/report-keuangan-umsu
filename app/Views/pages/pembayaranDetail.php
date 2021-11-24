@@ -43,8 +43,8 @@
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form autocomplete="off" action="/tunggakanDetail" method="POST">
-                            <div class="col-md-3">
+                        <form autocomplete="off" action="/pembayaranDetail" method="POST">
+                            <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
                                     <option value="">-- Select --</option>
@@ -53,7 +53,7 @@
                                     <?php endforeach ?>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>Tahun Angkatan</label>
                                 <select class="form-control select" name="tahunAngkatan">
                                     <option value="">-- Select --</option>
@@ -62,8 +62,8 @@
                                     <?php endfor ?>
                                 </select>
                             </div>
-                            <div class="col-md-3">
-                                <label>Tunggakan Tahap</label>
+                            <div class="col-md-2">
+                                <label>Pembayaran Tahap</label>
                                 <select class="form-control select" name="tahap">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 1; $i <= 4; $i++) : ?>
@@ -71,16 +71,26 @@
                                     <?php endfor ?>
                                 </select>
                             </div>
+                            <div class="col-md-2">
+                                <label>Pilih Bank</label>
+                                <select class="form-control select" name="bank">
+                                    <option value="">-- Select --</option>
+                                    <?php foreach ($listBank as $rows) : ?>
+                                        <option value="<?= $rows->Bank_Acronym ?>"><?= $rows->Bank_Name ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
                             <ul class="panel-controls">
                                 <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-success"><span class="fa fa-search"></span>
                                     Cari</button>
                             </ul>
                         </form>
-                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
-                            <form action="/tunggakanDetail/cetak" method="post">
+                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null && $bank != null) : ?>
+                            <form action="/pembayaranDetail/cetak" method="post">
                                 <input class="hidden" name="tahunAjar" value="<?= $termYear; ?>">
                                 <input class="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
                                 <input class="hidden" name="tahap" value="<?= $paymentOrder; ?>">
+                                <input class="hidden" name="bank" value="<?= $bank; ?>">
                                 <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                     Export</button>
                             </form>
@@ -104,6 +114,7 @@
                                                         <th>Nama Lengkap</th>
                                                         <th>Angkatan</th>
                                                         <th>Nama Biaya</th>
+                                                        <th>Bank</th>
                                                         <th>Tahap</th>
                                                         <th>Nominal</th>
                                                     </tr>
@@ -111,23 +122,24 @@
                                                 <tbody>
                                                     <?php $total = 0;
                                                     $no = 1;
-                                                    if (count($tunggakan) > 0) : ?>
-                                                        <?php foreach ($tunggakan as $rows) : ?>
-                                                            <?php if ($rows->NAMA_PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
+                                                    if (count($pembayaran) > 0) : ?>
+                                                        <?php foreach ($pembayaran as $rows) : ?>
+                                                            <?php if ($rows->PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
                                                                 <tr>
                                                                     <td><?= $no++ ?></td>
-                                                                    <td><?= $rows->NO_REGISTER . " " . count($tunggakan) ?></td>
+                                                                    <td><?= $rows->NO_REGISTER . " " . count($pembayaran) ?></td>
                                                                     <td><?= $rows->Npm ?></td>
                                                                     <td><?= $rows->NAMA_LENGKAP ?></td>
                                                                     <td><?= $rows->ANGKATAN ?></td>
                                                                     <td><?= $rows->NAMA_BIAYA ?></td>
-                                                                    <td><?= $rows->TAHAP ?></td>
+                                                                    <td><?= $rows->BANK_NAMA ?></td>
+                                                                    <td><?= ($rows->TAHAP == 0) ? "Lunas" : "Tahap " . $rows->TAHAP ?></td>
                                                                     <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
                                                                 </tr>
                                                             <?php endif ?>
                                                         <?php endforeach ?>
                                                         <tr>
-                                                            <td colspan=7 style="text-align: center;"><strong>Total Amount</strong></td>
+                                                            <td colspan=8 style="text-align: center;"><strong>Total Amount</strong></td>
                                                             <td><strong><?= number_to_currency($total, 'IDR') ?></strong></td>
                                                         </tr>
                                                     <?php else : ?>
@@ -145,7 +157,7 @@
                             <?php endforeach ?>
                         <?php else : ?>
                             <center>
-                                <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
+                                <lottie-player src="<?= $icon ?>" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
                             </center>
                         <?php endif ?>
                     </div>

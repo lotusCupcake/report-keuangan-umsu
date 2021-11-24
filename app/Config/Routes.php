@@ -69,20 +69,20 @@ $routes->add('/endorsement/(:num)/edit', 'Endorsement::edit/$1');
 $routes->get('/tunggakanDetail/(:any)', 'TunggakanDetail::index');
 $routes->post('/tunggakanDetail/cetak', 'TunggakanDetail::cetakTunggakanDetail');
 $routes->post('/tunggakanDetail', 'TunggakanDetail::prosesTunggakanDetail');
-$routes->get('/test', 'TunggakanDetail::test');
 
 // Route  Tunggakan Total
 $routes->get('/tunggakanTotal/(:any)', 'TunggakanTotal::index');
 $routes->post('/tunggakanTotal/cetak', 'TunggakanTotal::cetakTunggakanTotal');
 $routes->post('/tunggakanTotal', 'TunggakanTotal::prosesTunggakanTotal');
-$routes->get('/test', 'TunggakanTotal::test');
 
 // Route Pembayaran Detail
 $routes->get('/pembayaranDetail/(:any)', 'PembayaranDetail::index');
+$routes->post('/pembayaranDetail/cetak', 'PembayaranDetail::cetakPembayaranDetail');
 $routes->post('/pembayaranDetail', "PembayaranDetail::prosesPembayaranDetail");
 
 // Route Pembayaran Total
 $routes->get('/pembayaranTotal/(:any)', 'PembayaranTotal::index');
+$routes->post('/pembayaranTotal/cetak', 'PembayaranTotal::cetakPembayaranTotal');
 $routes->post('/pembayaranTotal', "PembayaranTotal::prosesPembayaranTotal");
 
 // Route UbahTanggalTahapAngkatan

@@ -6,7 +6,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
-class TunggakanDetail extends BaseController
+class PembayaranDetail extends BaseController
 {
     protected $curl;
     public function __construct()
@@ -19,20 +19,34 @@ class TunggakanDetail extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Detail Tunggakan",
+            'title' => "Detail Pembayaran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Detail Tunggakan'],
-            'tunggakan' => [],
+            'breadcrumb' => ['Home', 'Laporan Detail Pembayaran'],
+            'pembayaran' => [],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
             'listTermYear' => $this->getTermYear(),
+            'listBank' => $this->getBank(),
             'prodi' => [],
+            'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'validation' => \Config\Services::validation(),
         ];
         // dd($data);
 
-        return view('pages/tunggakanDetail', $data);
+        return view('pages/pembayaranDetail', $data);
+    }
+
+    public function getBank()
+    {
+        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getBank", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+
+        ]);
+
+        return json_decode($response->getBody())->data;
     }
 
     public function getTermYear()
@@ -47,9 +61,15 @@ class TunggakanDetail extends BaseController
         return json_decode($response->getBody())->data;
     }
 
-    public function prosesTunggakanDetail()
+    public function prosesPembayaranDetail()
     {
         if (!$this->validate([
+            'tahap' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Pembayaran Tahap Harus Diisi !',
+                ]
+            ],
             'tahunAngkatan' => [
                 'rules' => 'required',
                 'errors' => [
@@ -62,93 +82,81 @@ class TunggakanDetail extends BaseController
                     'required' => 'Tahun Ajar Harus Diisi !',
                 ]
             ],
-            'tahap' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Tunggakan Tahap Harus Diisi !',
-                ]
-            ],
         ])) {
-            return redirect()->to('tunggakanDetail')->withInput();
+            return redirect()->to('pembayaranDetail')->withInput();
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
-        // dd($term_year_id);
+        $bank = $this->request->getPost('bank');
+        // dd($term_year_id, $entry_year_id, $payment_order, $bank);
 
-
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [
                 "Accept" => "application/json"
             ],
             "form_params" => [
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
-                "tahap" => $payment_order
+                "tahap" => $payment_order,
+                "bank" => $bank
             ]
         ]);
 
-
         $prodi = [];
         foreach (json_decode($response->getBody())->data as $k) {
-            if (!in_array($k->NAMA_PRODI, $prodi)) {
-                array_push($prodi, $k->NAMA_PRODI);
+            if (!in_array($k->PRODI, $prodi)) {
+                array_push($prodi, $k->PRODI);
             }
         }
 
         $data = [
-            'title' => "Detail Tunggakan",
-            'appName' => "UMSU FM",
-            'breadcrumb' => ['Home', 'Laporan Detail Tunggakan'],
-            'tunggakan' => json_decode($response->getBody())->data,
+            'title' => "Detail Pembayaran",
+            'appName' => "UMSU",
+            'breadcrumb' => ['Home', 'Laporan Detail Pembayaran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
+            'bank' => $bank,
+            'pembayaran' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
+            'listBank' => $this->getBank(),
             'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
         ];
 
-        session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');
-        return view('pages/tunggakanDetail', $data);
+        session()->setFlashdata('success', 'Berhasil Memuat Data Pembayaran, Klik Export Untuk Download !');
+        return view('pages/pembayaranDetail', $data);
     }
 
-    public function cetakTunggakanDetail()
+    public function cetakPembayaranDetail()
     {
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
+        $bank = $this->request->getPost('bank');
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [
                 "Accept" => "application/json"
             ],
             "form_params" => [
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
-                "tahap" => $payment_order
+                "tahap" => $payment_order,
+                "bank" => $bank
             ]
         ]);
 
         $prodi = [];
         foreach (json_decode($response->getBody())->data as $k) {
-            if (!in_array($k->NAMA_PRODI, $prodi)) {
-                array_push($prodi, $k->NAMA_PRODI);
+            if (!in_array($k->PRODI, $prodi)) {
+                array_push($prodi, $k->PRODI);
             }
         }
 
-
         $spreadsheet = new Spreadsheet();
-
-        // $styleArray = [
-        //     'borders' => [
-        //         'outline' => [
-        //             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-        //             'color' => ['argb' => 'FF000000'],
-        //         ],
-        //     ],
-        // ];
 
         $default = 1;
         $konten = 0;
@@ -164,35 +172,37 @@ class TunggakanDetail extends BaseController
                 ->setCellValue('E' . $konten, 'Nama Prodi')
                 ->setCellValue('F' . $konten, 'Angkatan')
                 ->setCellValue('G' . $konten, 'Nama Biaya')
-                ->setCellValue('H' . $konten, 'Tahap')
-                ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
+                ->setCellValue('H' . $konten, 'Bank')
+                ->setCellValue('I' . $konten, 'Tahap')
+                ->setCellValue('J' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "J" . $konten)->getFont()->setBold(true);
 
             $konten = $konten + 1;
             $total = 0;
             $no = 1;
             foreach (json_decode($response->getBody())->data as $data) {
-                if ($prd == $data->NAMA_PRODI) {
+                if ($prd == $data->PRODI) {
                     $total = $total + $data->NOMINAL;
                     $spreadsheet->setActiveSheetIndex(0)
                         ->setCellValue('A' . $konten, $no++)
                         ->setCellValue('B' . $konten, $data->NO_REGISTER)
                         ->setCellValue('C' . $konten, $data->Npm)
                         ->setCellValue('D' . $konten, $data->NAMA_LENGKAP)
-                        ->setCellValue('E' . $konten, $data->NAMA_PRODI)
+                        ->setCellValue('E' . $konten, $data->PRODI)
                         ->setCellValue('F' . $konten, $data->ANGKATAN)
                         ->setCellValue('G' . $konten, $data->NAMA_BIAYA)
-                        ->setCellValue('H' . $konten, $data->TAHAP)
-                        ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "H" . $konten);
+                        ->setCellValue('H' . $konten, $data->BANK_NAMA)
+                        ->setCellValue('I' . $konten, ($data->TAHAP == 0) ? "Lunas" : "Tahap " . $data->TAHAP)
+                        ->setCellValue('J' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "J" . $konten);
                     $konten++;
                 }
             }
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "H" . $konten)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . $konten, number_to_currency($total, 'IDR'))->getStyle('I' . $konten)->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('J' . $konten, number_to_currency($total, 'IDR'))->getStyle('J' . $konten)->getFont()->setBold(true);
             $konten = $konten + 1;
         }
 
         $writer = new Xlsx($spreadsheet);
-        $fileName = 'Data Tunggakan Mahasiswa';
+        $fileName = 'Data Pembayaran Mahasiswa';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
@@ -200,6 +210,5 @@ class TunggakanDetail extends BaseController
 
         // session()->setFlashdata('success', 'Berhasil Export Data Tunggakan !');
         $writer->save('php://output');
-        return $this->index('tunggakan');
     }
 }

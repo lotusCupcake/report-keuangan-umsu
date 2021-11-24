@@ -2,17 +2,13 @@
 
 namespace App\Controllers;
 
-use App\Models\UbahAngkatanModel;
-
 
 class UbahAngkatan extends BaseController
 {
-    protected $UbahAngkatanModel;
     protected $curl;
 
     public function __construct()
     {
-        $this->UbahAngkatanModel = new UbahAngkatanModel();
         $this->curl = service('curlrequest');
     }
 

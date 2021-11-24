@@ -2,17 +2,13 @@
 
 namespace App\Controllers;
 
-use App\Models\UbahKedokteranModel;
-
 
 class UbahKedokteran extends BaseController
 {
-    protected $UbahKedokteranModel;
     protected $curl;
 
     public function __construct()
     {
-        $this->UbahKedokteranModel = new UbahKedokteranModel();
         $this->curl = service('curlrequest');
     }
 
