@@ -25,7 +25,12 @@
                         <?php echo session()->getFlashdata('success'); ?>
                     </div>
                 <?php endif; ?>
-                <?php if ($validation->hasError('tahunAjar')) : ?>
+                <?php if ($validation->hasError('tahunAngkatan')) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Failed ! </strong><?= $validation->getError('tahunAngkatan'); ?>
+                    </div>
+                <?php endif; ?> <?php if ($validation->hasError('tahunAjar')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
@@ -38,11 +43,15 @@
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <?php if ($termYear != null && $paymentOrder != null) : ?>
-                            <form action="/tunggakanTotal/cetak" method="post">
+                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
+                            <form action="/tunggakan/cetak" method="post">
                                 <div class="col-md-3">
                                     <label>Tahun Ajar</label>
                                     <input class="form-control" name="tahunAjar" value="<?= $termYear; ?>">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Tahun Angkatan</label>
+                                    <input class="form-control" name="tahunAngkatan" value="<?= $entryYear; ?>">
                                 </div>
                                 <div class="col-md-3">
                                     <label>Tunggakan Tahap</label>
@@ -54,7 +63,7 @@
                                 </ul>
                             </form>
                         <?php else : ?>
-                            <form autocomplete="off" action="/tunggakanTotal" method="POST">
+                            <form autocomplete="off" action="/tunggakan" method="POST">
                                 <div class="col-md-3">
                                     <label>Tahun Ajar</label>
                                     <select class="form-control select" name="tahunAjar">
@@ -62,6 +71,15 @@
                                         <?php foreach ($listTermYear as $rows) : ?>
                                             <option value="<?= $rows->Term_Year_Id ?>"><?= $rows->Term_Year_Name ?></option>
                                         <?php endforeach ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Tahun Angkatan</label>
+                                    <select class="form-control select" name="tahunAngkatan">
+                                        <option value="">-- Select --</option>
+                                        <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
+                                            <option value="<?= $i ?>"><?= $i ?></option>
+                                        <?php endfor ?>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -81,54 +99,62 @@
                         <?php endif ?>
                     </div>
                     <div class="panel-body col-md-12">
-                        <?php if ($fakultas != null) : ?>
+                        <?php if ($prodi != null) : ?>
+                            <?php foreach ($prodi as $prd) : ?>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title">Rekap Tunggakan</h3>
+                                        <h3 class="panel-title"><?= $prd ?></h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="table-responsive">
                                             <table class="table table-bordered table-striped table-actions">
                                                 <thead>
                                                     <tr>
-                                                        <th rowspan="2" style="text-align:center" valign="center">No.</th>
-                                                        <th style="text-align:center">Fakultas / Prodi</th>
-                                                        <th colspan=<?= count($angkatan)?> style="text-align:center">Stambuk</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th></th>
-                                                        <?php foreach ($angkatan as $ang) :?>
-                                                        <th style="text-align:center"><?=$ang ?></th>
-                                                        <?php endforeach ?>
+                                                        <th>No.</th>
+                                                        <th>No Register</th>
+                                                        <th>NPM</th>
+                                                        <th>Nama Lengkap</th>
+                                                        <th>Angkatan</th>
+                                                        <th>Nama Biaya</th>
+                                                        <th>Tahap</th>
+                                                        <th>Nominal</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php foreach ($fakultas as $fak) :?>
-                                                        <tr>
-                                                            <td></td>
-                                                            <td><strong><?= $fak ?></strong></td>
-                                                            <?php foreach ($angkatan as $ang) :?>
-                                                            <td></td>
-                                                            <?php endforeach ?>
-                                                        </tr>
-                                                        <?php $no =1; foreach ($prodi as $prd) :?>  
-                                                            <?php if ($fak == $prd['fakultas']) :?> 
-                                                            <tr>
-                                                                <td><?= $no++ ?></td>
-                                                                <td><?= $prd['prodi'] ?></td>
-                                                                <?php foreach ($angkatan as $ang) :?>
-                                                                <td></td>
-                                                                <?php endforeach ?>
-                                                            </tr>
+                                                    <?php $total = 0;
+                                                    $no = 1;
+                                                    if (count($tunggakan) > 0) : ?>
+                                                        <?php foreach ($tunggakan as $rows) : ?>
+                                                            <?php if ($rows->NAMA_PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
+                                                                <tr>
+                                                                    <td><?= $no++ ?></td>
+                                                                    <td><?= $rows->NO_REGISTER . " " . count($tunggakan) ?></td>
+                                                                    <td><?= $rows->Npm ?></td>
+                                                                    <td><?= $rows->NAMA_LENGKAP ?></td>
+                                                                    <td><?= $rows->ANGKATAN ?></td>
+                                                                    <td><?= $rows->NAMA_BIAYA ?></td>
+                                                                    <td><?= $rows->TAHAP ?></td>
+                                                                    <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
+                                                                </tr>
                                                             <?php endif ?>
                                                         <?php endforeach ?>
-                                                    <?php endforeach ?>
+                                                        <tr>
+                                                            <td colspan=7 style="text-align: center;"><strong>Total Amount</strong></td>
+                                                            <td><strong><?= number_to_currency($total, 'IDR') ?></strong></td>
+                                                        </tr>
+                                                    <?php else : ?>
+                                                        <tr>
+                                                            <td colspan=8 style="text-align:center">Tidak ada data</td>
+                                                        </tr>
+                                                    <?php endif ?>
                                                 </tbody>
                                             </table>
+
                                         </div>
                                     </div>
                                 </div>
 
+                            <?php endforeach ?>
                         <?php else : ?>
                             <center>
                                 <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>

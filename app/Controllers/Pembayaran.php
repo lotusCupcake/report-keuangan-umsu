@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\PembayaranModel;
+use App\Models\PembayaranDetailModel;
 
 
 class Pembayaran extends BaseController
@@ -11,7 +11,6 @@ class Pembayaran extends BaseController
     protected $curl;
     public function __construct()
     {
-        $this->PembayaranBniModel = new PembayaranModel();
         $this->curl = service('curlrequest');
     }
 
