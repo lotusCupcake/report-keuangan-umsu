@@ -116,8 +116,11 @@
                                                             <tr>
                                                                 <td><?= $no++ ?></td>
                                                                 <td><?= $prd['prodi'] ?></td>
-                                                                <?php foreach ($angkatan as $ang) :?>
-                                                                <td></td>
+                                                                <?php $nilai=0; foreach ($angkatan as $ang) :?>
+                                                                    <?php foreach ($tunggakan as $tung) :?>
+                                                                        <?php ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai=$tung->NOMINAL : $nilai = $nilai?>
+                                                                    <?php endforeach ?>
+                                                                        <td><?= $nilai ?></td>
                                                                 <?php endforeach ?>
                                                             </tr>
                                                             <?php endif ?>
