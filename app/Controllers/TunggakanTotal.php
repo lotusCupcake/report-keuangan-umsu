@@ -87,14 +87,6 @@ class TunggakanTotal extends BaseController
             }
         }
 
-
-        // $prodi = [];
-        // foreach (json_decode($response->getBody())->data as $k) {
-        //     if (!in_array($k->NAMA_PRODI, $prodi)) {
-        //         array_push($prodi, $k->NAMA_PRODI);
-        //     }
-        // }
-
         $prodi = [];
         foreach (json_decode($response->getBody())->data as $k) {
             array_push($prodi, [
@@ -102,8 +94,6 @@ class TunggakanTotal extends BaseController
                 "prodi" => $k->NAMA_PRODI
             ]);
         }
-
-        // dd(array_unique($prodi,SORT_REGULAR));
 
         $angkatan = [];
         foreach (json_decode($response->getBody())->data as $a) {
@@ -136,7 +126,7 @@ class TunggakanTotal extends BaseController
         $term_year_id = $this->request->getPost('tahunAjar');
         $payment_order = $this->request->getPost('tahap');
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getTotalTunggakan", [
             "headers" => [
                 "Accept" => "application/json"
             ],
@@ -146,59 +136,53 @@ class TunggakanTotal extends BaseController
             ]
         ]);
 
-        $prodi = [];
-        foreach (json_decode($response->getBody())->data as $k) {
-            if (!in_array($k->NAMA_PRODI, $prodi)) {
-                array_push($prodi, $k->NAMA_PRODI);
+        $fakultas = [];
+        foreach (json_decode($response->getBody())->data as $f) {
+            if (!in_array($f->FAKULTAS, $fakultas)) {
+                array_push($fakultas, $f->FAKULTAS);
             }
         }
+
+        $prodi = [];
+        foreach (json_decode($response->getBody())->data as $k) {
+            array_push($prodi, [
+                "fakultas" => $k->FAKULTAS,
+                "prodi" => $k->NAMA_PRODI
+            ]);
+        }
+
+        $angkatan = [];
+        foreach (json_decode($response->getBody())->data as $a) {
+            if (!in_array($a->ANGKATAN, $angkatan)) {
+                array_push($angkatan, $a->ANGKATAN);
+            }
+        }
+
+
 
 
         $spreadsheet = new Spreadsheet();
+        $col =   array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+        $row = 1;
 
-        $default = 1;
-        $konten = 0;
-        foreach ($prodi as $prd) {
-            $konten = $default + $konten;
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, $prd)->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
-            $konten = $konten + 1;
-            $spreadsheet->setActiveSheetIndex(0)
-                ->setCellValue('A' . $konten, 'No Register')
-                ->setCellValue('B' . $konten, 'No Register')
-                ->setCellValue('C' . $konten, 'NPM')
-                ->setCellValue('D' . $konten, 'Nama Lengkap')
-                ->setCellValue('E' . $konten, 'Nama Prodi')
-                ->setCellValue('F' . $konten, 'Angkatan')
-                ->setCellValue('G' . $konten, 'Nama Biaya')
-                ->setCellValue('H' . $konten, 'Tahap')
-                ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $row, "Rekap Tunggakan")->mergeCells("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
+        // $konten = $row + 1;
+        // $spreadsheet->setActiveSheetIndex(0)
+        //     ->setCellValue('A' . $konten, 'No Register')
+        //     ->setCellValue('B' . $konten, 'No Register')
+        //     ->setCellValue('C' . $konten, 'NPM')
+        //     ->setCellValue('D' . $konten, 'Nama Lengkap')
+        //     ->setCellValue('E' . $konten, 'Nama Prodi')
+        //     ->setCellValue('F' . $konten, 'Angkatan')
+        //     ->setCellValue('G' . $konten, 'Nama Biaya')
+        //     ->setCellValue('H' . $konten, 'Tahap')
+        //     ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
 
-            $konten = $konten + 1;
-            $total = 0;
-            $no = 1;
-            foreach (json_decode($response->getBody())->data as $data) {
-                if ($prd == $data->NAMA_PRODI) {
-                    $total = $total + $data->NOMINAL;
-                    $spreadsheet->setActiveSheetIndex(0)
-                        ->setCellValue('A' . $konten, $no++)
-                        ->setCellValue('B' . $konten, $data->NO_REGISTER)
-                        ->setCellValue('C' . $konten, $data->Npm)
-                        ->setCellValue('D' . $konten, $data->NAMA_LENGKAP)
-                        ->setCellValue('E' . $konten, $data->NAMA_PRODI)
-                        ->setCellValue('F' . $konten, $data->ANGKATAN)
-                        ->setCellValue('G' . $konten, $data->NAMA_BIAYA)
-                        ->setCellValue('H' . $konten, $data->TAHAP)
-                        ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "H" . $konten);
-                    $konten++;
-                }
-            }
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "H" . $konten)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . $konten, number_to_currency($total, 'IDR'))->getStyle('I' . $konten)->getFont()->setBold(true);
-            $konten = $konten + 1;
-        }
+
+
 
         $writer = new Xlsx($spreadsheet);
-        $fileName = 'Data Tunggakan Mahasiswa';
+        $fileName = 'Data Total Tunggakan Mahasiswa';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
@@ -206,6 +190,6 @@ class TunggakanTotal extends BaseController
 
         // session()->setFlashdata('success', 'Berhasil Export Data Tunggakan !');
         $writer->save('php://output');
-        return $this->index('tunggakan');
+        // return $this->index('tunggakan');
     }
 }
