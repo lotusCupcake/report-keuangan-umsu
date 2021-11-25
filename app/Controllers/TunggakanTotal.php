@@ -200,7 +200,7 @@ class TunggakanTotal extends BaseController
                     foreach (json_decode($response->getBody())->data as $tung){
                         ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
                     }
-                    $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, $nilai)->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
+                    $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($nilai, 'IDR'))->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
                     $no++;
                 }
                 $urut++; 
