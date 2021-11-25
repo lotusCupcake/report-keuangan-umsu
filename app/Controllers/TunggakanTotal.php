@@ -176,13 +176,15 @@ class TunggakanTotal extends BaseController
 
         // $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
         $row = $row + 1;
-        $no = 0;
+        
         foreach ($fakultas as $fak) {
             $spreadsheet->setActiveSheetIndex(0)
                 ->setCellValue('A' . $row, '')
                 ->setCellValue('B' . $row, $fak);
+            $no = 0;
             foreach ($angkatan as $ang) {
                 $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, '')->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
+                $no++;
             }
 
             $urut=1;
@@ -193,6 +195,7 @@ class TunggakanTotal extends BaseController
                     ->setCellValue('B' . $row, $prd['prodi']);
 
                     $nilai = 0;
+                    $no = 0;
                     foreach ($angkatan as $ang) {
                         foreach (json_decode($response->getBody())->data as $tung){
                             ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
@@ -202,7 +205,6 @@ class TunggakanTotal extends BaseController
                 }
             $urut++; 
             }
-            $no++;
             $row++;
         }
 
