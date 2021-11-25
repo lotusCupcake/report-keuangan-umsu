@@ -189,7 +189,7 @@ class TunggakanTotal extends BaseController
             foreach ($prodi as $prd){
                 if ($fak == $prd['fakultas']){
                     $spreadsheet->setActiveSheetIndex(0)
-                    ->setCellValue('A' . $row, $urut++)
+                    ->setCellValue('A' . $row, $urut)
                     ->setCellValue('B' . $row, $prd['prodi']);
 
                     $nilai = 0;
@@ -200,7 +200,7 @@ class TunggakanTotal extends BaseController
                         $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, $nilai)->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
                     }
                 }
-                
+            $urut++; 
             }
             $no++;
             $row++;
