@@ -23,6 +23,7 @@ class PembayaranTotal extends BaseController
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
+            'bank' => null,
             'listTermYear' => $this->getTermYear(),
             'listBank' => $this->getBank(),
             'prodi' => [],

@@ -75,7 +75,7 @@ class TunggakanDetail extends BaseController
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
-        // dd($term_year_id);
+        // dd($term_year_id, $entry_year_id, $payment_order);
 
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [

@@ -49,7 +49,7 @@
                                 <select class="form-control select" name="tahunAjar">
                                     <option value="">-- Select --</option>
                                     <?php foreach ($listTermYear as $rows) : ?>
-                                        <option value="<?= $rows->Term_Year_Id ?>"><?= $rows->Term_Year_Name ?></option>
+                                        <option value="<?= $rows->Term_Year_Id ?>" <?php if ($rows->Term_Year_Id == $termYear) echo " selected" ?>><?= $rows->Term_Year_Name ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -58,7 +58,7 @@
                                 <select class="form-control select" name="tahunAngkatan">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
-                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                        <option value="<?= $i ?>" <?php if ($i == $entryYear) echo " selected" ?>><?= $i ?></option>
                                     <?php endfor ?>
                                 </select>
                             </div>
@@ -67,7 +67,7 @@
                                 <select class="form-control select" name="tahap">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 1; $i <= 4; $i++) : ?>
-                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                        <option value="<?= $i ?>" <?php if ($i == $paymentOrder) echo " selected" ?>><?= $i ?></option>
                                     <?php endfor ?>
                                 </select>
                             </div>
@@ -78,9 +78,9 @@
                         </form>
                         <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
                             <form action="/tunggakanDetail/cetak" method="post">
-                                <input class="hidden" name="tahunAjar" value="<?= $termYear; ?>">
-                                <input class="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
-                                <input class="hidden" name="tahap" value="<?= $paymentOrder; ?>">
+                                <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
+                                <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
                                 <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                     Export</button>
                             </form>

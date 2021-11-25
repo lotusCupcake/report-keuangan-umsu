@@ -19,7 +19,11 @@
         <!-- END BREADCRUMB  ->getBody()-->
         <div class="row">
             <div class="col-md-12">
-                <?php if (!empty(session()->getFlashdata('success'))) : ?>
+                <?php
+
+                use PhpParser\Node\Stmt\Echo_;
+
+                if (!empty(session()->getFlashdata('success'))) : ?>
                     <div class="alert alert-success" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <?php echo session()->getFlashdata('success'); ?>
@@ -49,7 +53,7 @@
                                 <select class="form-control select" name="tahunAjar">
                                     <option value="">-- Select --</option>
                                     <?php foreach ($listTermYear as $rows) : ?>
-                                        <option value="<?= $rows->Term_Year_Id ?>"><?= $rows->Term_Year_Name ?></option>
+                                        <option value="<?= $rows->Term_Year_Id ?>" <?php if ($rows->Term_Year_Id == $termYear) echo "selected" ?>><?= $rows->Term_Year_Name ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -58,7 +62,7 @@
                                 <select class="form-control select" name="tahunAngkatan">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
-                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                        <option value="<?= $i ?>" <?php if ($i == $entryYear) echo "selected" ?>><?= $i ?></option>
                                     <?php endfor ?>
                                 </select>
                             </div>
@@ -67,7 +71,7 @@
                                 <select class="form-control select" name="tahap">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 1; $i <= 4; $i++) : ?>
-                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                        <option value="<?= $i ?>" <?php if ($i == $paymentOrder) echo "selected" ?>><?= $i ?></option>
                                     <?php endfor ?>
                                 </select>
                             </div>
@@ -76,7 +80,7 @@
                                 <select class="form-control select" name="bank">
                                     <option value="">-- Select --</option>
                                     <?php foreach ($listBank as $rows) : ?>
-                                        <option value="<?= $rows->Bank_Acronym ?>"><?= $rows->Bank_Name ?></option>
+                                        <option value="<?= $rows->Bank_Acronym ?>" <?php if ($rows->Bank_Acronym == $bank) echo "selected" ?>><?= $rows->Bank_Name ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -87,10 +91,10 @@
                         </form>
                         <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
                             <form action="/pembayaranDetail/cetak" method="post">
-                                <input class="hidden" name="tahunAjar" value="<?= $termYear; ?>">
-                                <input class="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
-                                <input class="hidden" name="tahap" value="<?= $paymentOrder; ?>">
-                                <input class="hidden" name="bank" value="<?= $bank; ?>">
+                                <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
+                                <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
+                                <input type="hidden" name="bank" value="<?= $bank; ?>">
                                 <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                     Export</button>
                             </form>
