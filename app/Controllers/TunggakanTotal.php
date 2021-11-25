@@ -195,9 +195,9 @@ class TunggakanTotal extends BaseController
                     ->setCellValue('A' . $row, $urut)
                     ->setCellValue('B' . $row, $prd['prodi']);
                 $urut++; 
+                $row++;
                 }
             }
-            $row++;
         }
 
 
