@@ -76,9 +76,9 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <label>Pilih Bank</label>
+                                <label>Tempat Pembayaran</label>
                                 <select class="form-control select" name="bank">
-                                    <option value="">-- Select --</option>
+                                    <option value="">Keseluruhan</option>
                                     <?php foreach ($listBank as $rows) : ?>
                                         <option value="<?= $rows->Bank_Acronym ?>" <?php if ($rows->Bank_Acronym == $bank) echo "selected" ?>><?= $rows->Bank_Name ?></option>
                                     <?php endforeach ?>

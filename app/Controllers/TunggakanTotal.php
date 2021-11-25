@@ -28,7 +28,7 @@ class TunggakanTotal extends BaseController
             'listTermYear' => $this->getTermYear(),
             'prodi' => [],
             'fakultas' => [],
-            'angkatan'=> [],
+            'angkatan' => [],
             'validation' => \Config\Services::validation(),
         ];
         // dd($data);
@@ -69,14 +69,14 @@ class TunggakanTotal extends BaseController
 
         $term_year_id = $this->request->getPost('tahunAjar');
         $payment_order = $this->request->getPost('tahap');
-        
+
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getTotalTunggakan", [
-        "headers" => [
-            "Accept" => "application/json"
-        ],
-        "form_params" => [
-            "termYearId" => $term_year_id,
-            "tahap" => $payment_order
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+            "form_params" => [
+                "termYearId" => $term_year_id,
+                "tahap" => $payment_order
             ]
         ]);
 
@@ -86,8 +86,8 @@ class TunggakanTotal extends BaseController
                 array_push($fakultas, $f->FAKULTAS);
             }
         }
-        
-        
+
+
         // $prodi = [];
         // foreach (json_decode($response->getBody())->data as $k) {
         //     if (!in_array($k->NAMA_PRODI, $prodi)) {
@@ -95,9 +95,9 @@ class TunggakanTotal extends BaseController
         //     }
         // }
 
-        $prodi =[];
+        $prodi = [];
         foreach (json_decode($response->getBody())->data as $k) {
-            array_push($prodi,[
+            array_push($prodi, [
                 "fakultas" => $k->FAKULTAS,
                 "prodi" => $k->NAMA_PRODI
             ]);
@@ -111,7 +111,7 @@ class TunggakanTotal extends BaseController
                 array_push($angkatan, $a->ANGKATAN);
             }
         }
-        
+
 
         $data = [
             'title' => "Total Tunggakan",
@@ -121,9 +121,9 @@ class TunggakanTotal extends BaseController
             'termYear' => $term_year_id,
             'paymentOrder' => $payment_order,
             'listTermYear' => $this->getTermYear(),
-            'prodi' => array_unique($prodi,SORT_REGULAR),
-            'fakultas'=>$fakultas,
-            'angkatan'=>$angkatan,
+            'prodi' => array_unique($prodi, SORT_REGULAR),
+            'fakultas' => $fakultas,
+            'angkatan' => $angkatan,
             'validation' => \Config\Services::validation(),
         ];
 
