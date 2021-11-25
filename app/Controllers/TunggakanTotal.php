@@ -166,18 +166,18 @@ class TunggakanTotal extends BaseController
         $row = 1;
         
         $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $row, "Rekap Tunggakan")->mergeCells("A" . $row . ":" . $col[2+(count($angkatan)-1)] . $row)->getStyle("A" . $row . ":" . $col[2+(count($angkatan)-1)] . $row)->getFont()->setBold(true);
-        // $konten = $row + 1;
-        // $spreadsheet->setActiveSheetIndex(0)
-        //     ->setCellValue('A' . $konten, 'No Register')
-        //     ->setCellValue('B' . $konten, 'No Register')
-        //     ->setCellValue('C' . $konten, 'NPM')
-        //     ->setCellValue('D' . $konten, 'Nama Lengkap')
-        //     ->setCellValue('E' . $konten, 'Nama Prodi')
-        //     ->setCellValue('F' . $konten, 'Angkatan')
-        //     ->setCellValue('G' . $konten, 'Nama Biaya')
-        //     ->setCellValue('H' . $konten, 'Tahap')
-        //     ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
+        $row = $row + 1;
+        $no=0;
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A' . $row, 'No Register')
+            ->setCellValue('B' . $row, 'No Register');
+            
+        foreach ($angkatan as $ang) {
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2+($no)] . $row, $ang)->getStyle($col[2+($no)] . $row)->getFont()->setBold(true);
+            $no++;
+        }
 
+        $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $row . ":" . $col[2+(count($angkatan)-1)]. $row)->getFont()->setBold(true);
         
         
 
