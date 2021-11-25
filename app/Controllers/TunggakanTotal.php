@@ -86,14 +86,6 @@ class TunggakanTotal extends BaseController
                 array_push($fakultas, $f->FAKULTAS);
             }
         }
-        
-        
-        // $prodi = [];
-        // foreach (json_decode($response->getBody())->data as $k) {
-        //     if (!in_array($k->NAMA_PRODI, $prodi)) {
-        //         array_push($prodi, $k->NAMA_PRODI);
-        //     }
-        // }
 
         $prodi =[];
         foreach (json_decode($response->getBody())->data as $k) {
@@ -102,8 +94,6 @@ class TunggakanTotal extends BaseController
                 "prodi" => $k->NAMA_PRODI
             ]);
         }
-
-        // dd(array_unique($prodi,SORT_REGULAR));
 
         $angkatan = [];
         foreach (json_decode($response->getBody())->data as $a) {
@@ -136,7 +126,7 @@ class TunggakanTotal extends BaseController
         $term_year_id = $this->request->getPost('tahunAjar');
         $payment_order = $this->request->getPost('tahap');
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getTotalTunggakan", [
             "headers" => [
                 "Accept" => "application/json"
             ],
@@ -146,10 +136,25 @@ class TunggakanTotal extends BaseController
             ]
         ]);
 
-        $prodi = [];
+        $fakultas = [];
+        foreach (json_decode($response->getBody())->data as $f) {
+            if (!in_array($f->FAKULTAS, $fakultas)) {
+                array_push($fakultas, $f->FAKULTAS);
+            }
+        }
+
+        $prodi =[];
         foreach (json_decode($response->getBody())->data as $k) {
-            if (!in_array($k->NAMA_PRODI, $prodi)) {
-                array_push($prodi, $k->NAMA_PRODI);
+            array_push($prodi,[
+                "fakultas" => $k->FAKULTAS,
+                "prodi" => $k->NAMA_PRODI
+            ]);
+        }
+
+        $angkatan = [];
+        foreach (json_decode($response->getBody())->data as $a) {
+            if (!in_array($a->ANGKATAN, $angkatan)) {
+                array_push($angkatan, $a->ANGKATAN);
             }
         }
 
@@ -208,4 +213,5 @@ class TunggakanTotal extends BaseController
         $writer->save('php://output');
         return $this->index('tunggakan');
     }
+
 }
