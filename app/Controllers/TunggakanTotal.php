@@ -203,6 +203,7 @@ class TunggakanTotal extends BaseController
                         }
                         $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, $nilai)->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
                     }
+                    $row++;
                 }
             $urut++; 
             }
