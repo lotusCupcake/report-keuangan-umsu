@@ -58,7 +58,7 @@
                                 <select class="form-control select" name="tahunAngkatan">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
-                                        <option value="<?= $i ?> <?php if ($i == $entryYear) echo "selected" ?>"><?= $i ?></option>
+                                        <option value="<?= $i ?>" <?php if ($i == $entryYear) echo "selected" ?>><?= $i ?></option>
                                     <?php endfor ?>
                                 </select>
                             </div>
@@ -67,7 +67,7 @@
                                 <select class="form-control select" name="tahap">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 1; $i <= 4; $i++) : ?>
-                                        <option value="<?= $i ?> <?php if ($i == $paymentOrder) echo "selected" ?>"><?= $i ?></option>
+                                        <option value="<?= $i ?>" <?php if ($i == $paymentOrder) echo "selected" ?>><?= $i ?></option>
                                     <?php endfor ?>
                                 </select>
                             </div>
