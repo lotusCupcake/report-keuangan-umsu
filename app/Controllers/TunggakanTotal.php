@@ -207,7 +207,6 @@ class TunggakanTotal extends BaseController
                 $row++;
             $urut++; 
             }
-            $row++;
         }
 
 
