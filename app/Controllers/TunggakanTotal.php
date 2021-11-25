@@ -174,7 +174,7 @@ class TunggakanTotal extends BaseController
             $no++;
         }
 
-        $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
+        // $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
         $row = $row + 1;
         $no = 0;
         foreach ($fakultas as $fak) {
@@ -184,7 +184,6 @@ class TunggakanTotal extends BaseController
             foreach ($angkatan as $ang) {
                 $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, '')->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
             }
-            $no++;
             $row++;
             $urut=1;
             foreach ($prodi as $prd){
@@ -192,15 +191,18 @@ class TunggakanTotal extends BaseController
                     $spreadsheet->setActiveSheetIndex(0)
                     ->setCellValue('A' . $row, $urut++)
                     ->setCellValue('B' . $row, $prd['prodi']);
-                }
-                // $nilai = 0;
-                // foreach ($angkatan as $ang) {
-                //     foreach (json_decode($response->getBody())->data as $tung){
-                //         ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
-                //     }
 
-                // }
+                    $nilai = 0;
+                    foreach ($angkatan as $ang) {
+                        foreach (json_decode($response->getBody())->data as $tung){
+                            ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
+                        }
+                        $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, $nilai)->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
+                    }
+                }
+                
             }
+            $no++;
             $row++;
         }
 
