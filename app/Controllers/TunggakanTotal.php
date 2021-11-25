@@ -182,12 +182,13 @@ class TunggakanTotal extends BaseController
         $no = 0;
         foreach ($fakultas as $fak) {
             $spreadsheet->setActiveSheetIndex(0)
-                ->setCellValue('A' . $row, '')
+                ->setCellValue('A' . $row, ($no + 1))
                 ->setCellValue('B' . $row, $fak);
             foreach ($angkatan as $ang) {
-                $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, '');
-                $no++;
+                $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, '')->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
             }
+            $no++;
+            $row++;
         }
 
 
