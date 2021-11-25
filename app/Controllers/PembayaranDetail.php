@@ -1,0 +1,215 @@
+<?php
+
+namespace App\Controllers;
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+
+class PembayaranDetail extends BaseController
+{
+    protected $curl;
+    public function __construct()
+    {
+        $this->curl = service('curlrequest');
+    }
+
+
+
+    public function index()
+    {
+        $data = [
+            'title' => "Detail Pembayaran",
+            'appName' => "UMSU",
+            'breadcrumb' => ['Home', 'Laporan Detail Pembayaran'],
+            'pembayaran' => [],
+            'termYear' => null,
+            'entryYear' => null,
+            'paymentOrder' => null,
+            'bank' => null,
+            'listTermYear' => $this->getTermYear(),
+            'listBank' => $this->getBank(),
+            'prodi' => [],
+            'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
+            'validation' => \Config\Services::validation(),
+        ];
+        // dd($data);
+
+        return view('pages/pembayaranDetail', $data);
+    }
+
+    public function getBank()
+    {
+        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getBank", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+
+        ]);
+
+        return json_decode($response->getBody())->data;
+    }
+
+    public function getTermYear()
+    {
+        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getTermYear", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+
+        ]);
+
+        return json_decode($response->getBody())->data;
+    }
+
+    public function prosesPembayaranDetail()
+    {
+        if (!$this->validate([
+            'tahap' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Pembayaran Tahap Harus Diisi !',
+                ]
+            ],
+            'tahunAngkatan' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tahun Angkatan Harus Diisi !',
+                ]
+            ],
+            'tahunAjar' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tahun Ajar Harus Diisi !',
+                ]
+            ],
+        ])) {
+            return redirect()->to('pembayaranDetail')->withInput();
+        }
+
+        $term_year_id = $this->request->getPost('tahunAjar');
+        $entry_year_id = $this->request->getPost('tahunAngkatan');
+        $payment_order = $this->request->getPost('tahap');
+        $bank = $this->request->getPost('bank');
+        // dd($term_year_id, $entry_year_id, $payment_order, $bank);
+
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+            "form_params" => [
+                "entryYearId" => $entry_year_id,
+                "termYearId" => $term_year_id,
+                "tahap" => $payment_order,
+                "bank" => $bank
+            ]
+        ]);
+
+        $prodi = [];
+        foreach (json_decode($response->getBody())->data as $k) {
+            if (!in_array($k->PRODI, $prodi)) {
+                array_push($prodi, $k->PRODI);
+            }
+        }
+
+        $data = [
+            'title' => "Detail Pembayaran",
+            'appName' => "UMSU",
+            'breadcrumb' => ['Home', 'Laporan Detail Pembayaran'],
+            'termYear' => $term_year_id,
+            'entryYear' => $entry_year_id,
+            'paymentOrder' => $payment_order,
+            'bank' => $bank,
+            'pembayaran' => json_decode($response->getBody())->data,
+            'listTermYear' => $this->getTermYear(),
+            'listBank' => $this->getBank(),
+            'prodi' => $prodi,
+            'validation' => \Config\Services::validation(),
+        ];
+
+        session()->setFlashdata('success', 'Berhasil Memuat Data Pembayaran, Klik Export Untuk Download !');
+        return view('pages/pembayaranDetail', $data);
+    }
+
+    public function cetakPembayaranDetail()
+    {
+        $term_year_id = $this->request->getPost('tahunAjar');
+        $entry_year_id = $this->request->getPost('tahunAngkatan');
+        $payment_order = $this->request->getPost('tahap');
+        $bank = $this->request->getPost('bank');
+
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+            "form_params" => [
+                "entryYearId" => $entry_year_id,
+                "termYearId" => $term_year_id,
+                "tahap" => $payment_order,
+                "bank" => $bank
+            ]
+        ]);
+
+        $prodi = [];
+        foreach (json_decode($response->getBody())->data as $k) {
+            if (!in_array($k->PRODI, $prodi)) {
+                array_push($prodi, $k->PRODI);
+            }
+        }
+
+        $spreadsheet = new Spreadsheet();
+
+        $default = 1;
+        $konten = 0;
+        foreach ($prodi as $prd) {
+            $konten = $default + $konten;
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, $prd)->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
+            $konten = $konten + 1;
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $konten, 'No.')
+                ->setCellValue('B' . $konten, 'No Register')
+                ->setCellValue('C' . $konten, 'NPM')
+                ->setCellValue('D' . $konten, 'Nama Lengkap')
+                ->setCellValue('E' . $konten, 'Nama Prodi')
+                ->setCellValue('F' . $konten, 'Angkatan')
+                ->setCellValue('G' . $konten, 'Nama Biaya')
+                ->setCellValue('H' . $konten, 'Bank')
+                ->setCellValue('I' . $konten, 'Tahap')
+                ->setCellValue('J' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "J" . $konten)->getFont()->setBold(true);
+
+            $konten = $konten + 1;
+            $total = 0;
+            $no = 1;
+            foreach (json_decode($response->getBody())->data as $data) {
+                if ($prd == $data->PRODI) {
+                    $total = $total + $data->NOMINAL;
+                    $spreadsheet->setActiveSheetIndex(0)
+                        ->setCellValue('A' . $konten, $no++)
+                        ->setCellValue('B' . $konten, $data->NO_REGISTER)
+                        ->setCellValue('C' . $konten, $data->Npm)
+                        ->setCellValue('D' . $konten, $data->NAMA_LENGKAP)
+                        ->setCellValue('E' . $konten, $data->PRODI)
+                        ->setCellValue('F' . $konten, $data->ANGKATAN)
+                        ->setCellValue('G' . $konten, $data->NAMA_BIAYA)
+                        ->setCellValue('H' . $konten, $data->BANK_NAMA)
+                        ->setCellValue('I' . $konten, ($data->TAHAP == 0) ? "Lunas" : "Tahap " . $data->TAHAP)
+                        ->setCellValue('J' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "J" . $konten);
+                    $konten++;
+                }
+            }
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('J' . $konten, number_to_currency($total, 'IDR'))->getStyle('J' . $konten)->getFont()->setBold(true);
+            $konten = $konten + 1;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'Data Pembayaran Mahasiswa';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
+        header('Cache-Control: max-age=0');
+
+        // session()->setFlashdata('success', 'Berhasil Export Data Tunggakan !');
+        $writer->save('php://output');
+    }
+}

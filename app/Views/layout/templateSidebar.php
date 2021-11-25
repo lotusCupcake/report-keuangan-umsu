@@ -3,7 +3,7 @@
     <!-- START X-NAVIGATION -->
     <ul class="x-navigation">
         <li class="xn-logo">
-            <a href="/home">ATLANT</a>
+            <a href="/home">UMSU</a>
             <a href="#!" class="x-navigation-control"></a>
         </li>
         <li class="xn-profile">
@@ -24,17 +24,34 @@
         <li>
             <a href="/home"><span class="fa fa-home"></span><span class="xn-text">Dashboard</span></a>
         </li>
-        <li class="xn-title">Jenis Laporan</li>
-        <li>
-            <a href="/tunggakan"><span class="fa fa-ban"></span><span class="xn-text">Tunggakan</span></a>
+        <li class="xn-title">Laporan</li>
+        <li class="xn-openable">
+            <a href=" #"><span class="fa fa-ban"></span><span class="xn-text">Laporan Tunggakan</span></a>
+            <ul>
+                <li><a href="/tunggakanDetail"><span class="xn-text">Detail Tunggakan</span></a></li>
+                <li><a href="/tunggakanTotal"><span class="xn-text">Total Tunggakan</span></a></li>
+            </ul>
         </li>
         <li class="xn-openable">
-            <a href=" /#"><span class="fa fa-money"></span><span class="xn-text">Pembayaran</span></a>
+            <a href="#"><span class="fa fa-money"></span><span class="xn-text">Laporan Pembayaran</span></a>
             <ul>
-                <li><a href="#"><span class="xn-text"></span>Per Prodi (BSM) </a></li>
-                <li><a href="#"><span class="xn-text"></span>Per Prodi (BRIS) </a></li>
-                <li><a href="#"><span class="xn-text"></span>Per Prodi (BNI) </a></li>
-                <li><a href="#"><span class="xn-text"></span>Per Prodi (Semua) </a></li>
+                <li><a href=" /pembayaranDetail"><span class="xn-text">Detail Pembayaran</span></a></li>
+                <li><a href=" /pembayaranTotal"><span class="xn-text">Total Pembayaran</span></a></li>
+            </ul>
+        </li>
+        <li class="xn-title">Setting</li>
+        <li class="xn-openable">
+            <a href="#"><span class="fa fa-edit"></span><span class="xn-text">Setting Tanggal Tahap</span></a>
+            <ul>
+                <li><a href="/ubahAngkatan"><span class="xn-text">Per Angkatan</span></a></li>
+                <li class="xn-openable">
+                    <a href="#"><span class="xn-text">Per Fakultas</span></a>
+                    <ul>
+                        <li><a href="/ubahNonKedokteran"><span class="xn-text">Fak. Non Kedokteran</span></a></li>
+                        <li><a href="/ubahKedokteran"><span class="xn-text">Fak. Kedokteran</span></a></li>
+                        <li><a href="/ubahPascasarjana"><span class="xn-text">Fak. Pascasarjana</span></a></li>
+                    </ul>
+                </li>
             </ul>
         </li>
     </ul>
