@@ -169,7 +169,7 @@ class TunggakanTotal extends BaseController
         $row = $row + 1;
         $no = 0;
         $spreadsheet->setActiveSheetIndex(0)
-            ->setCellValue('A' . $row, 'No Register')
+            ->setCellValue('A' . $row, 'No.')
             ->setCellValue('B' . $row, 'No Register');
 
         foreach ($angkatan as $ang) {
@@ -178,7 +178,17 @@ class TunggakanTotal extends BaseController
         }
 
         $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
-
+        $row = $row + 1;
+        $no = 0;
+        foreach ($fakultas as $fak) {
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $row, '')
+                ->setCellValue('B' . $row, $fak);
+            foreach ($angkatan as $ang) {
+                $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, '');
+                $no++;
+            }
+        }
 
 
         $writer = new Xlsx($spreadsheet);
