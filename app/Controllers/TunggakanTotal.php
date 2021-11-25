@@ -188,7 +188,7 @@ class TunggakanTotal extends BaseController
             $row++;
 
             $urut=1;
-            foreach ($prodi as $prd){
+            foreach (array_unique($prodi, SORT_REGULAR) as $prd){
                 if ($fak == $prd['fakultas']){
                     $spreadsheet->setActiveSheetIndex(0)
                     ->setCellValue('A' . $row, $urut)
