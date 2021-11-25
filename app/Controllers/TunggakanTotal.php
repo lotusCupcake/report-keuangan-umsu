@@ -195,8 +195,8 @@ class TunggakanTotal extends BaseController
                     ->setCellValue('B' . $row, $prd['prodi']);
 
                 $no = 0;
-                $nilai = 0;
                 foreach ($angkatan as $ang) {
+                    $nilai = 0;
                     foreach (json_decode($response->getBody())->data as $tung){
                         ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
                     }
