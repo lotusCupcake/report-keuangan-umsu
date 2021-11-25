@@ -158,9 +158,6 @@ class TunggakanTotal extends BaseController
             }
         }
 
-
-
-
         $spreadsheet = new Spreadsheet();
         $col =   array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
         $row = 1;
@@ -182,13 +179,21 @@ class TunggakanTotal extends BaseController
         $no = 0;
         foreach ($fakultas as $fak) {
             $spreadsheet->setActiveSheetIndex(0)
-                ->setCellValue('A' . $row, ($no + 1))
+                ->setCellValue('A' . $row, '')
                 ->setCellValue('B' . $row, $fak);
             foreach ($angkatan as $ang) {
                 $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, '')->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
             }
             $no++;
             $row++;
+            $urut=1;
+            foreach ($prodi as $prd){
+                if ($fak == $prd['fakultas']){
+                    $spreadsheet->setActiveSheetIndex(0)
+                    ->setCellValue('A' . $row, $urut++)
+                    ->setCellValue('B' . $row, $prd['prodi']);
+                }
+            }
         }
 
 
