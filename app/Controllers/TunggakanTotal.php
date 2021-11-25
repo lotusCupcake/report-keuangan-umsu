@@ -187,34 +187,27 @@ class TunggakanTotal extends BaseController
                 $no++;
             }
             $row++;
-            $spreadsheet->setActiveSheetIndex(0)
-                ->setCellValue('A' . $row, '')
-                ->setCellValue('B' . $row, $fak);
-            $no = 0;
-            foreach ($angkatan as $ang) {
-                $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, '')->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
-                $no++;
+            
+
+        }
+        $urut=1;
+        foreach ($prodi as $prd){
+            if ($fak == $prd['fakultas']){
+                $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $row, $urut)
+                ->setCellValue('B' . $row, $prd['prodi']);
+
+                $nilai = 0;
+                $no = 0;
+                foreach ($angkatan as $ang) {
+                    foreach (json_decode($response->getBody())->data as $tung){
+                        ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
+                    }
+                    $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, $nilai)->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
+                }
             }
-
-            // $urut=1;
-            // foreach ($prodi as $prd){
-            //     if ($fak == $prd['fakultas']){
-            //         $spreadsheet->setActiveSheetIndex(0)
-            //         ->setCellValue('A' . $row, $urut)
-            //         ->setCellValue('B' . $row, $prd['prodi']);
-
-            //         $nilai = 0;
-            //         $no = 0;
-            //         foreach ($angkatan as $ang) {
-            //             foreach (json_decode($response->getBody())->data as $tung){
-            //                 ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
-            //             }
-            //             $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, $nilai)->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
-            //         }
-            //     }
-            // $row++;
-            // $urut++; 
-            // }
+        $row++;
+        $urut++; 
         }
 
 
