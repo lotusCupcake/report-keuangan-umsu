@@ -85,14 +85,14 @@
                                     <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
                                     <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
                                     <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
-                                    <ul class="panel-controls"><button style="display: inline-block; margin-bottom: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                    <ul class="panel-controls"><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                             Export Prodi</button></ul>
                                 </form>
                                 <form action="/tunggakanDetailSeluruh/cetak" method="post">
                                     <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
                                     <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
                                     <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
-                                    <ul class="panel-controls"><button style="display: inline-block;  margin-right: 11px; margin-bottom: 11px; " type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                    <ul class="panel-controls"><button style="display: inline-block;  margin-right: 11px; margin-top:3px; margin-bottom: 18px; " type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                             Export Seluruh</button></ul>
                                 </form>
                             <?php endif ?>

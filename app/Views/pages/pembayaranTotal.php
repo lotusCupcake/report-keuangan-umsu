@@ -81,7 +81,7 @@
                                     <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
                                     <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
                                     <input type="hidden" name="bank" value="<?= $bank; ?>">
-                                    <ul class="panel-controls">><button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                    <ul class="panel-controls">><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                             Export</button></ul>
                                 </form>
                             <?php endif ?>
