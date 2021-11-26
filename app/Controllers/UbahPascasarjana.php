@@ -18,7 +18,7 @@ class UbahPascasarjana extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Pascasarjana",
+            'title' => "Fak. Pascasarjana",
             'appName' => "UMSU",
             'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fak. Pascasarjana'],
             'termYear' => null,
@@ -103,7 +103,7 @@ class UbahPascasarjana extends BaseController
         ]);
 
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Pascasarjana",
+            'title' => "Fak. Pascasarjana",
             'appName' => "UMSU",
             'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fak. Pascasarjana'],
             'termYear' => $term_year_id,
