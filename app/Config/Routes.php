@@ -67,7 +67,8 @@ $routes->add('/endorsement/(:num)/edit', 'Endorsement::edit/$1');
 
 // Route  Tunggakan Detail
 $routes->get('/tunggakanDetail/(:any)', 'TunggakanDetail::index');
-$routes->post('/tunggakanDetail/cetak', 'TunggakanDetail::cetakTunggakanDetail');
+$routes->post('/tunggakanDetailProdi/cetak', 'TunggakanDetail::cetakTunggakanDetailProdi');
+$routes->post('/tunggakanDetailSeluruh/cetak', 'TunggakanDetail::cetakTunggakanDetailSeluruh');
 $routes->post('/tunggakanDetail', 'TunggakanDetail::prosesTunggakanDetail');
 
 // Route  Tunggakan Total
@@ -77,7 +78,8 @@ $routes->post('/tunggakanTotal', 'TunggakanTotal::prosesTunggakanTotal');
 
 // Route Pembayaran Detail
 $routes->get('/pembayaranDetail/(:any)', 'PembayaranDetail::index');
-$routes->post('/pembayaranDetail/cetak', 'PembayaranDetail::cetakPembayaranDetail');
+$routes->post('/pembayaranDetailProdi/cetak', 'PembayaranDetail::cetakPembayaranDetailProdi');
+$routes->post('/pembayaranDetailSeluruh/cetak', 'PembayaranDetail::cetakPembayaranDetailSeluruh');
 $routes->post('/pembayaranDetail', "PembayaranDetail::prosesPembayaranDetail");
 
 // Route Pembayaran Total
@@ -85,19 +87,19 @@ $routes->get('/pembayaranTotal/(:any)', 'PembayaranTotal::index');
 $routes->post('/pembayaranTotal/cetak', 'PembayaranTotal::cetakPembayaranTotal');
 $routes->post('/pembayaranTotal', "PembayaranTotal::prosesPembayaranTotal");
 
-// Route UbahTanggalTahapAngkatan
+// Route Ubah Tanggal Tahap Angkatan
 $routes->get('/ubahAngkatan/(:any)', 'UbahAngkatan::index');
 $routes->post('/ubahAngkatan', "UbahAngkatan::proses");
 
-// Route UbahNonKedokteran
+// Route Ubah Tanggal Tahap Non Kedokteran
 $routes->get('/ubahNonKedokteran/(:any)', 'UbahNonKedokteran::index');
 $routes->post('/ubahNonKedokteran', "UbahNonKedokteran::proses");
 
-// Route UbahKedokteran
+// Route Ubah Tanggal Tahap Kedokteran
 $routes->get('/ubahKedokteran/(:any)', 'UbahKedokteran::index');
 $routes->post('/ubahKedokteran', "UbahKedokteran::proses");
 
-// Route UbahPascasarjana
+// Route Ubah Tanggal Tahap Pascasarjana
 $routes->get('/ubahPascasarjana/(:any)', 'UbahPascasarjana::index');
 $routes->post('/ubahPascasarjana', "UbahPascasarjana::proses");
 

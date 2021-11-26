@@ -44,7 +44,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <form autocomplete="off" action="/tunggakanDetail" method="POST">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
                                     <option value="">-- Select --</option>
@@ -53,7 +53,7 @@
                                     <?php endforeach ?>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>Tahun Angkatan</label>
                                 <select class="form-control select" name="tahunAngkatan">
                                     <option value="">-- Select --</option>
@@ -62,7 +62,7 @@
                                     <?php endfor ?>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>Tunggakan Tahap</label>
                                 <select class="form-control select" name="tahap">
                                     <option value="">-- Select --</option>
@@ -76,18 +76,25 @@
                                     Cari</button>
                             </ul>
                         </form>
-                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
-                            <form action="/tunggakanDetail/cetak" method="post">
-                                <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
-                                <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
-                                <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
-                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
-                                    Export</button>
-                            </form>
-                        <?php endif ?>
                     </div>
                     <div class="panel-body col-md-12">
                         <?php if ($prodi != null) : ?>
+                            <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
+                                <form action="/tunggakanDetailProdi/cetak" method="post">
+                                    <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                    <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
+                                    <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
+                                    <ul class="panel-controls"><button style="display: inline-block; margin-bottom: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                            Export Prodi</button></ul>
+                                </form>
+                                <form action="/tunggakanDetailSeluruh/cetak" method="post">
+                                    <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                    <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
+                                    <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
+                                    <ul class="panel-controls"><button style="display: inline-block;  margin-right: 11px; margin-bottom: 11px; " type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                            Export Seluruh</button></ul>
+                                </form>
+                            <?php endif ?>
                             <?php foreach ($prodi as $prd) : ?>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">

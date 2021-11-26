@@ -39,7 +39,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <form autocomplete="off" action="/tunggakanTotal" method="POST">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
                                     <option value="">-- Select --</option>
@@ -48,7 +48,7 @@
                                     <?php endforeach ?>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>Tunggakan Tahap</label>
                                 <select class="form-control select" name="tahap">
                                     <option value="">-- Select --</option>

@@ -89,19 +89,29 @@
                                     Cari</button>
                             </ul>
                         </form>
-                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
-                            <form action="/pembayaranDetail/cetak" method="post">
-                                <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
-                                <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
-                                <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
-                                <input type="hidden" name="bank" value="<?= $bank; ?>">
-                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
-                                    Export</button>
-                            </form>
-                        <?php endif ?>
                     </div>
                     <div class="panel-body col-md-12">
                         <?php if ($prodi != null) : ?>
+                            <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
+                                <form action="/pembayaranDetailProdi/cetak" method="post">
+                                    <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                    <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
+                                    <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
+                                    <input type="hidden" name="bank" value="<?= $bank; ?>">
+                                    <ul class="panel-controls"><button style="display: inline-block; margin-bottom: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                            Export Prodi</button></ul>
+                                </form>
+                                <span>
+                                    <form action="/pembayaranDetailSeluruh/cetak" method="post">
+                                        <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                        <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
+                                        <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
+                                        <input type="hidden" name="bank" value="<?= $bank; ?>">
+                                        <ul class="panel-controls"><button style="display: inline-block; margin-right: 11px; margin-bottom: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                                Export Seluruh</button></ul>
+                                    </form>
+                                </span>
+                            <?php endif ?>
                             <?php foreach ($prodi as $prd) : ?>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
