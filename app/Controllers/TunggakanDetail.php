@@ -21,7 +21,7 @@ class TunggakanDetail extends BaseController
         $data = [
             'title' => "Detail Tunggakan",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Detail Tunggakan'],
+            'breadcrumb' => ['Home', 'Laporan Tunggakan', 'Detail Tunggakan'],
             'tunggakan' => [],
             'termYear' => null,
             'entryYear' => null,
@@ -100,7 +100,7 @@ class TunggakanDetail extends BaseController
         $data = [
             'title' => "Detail Tunggakan",
             'appName' => "UMSU FM",
-            'breadcrumb' => ['Home', 'Laporan Detail Tunggakan'],
+            'breadcrumb' => ['Home', 'Laporan Tunggakan', 'Detail Tunggakan'],
             'tunggakan' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,

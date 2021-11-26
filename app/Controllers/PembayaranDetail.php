@@ -21,7 +21,7 @@ class PembayaranDetail extends BaseController
         $data = [
             'title' => "Detail Pembayaran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Detail Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Detail Pembayaran'],
             'pembayaran' => [],
             'termYear' => null,
             'entryYear' => null,
@@ -115,7 +115,7 @@ class PembayaranDetail extends BaseController
         $data = [
             'title' => "Detail Pembayaran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Detail Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Detail Pembayaran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,

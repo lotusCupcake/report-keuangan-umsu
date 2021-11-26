@@ -18,7 +18,7 @@ class PembayaranTotal extends BaseController
         $data = [
             'title' => "Total Pembayaran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Total Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Total Pembayaran'],
             'pembayaran' => [],
             'termYear' => null,
             'entryYear' => null,
@@ -106,7 +106,7 @@ class PembayaranTotal extends BaseController
         $data = [
             'title' => "Total Pembayaran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Total Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Total Pembayaran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,

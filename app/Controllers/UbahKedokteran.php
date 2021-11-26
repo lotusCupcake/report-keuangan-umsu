@@ -17,9 +17,9 @@ class UbahKedokteran extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Kedokteran",
+            'title' => "Fak. Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Kedokteran'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fak. Kedokteran'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
@@ -102,9 +102,9 @@ class UbahKedokteran extends BaseController
         ]);
 
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Kedokteran",
+            'title' => "Fak. Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Kedokteran'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fak. Kedokteran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,

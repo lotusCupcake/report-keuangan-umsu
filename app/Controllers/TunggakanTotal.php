@@ -21,7 +21,7 @@ class TunggakanTotal extends BaseController
         $data = [
             'title' => "Total Tunggakan",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Total Tunggakan'],
+            'breadcrumb' => ['Home', 'Laporan Tunggakan', 'Total Tunggakan'],
             'tunggakan' => [],
             'termYear' => null,
             'paymentOrder' => null,
@@ -106,7 +106,7 @@ class TunggakanTotal extends BaseController
         $data = [
             'title' => "Total Tunggakan",
             'appName' => "UMSU FM",
-            'breadcrumb' => ['Home', 'Laporan Total Tunggakan'],
+            'breadcrumb' => ['Home', 'Laporan Tunggakan', 'Total Tunggakan'],
             'tunggakan' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
             'paymentOrder' => $payment_order,
@@ -175,7 +175,7 @@ class TunggakanTotal extends BaseController
         }
 
         $row = $row + 1;
-        
+
         foreach ($fakultas as $fak) {
             $spreadsheet->setActiveSheetIndex(0)
                 ->setCellValue('A' . $row, '')
@@ -187,24 +187,24 @@ class TunggakanTotal extends BaseController
             }
             $row++;
 
-            $urut=1;
-            foreach (array_unique($prodi, SORT_REGULAR) as $prd){
-                if ($fak == $prd['fakultas']){
+            $urut = 1;
+            foreach (array_unique($prodi, SORT_REGULAR) as $prd) {
+                if ($fak == $prd['fakultas']) {
                     $spreadsheet->setActiveSheetIndex(0)
-                    ->setCellValue('A' . $row, $urut)
-                    ->setCellValue('B' . $row, $prd['prodi']);
+                        ->setCellValue('A' . $row, $urut)
+                        ->setCellValue('B' . $row, $prd['prodi']);
 
-                $no = 0;
-                foreach ($angkatan as $ang) {
-                    $nilai = 0;
-                    foreach (json_decode($response->getBody())->data as $tung){
-                        ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
+                    $no = 0;
+                    foreach ($angkatan as $ang) {
+                        $nilai = 0;
+                        foreach (json_decode($response->getBody())->data as $tung) {
+                            ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
+                        }
+                        $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($nilai, 'IDR'))->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
+                        $no++;
                     }
-                    $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($nilai, 'IDR'))->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
-                    $no++;
-                }
-                $urut++; 
-                $row++;
+                    $urut++;
+                    $row++;
                 }
             }
         }

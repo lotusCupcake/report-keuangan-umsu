@@ -17,9 +17,9 @@ class UbahNonKedokteran extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Non Kedokteran",
+            'title' => "Fak. Non Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Non Kedokteran'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fak. Non Kedokteran'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
@@ -102,9 +102,9 @@ class UbahNonKedokteran extends BaseController
         ]);
 
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Non Kedokteran",
+            'title' => "Fak. Non Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Non Kedokteran'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fak. Non Kedokteran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,

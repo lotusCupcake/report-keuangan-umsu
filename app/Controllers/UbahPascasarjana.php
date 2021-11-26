@@ -20,7 +20,7 @@ class UbahPascasarjana extends BaseController
         $data = [
             'title' => "Set. Tanggal Tahap Fak. Pascasarjana",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Pascasarjana'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fak. Pascasarjana'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
@@ -105,7 +105,7 @@ class UbahPascasarjana extends BaseController
         $data = [
             'title' => "Set. Tanggal Tahap Fak. Pascasarjana",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Pascasarjana'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fak. Pascasarjana'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,

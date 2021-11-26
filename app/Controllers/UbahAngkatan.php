@@ -17,9 +17,9 @@ class UbahAngkatan extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Set. Tanggal Tahap Angkatan",
+            'title' => "Per Angkatan",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Angkatan'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Angkatan'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
@@ -102,9 +102,9 @@ class UbahAngkatan extends BaseController
         ]);
 
         $data = [
-            'title' => "Set. Tanggal Tahap Angkatan",
+            'title' => "Per Angkatan",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Angkatan'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Angkatan'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
