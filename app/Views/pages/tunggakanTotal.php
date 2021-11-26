@@ -62,17 +62,17 @@
                                     Cari</button>
                             </ul>
                         </form>
-                        <?php if ($termYear != null && $paymentOrder != null) : ?>
-                            <form action="/tunggakanTotal/cetak" method="post">
-                                <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
-                                <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
-                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
-                                    Export</button>
-                            </form>
-                        <?php endif ?>
                     </div>
                     <div class="panel-body col-md-12">
                         <?php if ($fakultas != null) : ?>
+                            <?php if ($termYear != null && $paymentOrder != null) : ?>
+                                <form action="/tunggakanTotal/cetak" method="post">
+                                    <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                    <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
+                                    <ul class="panel-controls"><button style="display: inline-block; margin-bottom: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                            Export</button></ul>
+                                </form>
+                            <?php endif ?>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Rekap Tunggakan</h3>
