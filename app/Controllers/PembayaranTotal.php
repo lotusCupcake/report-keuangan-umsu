@@ -79,7 +79,6 @@ class PembayaranTotal extends BaseController
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
         $bank = $this->request->getPost('bank');
 
@@ -88,7 +87,6 @@ class PembayaranTotal extends BaseController
                 "Accept" => "application/json"
             ],
             "form_params" => [
-                "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
                 // "termYearName" => $term_year_name,
                 "tahap" => $payment_order,
@@ -108,7 +106,6 @@ class PembayaranTotal extends BaseController
             'appName' => "UMSU",
             'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Total Pembayaran'],
             'termYear' => $term_year_id,
-            'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
             'bank' => $bank,
             'pembayaran' => json_decode($response->getBody())->data,
