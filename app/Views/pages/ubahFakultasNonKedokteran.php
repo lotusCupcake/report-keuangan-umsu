@@ -14,8 +14,8 @@
         <!-- START BREADCRUMB -->
         <ul class="breadcrumb">
             <li><a href="/home"><?= $breadcrumb[0]; ?></a></li>
-            <li><a href="/ubahNonKedokteran"><?= $breadcrumb[1]; ?></a></li>
-            <li><a href="/ubahNonKedokteran"><?= $breadcrumb[2]; ?></a></li>
+            <li><a href="/ubahFakultasNonKedokteran"><?= $breadcrumb[1]; ?></a></li>
+            <li><a href="/ubahFakultasNonKedokteran"><?= $breadcrumb[2]; ?></a></li>
             <li class="active"><?= $breadcrumb[3]; ?></li>
         </ul>
         <!-- END BREADCRUMB  ->getBody()-->
@@ -32,22 +32,26 @@
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
                     </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahunAngkatan')) : ?>
+                <?php endif; ?>
+                <?php if ($validation->hasError('tahunAngkatan')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahunAngkatan'); ?>
                     </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahap')) : ?>
+                <?php endif; ?>
+                <?php if ($validation->hasError('tahap')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahap'); ?>
                     </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahapTanggalAwal')) : ?>
+                <?php endif; ?>
+                <?php if ($validation->hasError('tahapTanggalAwal')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahapTanggalAwal'); ?>
                     </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahapTanggalAkhir')) : ?>
+                <?php endif; ?>
+                <?php if ($validation->hasError('tahapTanggalAkhir')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahapTanggalAkhir'); ?>
@@ -55,7 +59,13 @@
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form autocomplete="off" class="form-horizontal" action="/ubahNonKedokteran" method="POST">
+                        <form autocomplete="off" class="form-horizontal" action="/ubahFakultasNonKedokteran" method="POST">
+                            <div class="col-md-2">
+                                <label>Pilih Fakultas</label>
+                                <select class="form-control select" name="fakultas">
+                                    <option value="">Semua Fakultas</option>
+                                </select>
+                            </div>
                             <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
@@ -66,7 +76,7 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <label>Tahun NonKedokteran</label>
+                                <label>Tahun Angkatan</label>
                                 <select class="form-control select" name="tahunAngkatan">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
@@ -98,7 +108,7 @@
                                 </div>
                             </div>
                             <ul class="panel-controls">
-                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-success"><span class="fa fa-arrow-circle-right"></span>
+                                <button style="display: inline-block; margin-top: 11px; margin-right: 9px;" type="submit" class="btn btn-success"><span class="fa fa-arrow-circle-right"></span>
                                     Proses</button>
                             </ul>
                         </form>

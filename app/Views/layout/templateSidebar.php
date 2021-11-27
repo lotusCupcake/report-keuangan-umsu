@@ -47,9 +47,17 @@
                 <li class="xn-openable">
                     <a href="#"><span class="xn-text">Per Fakultas</span></a>
                     <ul>
-                        <li><a href="/ubahNonKedokteran"><span class="xn-text">Fak. Non Kedokteran</span></a></li>
-                        <li><a href="/ubahKedokteran"><span class="xn-text">Fak. Kedokteran</span></a></li>
-                        <li><a href="/ubahPascasarjana"><span class="xn-text">Fak. Pascasarjana</span></a></li>
+                        <li><a href="/ubahFakultasNonKedokteran"><span class="xn-text">Fakultas Non Kedokteran</span></a></li>
+                        <li><a href="/ubahFakultasKedokteran"><span class="xn-text">Fakultas Kedokteran</span></a></li>
+                        <li><a href="/ubahFakultasPascasarjana"><span class="xn-text">Fakultas Pascasarjana</span></a></li>
+                    </ul>
+                </li>
+                <li class="xn-openable">
+                    <a href="#"><span class="xn-text">Per Prodi</span></a>
+                    <ul>
+                        <li><a href="/ubahProdiNonKedokteran"><span class="xn-text">Prodi Non Kedokteran</span></a></li>
+                        <li><a href="/ubahProdiKedokteran"><span class="xn-text">Prodi Kedokteran</span></a></li>
+                        <li><a href="/ubahProdiPascasarjana"><span class="xn-text">Prodi Pascasarjana</span></a></li>
                     </ul>
                 </li>
             </ul>

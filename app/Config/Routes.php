@@ -91,17 +91,29 @@ $routes->post('/pembayaranTotal', "PembayaranTotal::prosesPembayaranTotal");
 $routes->get('/ubahAngkatan/(:any)', 'UbahAngkatan::index');
 $routes->post('/ubahAngkatan', "UbahAngkatan::proses");
 
-// Route Ubah Tanggal Tahap Non Kedokteran
-$routes->get('/ubahNonKedokteran/(:any)', 'UbahNonKedokteran::index');
-$routes->post('/ubahNonKedokteran', "UbahNonKedokteran::proses");
+// Route Ubah Tanggal Tahap Fakultas Non  Kedokteran
+$routes->get('/ubahFakultasNonKedokteran/(:any)', 'UbahFakultasNonKedokteran::index');
+$routes->post('/ubahFakultasNonKedokteran', "UbahFakultasNonKedokteran::proses");
 
-// Route Ubah Tanggal Tahap Kedokteran
-$routes->get('/ubahKedokteran/(:any)', 'UbahKedokteran::index');
-$routes->post('/ubahKedokteran', "UbahKedokteran::proses");
+// Route Ubah Tanggal Tahap Fakultas Kedokteran
+$routes->get('/ubahFakultasKedokteran/(:any)', 'UbahFakultasKedokteran::index');
+$routes->post('/ubahFakultasKedokteran', "UbahFakultasKedokteran::proses");
 
-// Route Ubah Tanggal Tahap Pascasarjana
-$routes->get('/ubahPascasarjana/(:any)', 'UbahPascasarjana::index');
-$routes->post('/ubahPascasarjana', "UbahPascasarjana::proses");
+// Route Ubah Tanggal Tahap Fakultas Pascasarjana
+$routes->get('/ubahFakultasPascasarjana/(:any)', 'UbahFakultasPascasarjana::index');
+$routes->post('/ubahFakultasPascasarjana', "UbahFakultasPascasarjana::proses");
+
+// Route Ubah Tanggal Tahap Prodi Non Kedokteran
+$routes->get('/ubahProdiNonKedokteran/(:any)', 'UbahProdiNonKedokteran::index');
+$routes->post('/ubahProdiNonKedokteran', "UbahProdiNonKedokteran::proses");
+
+// Route Ubah Tanggal Tahap Prodi Kedokteran
+$routes->get('/ubahProdiKedokteran/(:any)', 'UbahProdiKedokteran::index');
+$routes->post('/ubahProdiKedokteran', "UbahProdiKedokteran::proses");
+
+// Route Ubah Tanggal Prodi Tahap Prodi Pascasarjana
+$routes->get('/ubahProdiPascasarjana/(:any)', 'UbahProdiPascasarjana::index');
+$routes->post('/ubahProdiPascasarjana', "UbahProdiPascasarjana::proses");
 
 
 
