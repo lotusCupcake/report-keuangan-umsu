@@ -5,7 +5,6 @@ namespace App\Controllers;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-
 class TunggakanTotal extends BaseController
 {
     protected $curl;

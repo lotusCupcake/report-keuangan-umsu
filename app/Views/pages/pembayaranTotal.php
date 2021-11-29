@@ -85,37 +85,37 @@
                                             Export</button></ul>
                                 </form>
                             <?php endif ?>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Rekap Pembayaran</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered table-striped table-actions">
-                                                <thead>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Rekap Pembayaran</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-actions">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2" style="text-align:center" valign="center">No.</th>
+                                                    <th style="text-align:center">Fakultas / Prodi</th>
+                                                    <th colspan=<?= count($angkatan) ?> style="text-align:center">Stambuk</th>
+                                                </tr>
+                                                <tr>
+                                                    <th></th>
+                                                    <?php foreach ($angkatan as $ang) : ?>
+                                                        <th style="text-align:center"><?= $ang ?></th>
+                                                    <?php endforeach ?>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($fakultas as $fak) : ?>
                                                     <tr>
-                                                        <th rowspan="2" style="text-align:center" valign="center">No.</th>
-                                                        <th style="text-align:center">Fakultas / Prodi</th>
-                                                        <th colspan=<?= count($angkatan) ?> style="text-align:center">Stambuk</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th></th>
+                                                        <td></td>
+                                                        <td><strong><?= $fak ?></strong></td>
                                                         <?php foreach ($angkatan as $ang) : ?>
-                                                            <th style="text-align:center"><?= $ang ?></th>
+                                                            <td></td>
                                                         <?php endforeach ?>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php foreach ($fakultas as $fak) : ?>
-                                                        <tr>
-                                                            <td></td>
-                                                            <td><strong><?= $fak ?></strong></td>
-                                                            <?php foreach ($angkatan as $ang) : ?>
-                                                                <td></td>
-                                                            <?php endforeach ?>
-                                                        </tr>
-                                                        <?php $no = 1;
-                                                        foreach ($prodi as $prd) : ?>
+                                                    <?php $no = 1;
+                                                    foreach ($prodi as $prd) : ?>
                                                         <?php if ($fak == $prd['fakultas']) : ?>
                                                             <tr>
                                                                 <td><?= $no++ ?></td>
@@ -130,12 +130,12 @@
                                                             </tr>
                                                         <?php endif ?>
                                                     <?php endforeach ?>
-                                                    <?php endforeach ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                <?php endforeach ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
+                            </div>
                         <?php else : ?>
                             <center>
                                 <lottie-player src="<?= $icon ?>" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
