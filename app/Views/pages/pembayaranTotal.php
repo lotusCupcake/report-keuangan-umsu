@@ -87,7 +87,7 @@
                             <?php endif ?>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Rekap Pembayaran</h3>
+                                    <h3 class="panel-title">Rekap Pembayaran <?= ($bank=='')?"Keseluruhan":$bank ?></h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
