@@ -14,7 +14,8 @@
         <!-- START BREADCRUMB -->
         <ul class="breadcrumb">
             <li><a href="/home"><?= $breadcrumb[0]; ?></a></li>
-            <li class="active"><?= $breadcrumb[1]; ?></li>
+            <li><a href="/totalPembayaran"><?= $breadcrumb[1]; ?></a></li>
+            <li class="active"><?= $breadcrumb[2]; ?></li>
         </ul>
         <!-- END BREADCRUMB  ->getBody()-->
         <div class="row">
@@ -25,17 +26,13 @@
                         <?php echo session()->getFlashdata('success'); ?>
                     </div>
                 <?php endif; ?>
-                <?php if ($validation->hasError('tahunAngkatan')) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Failed ! </strong><?= $validation->getError('tahunAngkatan'); ?>
-                    </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahunAjar')) : ?>
+                <?php if ($validation->hasError('tahunAjar')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
                     </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahap')) : ?>
+                <?php endif; ?>
+                <?php if ($validation->hasError('tahap')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahap'); ?>
@@ -54,27 +51,18 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <label>Tahun Angkatan</label>
-                                <select class="form-control select" name="tahunAngkatan">
-                                    <option value="">-- Select --</option>
-                                    <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
-                                        <option value="<?= $i ?> <?php if ($i == $entryYear) echo "selected" ?>"><?= $i ?></option>
-                                    <?php endfor ?>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
                                 <label>Pembayaran Tahap</label>
                                 <select class="form-control select" name="tahap">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 1; $i <= 4; $i++) : ?>
-                                        <option value="<?= $i ?> <?php if ($i == $paymentOrder) echo "selected" ?>"><?= $i ?></option>
+                                        <option value="<?= $i ?>" <?php if ($i == $paymentOrder) echo "selected" ?>><?= $i ?></option>
                                     <?php endfor ?>
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <label>Pilih Bank</label>
+                                <label>Tempat Pembayaran</label>
                                 <select class="form-control select" name="bank">
-                                    <option value="">-- Select --</option>
+                                    <option value="">Keseluruhan</option>
                                     <?php foreach ($listBank as $rows) : ?>
                                         <option value="<?= $rows->Bank_Acronym ?>" <?php if ($rows->Bank_Acronym == $bank) echo "selected" ?>><?= $rows->Bank_Name ?></option>
                                     <?php endforeach ?>
@@ -85,19 +73,18 @@
                                     Cari</button>
                             </ul>
                         </form>
-                        <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
-                            <form action="/pembayaranTotal/cetak" method="post">
-                                <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
-                                <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
-                                <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
-                                <input type="hidden" name="bank" value="<?= $bank; ?>">
-                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
-                                    Export</button>
-                            </form>
-                        <?php endif ?>
                     </div>
                     <div class="panel-body col-md-12">
                         <?php if ($prodi != null) : ?>
+                            <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
+                                <form action="/pembayaranTotal/cetak" method="post">
+                                    <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                    <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
+                                    <input type="hidden" name="bank" value="<?= $bank; ?>">
+                                    <ul class="panel-controls">><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                            Export</button></ul>
+                                </form>
+                            <?php endif ?>
                             <?php foreach ($prodi as $prd) : ?>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">

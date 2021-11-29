@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 
-class UbahNonKedokteran extends BaseController
+class UbahFakultasKedokteran extends BaseController
 {
     protected $curl;
 
@@ -17,9 +17,9 @@ class UbahNonKedokteran extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Non Kedokteran",
+            'title' => "Fakultas Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Non Kedokteran'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fakultas Kedokteran'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
@@ -30,7 +30,7 @@ class UbahNonKedokteran extends BaseController
         ];
         // dd($data);
 
-        return view('pages/ubahNonKedokteran', $data);
+        return view('pages/ubahFakultasKedokteran', $data);
     }
 
     public function getTermYear()
@@ -79,7 +79,7 @@ class UbahNonKedokteran extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to('ubahNonKedokteran')->withInput();
+            return redirect()->to('ubahFakultasKedokteran')->withInput();
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
@@ -102,9 +102,9 @@ class UbahNonKedokteran extends BaseController
         ]);
 
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Non Kedokteran",
+            'title' => "Fakultas Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Non Kedokteran'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fakultas Kedokteran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
@@ -117,6 +117,6 @@ class UbahNonKedokteran extends BaseController
         ];
 
         session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');
-        return view('pages/ubahNonKedokteran', $data);
+        return view('pages/ubahFakultasKedokteran', $data);
     }
 }

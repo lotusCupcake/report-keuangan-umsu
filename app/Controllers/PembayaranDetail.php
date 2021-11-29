@@ -21,7 +21,7 @@ class PembayaranDetail extends BaseController
         $data = [
             'title' => "Detail Pembayaran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Detail Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Detail Pembayaran'],
             'pembayaran' => [],
             'termYear' => null,
             'entryYear' => null,
@@ -115,7 +115,7 @@ class PembayaranDetail extends BaseController
         $data = [
             'title' => "Detail Pembayaran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Detail Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Detail Pembayaran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
@@ -131,7 +131,7 @@ class PembayaranDetail extends BaseController
         return view('pages/pembayaranDetail', $data);
     }
 
-    public function cetakPembayaranDetail()
+    public function cetakPembayaranDetailProdi()
     {
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
@@ -203,7 +203,82 @@ class PembayaranDetail extends BaseController
         }
 
         $writer = new Xlsx($spreadsheet);
-        $fileName = 'Data Pembayaran Mahasiswa';
+        $fileName = 'Data Detail Pembayaran Mahasiswa - Prodi';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
+        header('Cache-Control: max-age=0');
+
+        // session()->setFlashdata('success', 'Berhasil Export Data Tunggakan !');
+        $writer->save('php://output');
+    }
+
+    public function cetakPembayaranDetailSeluruh()
+    {
+        $term_year_id = $this->request->getPost('tahunAjar');
+        $entry_year_id = $this->request->getPost('tahunAngkatan');
+        $payment_order = $this->request->getPost('tahap');
+        $bank = $this->request->getPost('bank');
+
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+            "form_params" => [
+                "entryYearId" => $entry_year_id,
+                "termYearId" => $term_year_id,
+                "tahap" => $payment_order,
+                "bank" => $bank
+            ]
+        ]);
+
+        $prodi = [];
+        foreach (json_decode($response->getBody())->data as $k) {
+            if (!in_array($k->PRODI, $prodi)) {
+                array_push($prodi, $k->PRODI);
+            }
+        }
+
+        $spreadsheet = new Spreadsheet();
+
+        $konten = 0;
+        $konten = $konten + 1;
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A' . $konten, 'No.')
+            ->setCellValue('B' . $konten, 'No Register')
+            ->setCellValue('C' . $konten, 'NPM')
+            ->setCellValue('D' . $konten, 'Nama Lengkap')
+            ->setCellValue('E' . $konten, 'Nama Prodi')
+            ->setCellValue('F' . $konten, 'Angkatan')
+            ->setCellValue('G' . $konten, 'Nama Biaya')
+            ->setCellValue('H' . $konten, 'Bank')
+            ->setCellValue('I' . $konten, 'Tahap')
+            ->setCellValue('J' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "J" . $konten)->getFont()->setBold(true);
+
+        $konten = $konten + 1;
+        $total = 0;
+        $no = 1;
+        foreach (json_decode($response->getBody())->data as $data) {
+            $total = $total + $data->NOMINAL;
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $konten, $no++)
+                ->setCellValue('B' . $konten, $data->NO_REGISTER)
+                ->setCellValue('C' . $konten, $data->Npm)
+                ->setCellValue('D' . $konten, $data->NAMA_LENGKAP)
+                ->setCellValue('E' . $konten, $data->PRODI)
+                ->setCellValue('F' . $konten, $data->ANGKATAN)
+                ->setCellValue('G' . $konten, $data->NAMA_BIAYA)
+                ->setCellValue('H' . $konten, $data->BANK_NAMA)
+                ->setCellValue('I' . $konten, ($data->TAHAP == 0) ? "Lunas" : "Tahap " . $data->TAHAP)
+                ->setCellValue('J' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "J" . $konten);
+            $konten++;
+        }
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('J' . $konten, number_to_currency($total, 'IDR'))->getStyle('J' . $konten)->getFont()->setBold(true);
+        $konten = $konten + 1;
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'Data Detail Pembayaran Mahasiswa - Seluruh';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');

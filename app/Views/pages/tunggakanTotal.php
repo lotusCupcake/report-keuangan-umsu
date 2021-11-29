@@ -14,16 +14,13 @@
         <!-- START BREADCRUMB -->
         <ul class="breadcrumb">
             <li><a href="/home"><?= $breadcrumb[0]; ?></a></li>
-            <li class="active"><?= $breadcrumb[1]; ?></li>
+            <li><a href="/home"><?= $breadcrumb[1]; ?></a></li>
+            <li class="active"><?= $breadcrumb[2]; ?></li>
         </ul>
         <!-- END BREADCRUMB  ->getBody()-->
         <div class="row">
             <div class="col-md-12">
-                <?php
-
-                use PhpParser\Node\Stmt\Echo_;
-
-                if (!empty(session()->getFlashdata('success'))) : ?>
+                <?php if (!empty(session()->getFlashdata('success'))) : ?>
                     <div class="alert alert-success" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <?php echo session()->getFlashdata('success'); ?>
@@ -43,21 +40,21 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <form autocomplete="off" action="/tunggakanTotal" method="POST">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
                                     <option value="">-- Select --</option>
                                     <?php foreach ($listTermYear as $rows) : ?>
-                                        <option value="<?= $rows->Term_Year_Id ?>" <?php if ($rows->Term_Year_Id == $termYear) echo " selected " ?>><?= $rows->Term_Year_Name ?></option>
+                                        <option value="<?= $rows->Term_Year_Id ?>" <?php if ($rows->Term_Year_Id == $termYear) echo "selected" ?>><?= $rows->Term_Year_Name ?></option>
                                     <?php endforeach ?>
-                                </select> <?php  ?>
+                                </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>Tunggakan Tahap</label>
                                 <select class="form-control select" name="tahap">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 1; $i <= 4; $i++) : ?>
-                                        <option value="<?= $i ?>" <?php if ($i == $paymentOrder) echo " selected " ?>><?= $i ?></option>
+                                        <option value="<?= $i ?>" <?php if ($i == $paymentOrder) echo "selected" ?>><?= $i ?></option>
                                     <?php endfor ?>
                                 </select>
                             </div>
@@ -66,17 +63,17 @@
                                     Cari</button>
                             </ul>
                         </form>
-                        <?php if ($termYear != null && $paymentOrder != null) : ?>
-                            <form action="/tunggakanTotal/cetak" method="post">
-                                <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
-                                <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
-                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
-                                    Export</button>
-                            </form>
-                        <?php endif ?>
                     </div>
                     <div class="panel-body col-md-12">
                         <?php if ($fakultas != null) : ?>
+                            <?php if ($termYear != null && $paymentOrder != null) : ?>
+                                <form action="/tunggakanTotal/cetak" method="post">
+                                    <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                    <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
+                                    <ul class="panel-controls"><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                            Export</button></ul>
+                                </form>
+                            <?php endif ?>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Rekap Tunggakan</h3>
@@ -112,9 +109,9 @@
                                                             <tr>
                                                                 <td><?= $no++ ?></td>
                                                                 <td><?= $prd['prodi'] ?></td>
-                                                                <?php $nilai = 0;
-                                                                foreach ($angkatan as $ang) : ?>
-                                                                    <?php foreach ($tunggakan as $tung) : ?>
+                                                                <?php foreach ($angkatan as $ang) : ?>
+                                                                    <?php $nilai = 0;
+                                                                    foreach ($tunggakan as $tung) : ?>
                                                                         <?php ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai ?>
                                                                     <?php endforeach ?>
                                                                     <td><?= number_to_currency($nilai, 'IDR') ?></td>

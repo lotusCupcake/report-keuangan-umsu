@@ -18,7 +18,7 @@ class PembayaranTotal extends BaseController
         $data = [
             'title' => "Total Pembayaran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Total Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Total Pembayaran'],
             'pembayaran' => [],
             'termYear' => null,
             'entryYear' => null,
@@ -68,12 +68,6 @@ class PembayaranTotal extends BaseController
                     'required' => 'Pembayaran Tahap Harus Diisi !',
                 ]
             ],
-            'tahunAngkatan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Tahun Angkatan Harus Diisi !',
-                ]
-            ],
             'tahunAjar' => [
                 'rules' => 'required',
                 'errors' => [
@@ -85,7 +79,6 @@ class PembayaranTotal extends BaseController
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
         $bank = $this->request->getPost('bank');
 
@@ -94,7 +87,6 @@ class PembayaranTotal extends BaseController
                 "Accept" => "application/json"
             ],
             "form_params" => [
-                "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
                 // "termYearName" => $term_year_name,
                 "tahap" => $payment_order,
@@ -112,9 +104,8 @@ class PembayaranTotal extends BaseController
         $data = [
             'title' => "Total Pembayaran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Total Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Total Pembayaran'],
             'termYear' => $term_year_id,
-            'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
             'bank' => $bank,
             'pembayaran' => json_decode($response->getBody())->data,

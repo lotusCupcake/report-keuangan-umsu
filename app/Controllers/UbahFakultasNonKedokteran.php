@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 
-class UbahAngkatan extends BaseController
+class UbahFakultasNonKedokteran extends BaseController
 {
     protected $curl;
 
@@ -17,9 +17,9 @@ class UbahAngkatan extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Per Angkatan",
+            'title' => "Fakultas Non Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Angkatan'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fakultas Non Kedokteran'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
@@ -30,7 +30,7 @@ class UbahAngkatan extends BaseController
         ];
         // dd($data);
 
-        return view('pages/ubahAngkatan', $data);
+        return view('pages/ubahFakultasNonKedokteran', $data);
     }
 
     public function getTermYear()
@@ -79,7 +79,7 @@ class UbahAngkatan extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to('ubahAngkatan')->withInput();
+            return redirect()->to('ubahFakultasNonKedokteran')->withInput();
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
@@ -102,9 +102,9 @@ class UbahAngkatan extends BaseController
         ]);
 
         $data = [
-            'title' => "Per Angkatan",
+            'title' => "Fakultas Non Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Angkatan'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fakultas Non Kedokteran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
@@ -117,6 +117,6 @@ class UbahAngkatan extends BaseController
         ];
 
         session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');
-        return view('pages/ubahAngkatan', $data);
+        return view('pages/ubahFakultasNonKedokteran', $data);
     }
 }

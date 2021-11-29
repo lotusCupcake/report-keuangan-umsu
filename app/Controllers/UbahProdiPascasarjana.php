@@ -3,8 +3,7 @@
 namespace App\Controllers;
 
 
-
-class UbahPascasarjana extends BaseController
+class UbahProdiPascasarjana extends BaseController
 {
     protected $curl;
 
@@ -18,9 +17,9 @@ class UbahPascasarjana extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Pascasarjana",
+            'title' => "Prodi Pascasarjana",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Pascasarjana'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Prodi', 'Prodi Pascasarjana'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
@@ -31,7 +30,7 @@ class UbahPascasarjana extends BaseController
         ];
         // dd($data);
 
-        return view('pages/ubahPascasarjana', $data);
+        return view('pages/ubahProdiPascasarjana', $data);
     }
 
     public function getTermYear()
@@ -49,6 +48,12 @@ class UbahPascasarjana extends BaseController
     public function proses()
     {
         if (!$this->validate([
+            'prodi' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Prodi Harus Dipilih2 !',
+                ]
+            ],
             'tahap' => [
                 'rules' => 'required',
                 'errors' => [
@@ -80,7 +85,7 @@ class UbahPascasarjana extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to('ubahPascasarjana')->withInput();
+            return redirect()->to('ubahProdiPascasarjana')->withInput();
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
@@ -103,9 +108,9 @@ class UbahPascasarjana extends BaseController
         ]);
 
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Pascasarjana",
+            'title' => "Prodi Pascasarjana",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Pascasarjana'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Prodi', 'Prodi Pascasarjana'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
@@ -118,6 +123,6 @@ class UbahPascasarjana extends BaseController
         ];
 
         session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');
-        return view('pages/ubahPascasarjana', $data);
+        return view('pages/ubahProdiPascasarjana', $data);
     }
 }

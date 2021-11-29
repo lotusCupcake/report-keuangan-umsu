@@ -3,7 +3,8 @@
 namespace App\Controllers;
 
 
-class UbahAngkatan extends BaseController
+
+class UbahFakultasPascasarjana extends BaseController
 {
     protected $curl;
 
@@ -17,9 +18,9 @@ class UbahAngkatan extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Per Angkatan",
+            'title' => "Fakultas Pascasarjana",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Angkatan'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fakultas Pascasarjana'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
@@ -30,7 +31,7 @@ class UbahAngkatan extends BaseController
         ];
         // dd($data);
 
-        return view('pages/ubahAngkatan', $data);
+        return view('pages/ubahFakultasPascasarjana', $data);
     }
 
     public function getTermYear()
@@ -79,7 +80,7 @@ class UbahAngkatan extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to('ubahAngkatan')->withInput();
+            return redirect()->to('ubahFakultasPascasarjana')->withInput();
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
@@ -102,9 +103,9 @@ class UbahAngkatan extends BaseController
         ]);
 
         $data = [
-            'title' => "Per Angkatan",
+            'title' => "Fakultas Pascasarjana",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Angkatan'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Fakultas', 'Fakultas Pascasarjana'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
@@ -117,6 +118,6 @@ class UbahAngkatan extends BaseController
         ];
 
         session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');
-        return view('pages/ubahAngkatan', $data);
+        return view('pages/ubahFakultasPascasarjana', $data);
     }
 }

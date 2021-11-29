@@ -14,8 +14,9 @@
         <!-- START BREADCRUMB -->
         <ul class="breadcrumb">
             <li><a href="/home"><?= $breadcrumb[0]; ?></a></li>
-            <li><a href="/ubahAngkatan"><?= $breadcrumb[1]; ?></a></li>
-            <li class="active"><?= $breadcrumb[2]; ?></li>
+            <li><a href="/ubahFakultasPascasarjana"><?= $breadcrumb[1]; ?></a></li>
+            <li><a href="/ubahFakultasPascasarjana"><?= $breadcrumb[2]; ?></a></li>
+            <li class="active"><?= $breadcrumb[3]; ?></li>
         </ul>
         <!-- END BREADCRUMB  ->getBody()-->
         <div class="row">
@@ -31,22 +32,26 @@
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
                     </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahunAngkatan')) : ?>
+                <?php endif; ?>
+                <?php if ($validation->hasError('tahunAngkatan')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahunAngkatan'); ?>
                     </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahap')) : ?>
+                <?php endif; ?>
+                <?php if ($validation->hasError('tahap')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahap'); ?>
                     </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahapTanggalAwal')) : ?>
+                <?php endif; ?>
+                <?php if ($validation->hasError('tahapTanggalAwal')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahapTanggalAwal'); ?>
                     </div>
-                <?php endif; ?> <?php if ($validation->hasError('tahapTanggalAkhir')) : ?>
+                <?php endif; ?>
+                <?php if ($validation->hasError('tahapTanggalAkhir')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Failed ! </strong><?= $validation->getError('tahapTanggalAkhir'); ?>
@@ -54,7 +59,7 @@
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form autocomplete="off" class="form-horizontal" action="/ubahAngkatan" method="POST">
+                        <form autocomplete="off" class="form-horizontal" action="/ubahFakultasPascasarjana" method="POST">
                             <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
@@ -65,7 +70,7 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <label>Tahun Angkatan</label>
+                                <label>Tahun Pascasarjana</label>
                                 <select class="form-control select" name="tahunAngkatan">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>

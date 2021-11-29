@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 
-class UbahAngkatan extends BaseController
+class UbahProdiKedokteran extends BaseController
 {
     protected $curl;
 
@@ -17,9 +17,9 @@ class UbahAngkatan extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Per Angkatan",
+            'title' => "Prodi Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Angkatan'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Prodi', 'Prodi Kedokteran'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
@@ -30,7 +30,7 @@ class UbahAngkatan extends BaseController
         ];
         // dd($data);
 
-        return view('pages/ubahAngkatan', $data);
+        return view('pages/ubahProdiKedokteran', $data);
     }
 
     public function getTermYear()
@@ -48,6 +48,12 @@ class UbahAngkatan extends BaseController
     public function proses()
     {
         if (!$this->validate([
+            'prodi' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Prodi Harus Dipilih2 !',
+                ]
+            ],
             'tahap' => [
                 'rules' => 'required',
                 'errors' => [
@@ -79,7 +85,7 @@ class UbahAngkatan extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to('ubahAngkatan')->withInput();
+            return redirect()->to('ubahProdiKedokteran')->withInput();
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
@@ -102,9 +108,9 @@ class UbahAngkatan extends BaseController
         ]);
 
         $data = [
-            'title' => "Per Angkatan",
+            'title' => "Prodi Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Angkatan'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Prodi', 'Prodi Kedokteran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
@@ -117,6 +123,6 @@ class UbahAngkatan extends BaseController
         ];
 
         session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');
-        return view('pages/ubahAngkatan', $data);
+        return view('pages/ubahProdiKedokteran', $data);
     }
 }

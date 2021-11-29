@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 
-class UbahKedokteran extends BaseController
+class UbahProdiNonKedokteran extends BaseController
 {
     protected $curl;
 
@@ -17,9 +17,9 @@ class UbahKedokteran extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Kedokteran",
+            'title' => "Prodi Non Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Kedokteran'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Prodi', 'Prodi Non Kedokteran'],
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
@@ -30,7 +30,7 @@ class UbahKedokteran extends BaseController
         ];
         // dd($data);
 
-        return view('pages/ubahKedokteran', $data);
+        return view('pages/ubahProdiNonKedokteran', $data);
     }
 
     public function getTermYear()
@@ -48,6 +48,12 @@ class UbahKedokteran extends BaseController
     public function proses()
     {
         if (!$this->validate([
+            'prodi' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Prodi Harus Dipilih2 !',
+                ]
+            ],
             'tahap' => [
                 'rules' => 'required',
                 'errors' => [
@@ -79,7 +85,7 @@ class UbahKedokteran extends BaseController
                 ]
             ],
         ])) {
-            return redirect()->to('ubahKedokteran')->withInput();
+            return redirect()->to('ubahProdiNonKedokteran')->withInput();
         }
 
         $term_year_id = $this->request->getPost('tahunAjar');
@@ -102,9 +108,9 @@ class UbahKedokteran extends BaseController
         ]);
 
         $data = [
-            'title' => "Set. Tanggal Tahap Fak. Kedokteran",
+            'title' => "Prodi Non Kedokteran",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Set. Tanggal Tahap Fak. Kedokteran'],
+            'breadcrumb' => ['Home', 'Setting Tanggal Tahap', 'Per Prodi', 'Prodi Non Kedokteran'],
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
@@ -117,6 +123,6 @@ class UbahKedokteran extends BaseController
         ];
 
         session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');
-        return view('pages/ubahKedokteran', $data);
+        return view('pages/ubahProdiNonKedokteran', $data);
     }
 }
