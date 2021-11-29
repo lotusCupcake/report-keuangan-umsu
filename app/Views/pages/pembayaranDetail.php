@@ -77,7 +77,7 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <label>Tempat Pembayaran</label>
+                                <label>Bank</label>
                                 <select class="form-control select" name="bank">
                                     <option value="">Keseluruhan</option>
                                     <?php foreach ($listBank as $rows) : ?>
