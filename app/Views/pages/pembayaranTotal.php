@@ -76,7 +76,7 @@
                     </div>
                     <div class="panel-body col-md-12">
                         <?php if ($prodi != null) : ?>
-                            <?php if ($termYear != null && $entryYear != null && $paymentOrder != null) : ?>
+                            <?php if ($termYear != null  && $paymentOrder != null) : ?>
                                 <form action="/pembayaranTotal/cetak" method="post">
                                     <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
                                     <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
@@ -85,63 +85,57 @@
                                             Export</button></ul>
                                 </form>
                             <?php endif ?>
-                            <?php foreach ($prodi as $prd) : ?>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title"><?= $prd ?></h3>
+                                        <h3 class="panel-title">Rekap Pembayaran</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="table-responsive">
                                             <table class="table table-bordered table-striped table-actions">
                                                 <thead>
                                                     <tr>
-                                                        <th>No.</th>
-                                                        <th>No Register</th>
-                                                        <th>NPM</th>
-                                                        <th>Nama Lengkap</th>
-                                                        <th>Angkatan</th>
-                                                        <th>Nama Biaya</th>
-                                                        <th>Bank</th>
-                                                        <th>Tahap</th>
-                                                        <th>Nominal</th>
+                                                        <th rowspan="2" style="text-align:center" valign="center">No.</th>
+                                                        <th style="text-align:center">Fakultas / Prodi</th>
+                                                        <th colspan=<?= count($angkatan) ?> style="text-align:center">Stambuk</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th></th>
+                                                        <?php foreach ($angkatan as $ang) : ?>
+                                                            <th style="text-align:center"><?= $ang ?></th>
+                                                        <?php endforeach ?>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php $total = 0;
-                                                    $no = 1;
-                                                    if (count($pembayaran) > 0) : ?>
-                                                        <?php foreach ($pembayaran as $rows) : ?>
-                                                            <?php if ($rows->PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
-                                                                <tr>
-                                                                    <td><?= $no++ ?></td>
-                                                                    <td><?= $rows->NO_REGISTER . " " . count($pembayaran) ?></td>
-                                                                    <td><?= $rows->Npm ?></td>
-                                                                    <td><?= $rows->NAMA_LENGKAP ?></td>
-                                                                    <td><?= $rows->ANGKATAN ?></td>
-                                                                    <td><?= $rows->NAMA_BIAYA ?></td>
-                                                                    <td><?= $rows->BANK_NAMA ?></td>
-                                                                    <td><?= ($rows->TAHAP == 0) ? "Lunas" : "Tahap " . $rows->TAHAP ?></td>
-                                                                    <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
-                                                                </tr>
-                                                            <?php endif ?>
-                                                        <?php endforeach ?>
+                                                    <?php foreach ($fakultas as $fak) : ?>
                                                         <tr>
-                                                            <td colspan=8 style="text-align: center;"><strong>Total Amount</strong></td>
-                                                            <td><strong><?= number_to_currency($total, 'IDR') ?></strong></td>
+                                                            <td></td>
+                                                            <td><strong><?= $fak ?></strong></td>
+                                                            <?php foreach ($angkatan as $ang) : ?>
+                                                                <td></td>
+                                                            <?php endforeach ?>
                                                         </tr>
-                                                    <?php else : ?>
-                                                        <tr>
-                                                            <td colspan=8 style="text-align:center">Tidak ada data</td>
-                                                        </tr>
-                                                    <?php endif ?>
+                                                        <?php $no = 1;
+                                                        foreach ($prodi as $prd) : ?>
+                                                        <?php if ($fak == $prd['fakultas']) : ?>
+                                                            <tr>
+                                                                <td><?= $no++ ?></td>
+                                                                <td><?= $prd['prodi'] ?></td>
+                                                                <?php foreach ($angkatan as $ang) : ?>
+                                                                    <?php $nilai = 0;
+                                                                    foreach ($pembayaran as $pemb) : ?>
+                                                                        <?php ($ang == $pemb->ANGKATAN && $prd['prodi'] == $pemb->PRODI) ? $nilai = $pemb->NOMINAL : $nilai = $nilai ?>
+                                                                    <?php endforeach ?>
+                                                                    <td><?= number_to_currency($nilai, 'IDR') ?></td>
+                                                                <?php endforeach ?>
+                                                            </tr>
+                                                        <?php endif ?>
+                                                    <?php endforeach ?>
+                                                    <?php endforeach ?>
                                                 </tbody>
                                             </table>
-
                                         </div>
                                     </div>
                                 </div>
-
-                            <?php endforeach ?>
                         <?php else : ?>
                             <center>
                                 <lottie-player src="<?= $icon ?>" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
