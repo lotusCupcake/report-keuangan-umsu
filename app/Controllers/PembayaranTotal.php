@@ -26,8 +26,10 @@ class PembayaranTotal extends BaseController
             'bank' => null,
             'listTermYear' => $this->getTermYear(),
             'listBank' => $this->getBank(),
+            'fakultas' => [],
             'prodi' => [],
             'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
+            'angkatan' => [],
             'validation' => \Config\Services::validation(),
         ];
         // dd($data);
@@ -82,7 +84,7 @@ class PembayaranTotal extends BaseController
         $payment_order = $this->request->getPost('tahap');
         $bank = $this->request->getPost('bank');
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanTotalPembayaran", [
             "headers" => [
                 "Accept" => "application/json"
             ],
@@ -94,10 +96,25 @@ class PembayaranTotal extends BaseController
             ]
         ]);
 
+        $fakultas = [];
+        foreach (json_decode($response->getBody())->data as $f) {
+            if (!in_array($f->FAKULTAS, $fakultas)) {
+                array_push($fakultas, $f->FAKULTAS);
+            }
+        }
+
         $prodi = [];
         foreach (json_decode($response->getBody())->data as $k) {
-            if (!in_array($k->PRODI, $prodi)) {
-                array_push($prodi, $k->PRODI);
+            array_push($prodi, [
+                "fakultas" => $k->FAKULTAS,
+                "prodi" => $k->PRODI
+            ]);
+        }
+
+        $angkatan = [];
+        foreach (json_decode($response->getBody())->data as $a) {
+            if (!in_array($a->ANGKATAN, $angkatan)) {
+                array_push($angkatan, $a->ANGKATAN);
             }
         }
 
@@ -111,9 +128,13 @@ class PembayaranTotal extends BaseController
             'pembayaran' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
             'listBank' => $this->getBank(),
-            'prodi' => $prodi,
+            'fakultas' => $fakultas,
+            'prodi' => array_unique($prodi, SORT_REGULAR),
+            'angkatan' => $angkatan,
             'validation' => \Config\Services::validation(),
         ];
+
+        // dd($data);
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Pembayaran, Klik Export Untuk Download !');
         return view('pages/pembayaranTotal', $data);
