@@ -24,6 +24,8 @@ class UbahFakultasNonKedokteran extends BaseController
             'entryYear' => null,
             'paymentOrder' => null,
             'filter' => null,
+            'startDate' => null,
+            'endDate' => null,
             'tunggakan' => [],
             'icon' => 'https://assets10.lottiefiles.com/packages/lf20_s6bvy00o.json',
             'fakultas' => $this->getFakultas(),

@@ -24,6 +24,8 @@ class UbahProdiPascasarjana extends BaseController
             'entryYear' => null,
             'paymentOrder' => null,
             'filter' => null,
+            'startDate' => null,
+            'endDate' => null,
             'tunggakan' => [],
             'prodi' => $this->getProdi('Pascasarjana'),
             'icon' => 'https://assets10.lottiefiles.com/packages/lf20_s6bvy00o.json',

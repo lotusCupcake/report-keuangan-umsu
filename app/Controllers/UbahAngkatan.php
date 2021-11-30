@@ -23,6 +23,8 @@ class UbahAngkatan extends BaseController
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
+            'startDate' => null,
+            'endDate' => null,
             'tunggakan' => [],
             'icon' => 'https://assets10.lottiefiles.com/packages/lf20_s6bvy00o.json',
             'listTermYear' => $this->getTermYear(),
@@ -97,7 +99,7 @@ class UbahAngkatan extends BaseController
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
                 "tahap" => $payment_order,
-                "filter"=>$filter,
+                "filter" => $filter,
                 "startDate" => $startDate,
                 "endDate" => $endDate
             ]

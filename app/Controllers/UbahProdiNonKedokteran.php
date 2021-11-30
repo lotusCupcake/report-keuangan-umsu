@@ -23,6 +23,8 @@ class UbahProdiNonKedokteran extends BaseController
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
+            'startDate' => null,
+            'endDate' => null,
             'filter' => null,
             'tunggakan' => [],
             'prodi' => $this->getProdi('NonKedokteran'),
@@ -108,7 +110,7 @@ class UbahProdiNonKedokteran extends BaseController
         $filter = $this->request->getPost('prodi');
         $startDate = $this->request->getPost('tahapTanggalAwal') . ' 00:00:00.000';
         $endDate = $this->request->getPost('tahapTanggalAkhir') . ' 23:59:00.000';
-        dd($term_year_id, $entry_year_id, $payment_order, $filter, $startDate, $endDate);
+        // dd($term_year_id, $entry_year_id, $payment_order, $filter, $startDate, $endDate);
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/updTanggalTahap", [
             "headers" => [
