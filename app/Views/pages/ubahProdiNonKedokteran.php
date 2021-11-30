@@ -70,6 +70,9 @@
                                 <label>Pilih Prodi</label>
                                 <select class="form-control select" name="prodi">
                                     <option value="">-- Select --</option>
+                                    <?php foreach ($prodi as $rows) : ?>
+                                        <option value="<?= $rows->Department_Acronym ?>"><?= $rows->Department_Name ?></option>
+                                    <?php endforeach ?>
                                 </select>
                             </div>
                             <div class="col-md-2">

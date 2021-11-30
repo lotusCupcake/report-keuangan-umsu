@@ -24,6 +24,7 @@ class UbahProdiNonKedokteran extends BaseController
             'entryYear' => null,
             'paymentOrder' => null,
             'tunggakan' => [],
+            'prodi'=> $this->getProdi('NonKedokteran'),
             'icon' => 'https://assets10.lottiefiles.com/packages/lf20_s6bvy00o.json',
             'listTermYear' => $this->getTermYear(),
             'validation' => \Config\Services::validation(),
@@ -31,6 +32,18 @@ class UbahProdiNonKedokteran extends BaseController
         // dd($data);
 
         return view('pages/ubahProdiNonKedokteran', $data);
+    }
+
+    public function getProdi($ket)
+    {
+        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getProdi?fakultas=".$ket, [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+
+        ]);
+
+        return json_decode($response->getBody())->data;
     }
 
     public function getTermYear()
@@ -118,6 +131,7 @@ class UbahProdiNonKedokteran extends BaseController
             'endDate' => $endDate,
             'dataUbah' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
+            'prodi'=> $this->getProdi('NonKedokteran'),
             'icon' => (json_decode($response->getBody())->status) ? 'https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json' : 'https://assets10.lottiefiles.com/packages/lf20_gO48yV.json',
             'validation' => \Config\Services::validation(),
         ];
