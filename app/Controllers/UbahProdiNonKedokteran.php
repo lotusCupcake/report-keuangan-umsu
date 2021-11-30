@@ -23,8 +23,9 @@ class UbahProdiNonKedokteran extends BaseController
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
+            'filter' => null,
             'tunggakan' => [],
-            'prodi'=> $this->getProdi('NonKedokteran'),
+            'prodi' => $this->getProdi('NonKedokteran'),
             'icon' => 'https://assets10.lottiefiles.com/packages/lf20_s6bvy00o.json',
             'listTermYear' => $this->getTermYear(),
             'validation' => \Config\Services::validation(),
@@ -36,7 +37,7 @@ class UbahProdiNonKedokteran extends BaseController
 
     public function getProdi($ket)
     {
-        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getProdi?fakultas=".$ket, [
+        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getProdi?fakultas=" . $ket, [
             "headers" => [
                 "Accept" => "application/json"
             ],
@@ -104,8 +105,10 @@ class UbahProdiNonKedokteran extends BaseController
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
+        $filter = $this->request->getPost('prodi');
         $startDate = $this->request->getPost('tahapTanggalAwal') . ' 00:00:00.000';
         $endDate = $this->request->getPost('tahapTanggalAkhir') . ' 23:59:00.000';
+        dd($term_year_id, $entry_year_id, $payment_order, $filter, $startDate, $endDate);
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/updTanggalTahap", [
             "headers" => [
@@ -115,6 +118,7 @@ class UbahProdiNonKedokteran extends BaseController
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
                 "tahap" => $payment_order,
+                "filter" => $filter,
                 "startDate" => $startDate,
                 "endDate" => $endDate
             ]
@@ -127,11 +131,12 @@ class UbahProdiNonKedokteran extends BaseController
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
+            'filter' => $filter,
             'startDate' => $startDate,
             'endDate' => $endDate,
             'dataUbah' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
-            'prodi'=> $this->getProdi('NonKedokteran'),
+            'prodi' => $this->getProdi('NonKedokteran'),
             'icon' => (json_decode($response->getBody())->status) ? 'https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json' : 'https://assets10.lottiefiles.com/packages/lf20_gO48yV.json',
             'validation' => \Config\Services::validation(),
         ];

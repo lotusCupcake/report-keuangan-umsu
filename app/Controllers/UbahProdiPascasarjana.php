@@ -23,7 +23,9 @@ class UbahProdiPascasarjana extends BaseController
             'termYear' => null,
             'entryYear' => null,
             'paymentOrder' => null,
+            'filter' => null,
             'tunggakan' => [],
+            'prodi' => $this->getProdi('Pascasarjana'),
             'icon' => 'https://assets10.lottiefiles.com/packages/lf20_s6bvy00o.json',
             'listTermYear' => $this->getTermYear(),
             'validation' => \Config\Services::validation(),
@@ -31,6 +33,18 @@ class UbahProdiPascasarjana extends BaseController
         // dd($data);
 
         return view('pages/ubahProdiPascasarjana', $data);
+    }
+
+    public function getProdi($ket)
+    {
+        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getProdi?fakultas=" . $ket, [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+
+        ]);
+
+        return json_decode($response->getBody())->data;
     }
 
     public function getTermYear()
@@ -88,9 +102,11 @@ class UbahProdiPascasarjana extends BaseController
             return redirect()->to('ubahProdiPascasarjana')->withInput();
         }
 
+        // dd($_POST);
         $term_year_id = $this->request->getPost('tahunAjar');
         $entry_year_id = $this->request->getPost('tahunAngkatan');
         $payment_order = $this->request->getPost('tahap');
+        $filter = $this->request->getPost('prodi');
         $startDate = $this->request->getPost('tahapTanggalAwal') . ' 00:00:00.000';
         $endDate = $this->request->getPost('tahapTanggalAkhir') . ' 23:59:00.000';
 
@@ -102,6 +118,7 @@ class UbahProdiPascasarjana extends BaseController
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
                 "tahap" => $payment_order,
+                "filter" => $filter,
                 "startDate" => $startDate,
                 "endDate" => $endDate
             ]
@@ -114,10 +131,12 @@ class UbahProdiPascasarjana extends BaseController
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
+            'filter' => $filter,
             'startDate' => $startDate,
             'endDate' => $endDate,
             'dataUbah' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
+            'prodi' => $this->getProdi('Pascasarjana'),
             'icon' => (json_decode($response->getBody())->status) ? 'https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json' : 'https://assets10.lottiefiles.com/packages/lf20_gO48yV.json',
             'validation' => \Config\Services::validation(),
         ];
