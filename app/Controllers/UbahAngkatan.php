@@ -91,6 +91,20 @@ class UbahAngkatan extends BaseController
         $startDate = $this->request->getPost('tahapTanggalAwal') . ' 00:00:00.000';
         $endDate = $this->request->getPost('tahapTanggalAkhir') . ' 23:59:00.000';
 
+        $responseData = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getDataTanggalTahap", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+            "form_params" => [
+                "entryYearId" => $entry_year_id,
+                "termYearId" => $term_year_id,
+                "tahap" => $payment_order,
+                "filter" => $filter,
+                "startDate" => $startDate,
+                "endDate" => $endDate
+            ]
+        ]);
+
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/updTanggalTahap", [
             "headers" => [
                 "Accept" => "application/json"
@@ -114,6 +128,7 @@ class UbahAngkatan extends BaseController
             'paymentOrder' => $payment_order,
             'startDate' => $startDate,
             'endDate' => $endDate,
+            'jumlah' => json_decode($responseData->getBody())->jumlah,
             'dataUbah' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
             'icon' => (json_decode($response->getBody())->status) ? 'https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json' : 'https://assets10.lottiefiles.com/packages/lf20_gO48yV.json',

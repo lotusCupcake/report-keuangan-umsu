@@ -23,7 +23,7 @@
                 <?php if (!empty(session()->getFlashdata('success'))) : ?>
                     <div class="alert alert-success" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <?php echo session()->getFlashdata('success'); ?>
+                        <?php echo session()->getFlashdata('success'). ', '.$jumlah.' data berhasil diubah'; ?>
                     </div>
                 <?php endif; ?>
                 <?php if ($validation->hasError('tahunAjar')) : ?>
