@@ -121,17 +121,19 @@
                                                     $no = 1;
                                                     if (count($tunggakan) > 0) : ?>
                                                         <?php foreach ($tunggakan as $rows) : ?>
-                                                            <?php if ($rows->NAMA_PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
-                                                                <tr>
-                                                                    <td><?= $no++ ?></td>
-                                                                    <td><?= $rows->NO_REGISTER . " " . count($tunggakan) ?></td>
-                                                                    <td><?= $rows->Npm ?></td>
-                                                                    <td><?= $rows->NAMA_LENGKAP ?></td>
-                                                                    <td><?= $rows->ANGKATAN ?></td>
-                                                                    <td><?= $rows->NAMA_BIAYA ?></td>
-                                                                    <td><?= $rows->TAHAP ?></td>
-                                                                    <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
-                                                                </tr>
+                                                            <?php if ($rows->NOMINAL != 0) :?>
+                                                                <?php if ($rows->NAMA_PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
+                                                                    <tr>
+                                                                        <td><?= $no++ ?></td>
+                                                                        <td><?= $rows->NO_REGISTER . " " . count($tunggakan) ?></td>
+                                                                        <td><?= $rows->Npm ?></td>
+                                                                        <td><?= $rows->NAMA_LENGKAP ?></td>
+                                                                        <td><?= $rows->ANGKATAN ?></td>
+                                                                        <td><?= $rows->NAMA_BIAYA ?></td>
+                                                                        <td><?= $rows->TAHAP ?></td>
+                                                                        <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
+                                                                    </tr>
+                                                                <?php endif ?>
                                                             <?php endif ?>
                                                         <?php endforeach ?>
                                                         <tr>

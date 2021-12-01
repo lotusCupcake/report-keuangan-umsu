@@ -171,19 +171,21 @@ class TunggakanDetail extends BaseController
             $total = 0;
             $no = 1;
             foreach (json_decode($response->getBody())->data as $data) {
-                if ($prd == $data->NAMA_PRODI) {
-                    $total = $total + $data->NOMINAL;
-                    $spreadsheet->setActiveSheetIndex(0)
-                        ->setCellValue('A' . $konten, $no++)
-                        ->setCellValue('B' . $konten, $data->NO_REGISTER)
-                        ->setCellValue('C' . $konten, $data->Npm)
-                        ->setCellValue('D' . $konten, $data->NAMA_LENGKAP)
-                        ->setCellValue('E' . $konten, $data->NAMA_PRODI)
-                        ->setCellValue('F' . $konten, $data->ANGKATAN)
-                        ->setCellValue('G' . $konten, $data->NAMA_BIAYA)
-                        ->setCellValue('H' . $konten, $data->TAHAP)
-                        ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "H" . $konten);
-                    $konten++;
+                if ($data->NOMINAL != 0) {
+                    if ($prd == $data->NAMA_PRODI) {
+                        $total = $total + $data->NOMINAL;
+                        $spreadsheet->setActiveSheetIndex(0)
+                            ->setCellValue('A' . $konten, $no++)
+                            ->setCellValue('B' . $konten, $data->NO_REGISTER)
+                            ->setCellValue('C' . $konten, $data->Npm)
+                            ->setCellValue('D' . $konten, $data->NAMA_LENGKAP)
+                            ->setCellValue('E' . $konten, $data->NAMA_PRODI)
+                            ->setCellValue('F' . $konten, $data->ANGKATAN)
+                            ->setCellValue('G' . $konten, $data->NAMA_BIAYA)
+                            ->setCellValue('H' . $konten, $data->TAHAP)
+                            ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "H" . $konten);
+                        $konten++;
+                    }
                 }
             }
             $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "H" . $konten)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
