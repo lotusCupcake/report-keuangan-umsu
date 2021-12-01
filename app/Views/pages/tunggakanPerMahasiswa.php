@@ -26,23 +26,27 @@
                         <?php echo session()->getFlashdata('success'); ?>
                     </div>
                 <?php endif; ?>
-                <?php if ($validation->hasError('mahasiswa')) : ?>
+                <?php if ($validation->hasError('namaMahasiswa')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Failed ! </strong><?= $validation->getError('mahasiswa'); ?>
+                        <strong>Failed ! </strong><?= $validation->getError('namaMahasiswa'); ?>
                     </div>
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form autocomplete="off" action="/tunggakanDetail" method="POST">
-                            <div class="col-md-4">
-                                <label>NPM / Nama Mahasiswa</label>
-                                <input type="text" class="form-control" name="mahasiswa" value="" placeholder="Type here...">
+                        <form autocomplete="off" action="/tunggakanPerMahasiswa" method="POST">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <label>NPM / Nama Mahasiswa</label>
+                                        <input type="text" class="form-control" value="" name="namaMahasiswa" placeholder="Type here..." />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary"><span class="fa fa-search"></span>
+                                                cari</button>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                            <ul class="panel-controls">
-                                <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-success"><span class="fa fa-search"></span>
-                                    Cari</button>
-                            </ul>
                         </form>
                     </div>
                     <div class="panel-body col-md-12">

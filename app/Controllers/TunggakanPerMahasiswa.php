@@ -51,10 +51,10 @@ class TunggakanPerMahasiswa extends BaseController
     public function prosesTunggakanPerMahasiswa()
     {
         if (!$this->validate([
-            'mahasiswa' => [
+            'namaMahasiswa' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'Nama/NPM Mahasiswa Harus Diisi !',
+                    'required' => 'Nama / NPM Mahasiswa Harus Diisi !',
                 ]
             ],
         ])) {
