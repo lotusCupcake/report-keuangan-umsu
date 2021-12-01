@@ -128,14 +128,13 @@ class UbahAngkatan extends BaseController
             'paymentOrder' => $payment_order,
             'startDate' => $startDate,
             'endDate' => $endDate,
-            'jumlah' => json_decode($responseData->getBody())->jumlah,
             'dataUbah' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
             'icon' => (json_decode($response->getBody())->status) ? 'https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json' : 'https://assets10.lottiefiles.com/packages/lf20_gO48yV.json',
             'validation' => \Config\Services::validation(),
         ];
 
-        session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');
+        session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap, '.json_decode($responseData->getBody())->jumlah.' data berhasil diubah');
         return view('pages/ubahAngkatan', $data);
     }
 }
