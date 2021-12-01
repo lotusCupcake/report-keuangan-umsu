@@ -65,6 +65,11 @@ $routes->post('/endorsement', 'Endorsement::add');
 $routes->get('/endorsement/(:any)', 'Endorsement::index');
 $routes->add('/endorsement/(:num)/edit', 'Endorsement::edit/$1');
 
+// Route  Tunggakan PerMahasiswa
+$routes->get('/tunggakanPerMahasiswa/(:any)', 'TunggakanPerMahasiswa::index');
+$routes->post('/tunggakanPerMahasiswa/cetak', 'TunggakanPerMahasiswa::cetakTunggakanPerMahasiswa');
+$routes->post('/tunggakanPerMahasiswa', 'TunggakanPerMahasiswa::prosesTunggakanPerMahasiswa');
+
 // Route  Tunggakan Detail
 $routes->get('/tunggakanDetail/(:any)', 'TunggakanDetail::index');
 $routes->post('/tunggakanDetailProdi/cetak', 'TunggakanDetail::cetakTunggakanDetailProdi');
