@@ -105,6 +105,8 @@ class UbahAngkatan extends BaseController
             ]
         ]);
 
+        $jumlah = json_decode($responseData->getBody())->jumlah;
+
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/updTanggalTahap", [
             "headers" => [
                 "Accept" => "application/json"
@@ -134,7 +136,7 @@ class UbahAngkatan extends BaseController
             'validation' => \Config\Services::validation(),
         ];
 
-        session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap, '.json_decode($responseData->getBody())->jumlah.' data berhasil diubah');
+        session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap, '.$jumlah.' data berhasil diubah');
         return view('pages/ubahAngkatan', $data);
     }
 }
