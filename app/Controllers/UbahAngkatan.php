@@ -56,12 +56,6 @@ class UbahAngkatan extends BaseController
                     'required' => 'Pembayaran Tahap Harus Diisi !',
                 ]
             ],
-            'tahunAngkatan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Tahun Angkatan Harus Diisi !',
-                ]
-            ],
             'tahunAjar' => [
                 'rules' => 'required',
                 'errors' => [
@@ -136,7 +130,7 @@ class UbahAngkatan extends BaseController
             'validation' => \Config\Services::validation(),
         ];
 
-        session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap, '.$jumlah.' data berhasil diubah');
+        session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap, ' . $jumlah . ' data berhasil diubah');
         return view('pages/ubahAngkatan', $data);
     }
 }

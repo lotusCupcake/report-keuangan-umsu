@@ -69,12 +69,6 @@ class UbahFakultasKedokteran extends BaseController
                     'required' => 'Pembayaran Tahap Harus Diisi !',
                 ]
             ],
-            'tahunAngkatan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Tahun Angkatan Harus Diisi !',
-                ]
-            ],
             'tahunAjar' => [
                 'rules' => 'required',
                 'errors' => [

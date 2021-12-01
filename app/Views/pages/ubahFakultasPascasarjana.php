@@ -33,12 +33,6 @@
                         <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
                     </div>
                 <?php endif; ?>
-                <?php if ($validation->hasError('tahunAngkatan')) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Failed ! </strong><?= $validation->getError('tahunAngkatan'); ?>
-                    </div>
-                <?php endif; ?>
                 <?php if ($validation->hasError('tahap')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -72,7 +66,7 @@
                             <div class="col-md-2">
                                 <label>Tahun Angkatan</label>
                                 <select class="form-control select" name="tahunAngkatan">
-                                    <option value="">-- Select --</option>
+                                    <option value="">Semua Angkatan</option>
                                     <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
                                         <option value="<?= $i ?>" <?php if ($i == $entryYear) echo " selected" ?>><?= $i ?></option>
                                     <?php endfor ?>
@@ -90,14 +84,14 @@
                             <div class="col-md-2">
                                 <label>Tanggal Awal</label>
                                 <div class="input-group date" id="dp-2" data-date-format="yyyy-mm-dd">
-                                    <input type="text" class="form-control datepicker" value="<?= date("Y-m-d", strtotime($startDate));  ?>" name="tahapTanggalAwal" />
+                                    <input type="text" class="form-control datepicker" value="<?= date("Y-m-d", strtotime(($startDate != null) ? $startDate : "now"));  ?>" name="tahapTanggalAwal" />
                                     <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <label>Tanggal Akhir</label>
                                 <div class="input-group date" id="dp-2" data-date-format="yyyy-mm-dd">
-                                    <input type="text" class="form-control datepicker" value="<?= date("Y-m-d", strtotime($endDate));  ?>" name="tahapTanggalAkhir" />
+                                    <input type="text" class="form-control datepicker" value="<?= date("Y-m-d", strtotime(($endDate != null) ? $endDate : "+1 week"));  ?>" name="tahapTanggalAkhir" />
                                     <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
