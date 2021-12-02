@@ -26,12 +26,13 @@
                         <?php echo session()->getFlashdata('success'); ?>
                     </div>
                 <?php endif; ?>
-                <?php if ($validation->hasError('namaMahasiswa')) : ?>
+                <?php if ($validation->hasError('filter')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Failed ! </strong><?= $validation->getError('namaMahasiswa'); ?>
+                        <strong>Failed ! </strong><?= $validation->getError('filter'); ?>
                     </div>
                 <?php endif; ?>
+
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <form autocomplete="off" action="/tunggakanPerMahasiswa" method="POST">
@@ -39,7 +40,7 @@
                                 <div class="col-md-4">
                                     <div class="input-group">
                                         <label>NPM / Nama Mahasiswa</label>
-                                        <input type="text" class="form-control" value="" name="namaMahasiswa" placeholder="Type here..." />
+                                        <input type="text" class="form-control" value="<?= $filter; ?>" name="filter" placeholder="Type here..." />
                                         <span class="input-group-btn">
                                             <button class="btn btn-primary"><span class="fa fa-search"></span>
                                                 cari</button>
@@ -49,19 +50,38 @@
                             </div>
                         </form>
                     </div>
+
                     <div class="panel-body col-md-12">
-                        <?php if ($prodi != null) : ?>
-                            <?php if ($termYear != null) : ?>
-                                <form action="/tunggakanPerMahasiswa/cetak" method="post">
-                                    <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
-                                    <ul class="panel-controls"><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
-                                            Export</button></ul>
-                                </form>
-                            <?php endif ?>
-                            <?php foreach ($prodi as $prd) : ?>
+                        <?php if ($tunggakan != null && $student != null) : ?>
+                            <div class="col-md-2">
+                                <div class="panel panel-default">
+                                    <div class="panel-body profile">
+                                        <div class="profile-image"><img height="100" src=<?= (filter_var("https://mahasiswa.umsu.ac.id/FotoMhs/" . $student[0]->Entry_Year_Id . "/" . $student[0]->Nim . ".jpg", FILTER_VALIDATE_URL)) ? "https://mahasiswa.umsu.ac.id/FotoMhs/" . $student[0]->Entry_Year_Id . "/" . $student[0]->Nim . ".jpg" : "theme/assets/images/users/no-image.jpg"; ?> alt="Foto Mahasiswa" />
+                                        </div>
+                                        <div class="profile-data">
+                                            <div class="profile-data-name"><?= $student[0]->Full_Name ?></div>
+                                            <div class="profile-data-title"><?= $student[0]->Nim ?></div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="contact-info">
+                                            <p><small>Fakultas</small><br /><?= $student[0]->Faculty_Name ?></p>
+                                            <p><small>Prodi</small><br /><?= $student[0]->Department_Name ?></p>
+                                            <p><small>Kelas</small><br /><?= $student[0]->Class_Name ?> <?= $student[0]->Class_Program_Name ?></p>
+                                            <p><small>Program Kuliah</small><br /><?= $student[0]->Class_Program_Name ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title"><?= $prd ?></h3>
+                                        <h3 class="panel-title">Tunggakan <strong><?= $student[0]->Full_Name ?></strong></h3>
+                                        <form action="/tunggakanPerMahasiswa/cetak" method="post">
+                                            <input type="hidden" name="tahunAjar" value="">
+                                            <ul class="panel-controls"><button style="display: inline-block; " type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
+                                                    Export</button></ul>
+                                        </form>
                                     </div>
                                     <div class="panel-body">
                                         <div class="table-responsive">
@@ -69,11 +89,8 @@
                                                 <thead>
                                                     <tr>
                                                         <th>No.</th>
-                                                        <th>No Register</th>
-                                                        <th>NPM</th>
-                                                        <th>Nama Lengkap</th>
-                                                        <th>Angkatan</th>
-                                                        <th>Nama Biaya</th>
+                                                        <th>Tahun</th>
+                                                        <th>Nama Tagihan</th>
                                                         <th>Tahap</th>
                                                         <th>Nominal</th>
                                                     </tr>
@@ -81,51 +98,40 @@
                                                 <tbody>
                                                     <?php $total = 0;
                                                     $no = 1;
-                                                    if (count($tunggakan) > 0) : ?>
-                                                        <?php foreach ($tunggakan as $rows) : ?>
-                                                            <?php if ($rows->NAMA_PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
-                                                                <tr>
-                                                                    <td><?= $no++ ?></td>
-                                                                    <td><?= $rows->NO_REGISTER . " " . count($tunggakan) ?></td>
-                                                                    <td><?= $rows->Npm ?></td>
-                                                                    <td><?= $rows->NAMA_LENGKAP ?></td>
-                                                                    <td><?= $rows->ANGKATAN ?></td>
-                                                                    <td><?= $rows->NAMA_BIAYA ?></td>
-                                                                    <td><?= $rows->TAHAP ?></td>
-                                                                    <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
-                                                                </tr>
-                                                            <?php endif ?>
-                                                        <?php endforeach ?>
+                                                    foreach ($tunggakan as $rows) : $total = $total + $rows->Amount ?>
                                                         <tr>
-                                                            <td colspan=7 style="text-align: center;"><strong>Total Amount</strong></td>
-                                                            <td><strong><?= number_to_currency($total, 'IDR') ?></strong></td>
+                                                            <td><?= $no++; ?></td>
+                                                            <td><?= $rows->Term_Year_Bill_id; ?></td>
+                                                            <td><?= $rows->Cost_Item_Name; ?></td>
+                                                            <td><?= $rows->Payment_Order; ?></td>
+                                                            <td><?= number_to_currency($rows->Amount, 'IDR') ?></td>
                                                         </tr>
-                                                    <?php else : ?>
-                                                        <tr>
-                                                            <td colspan=8 style="text-align:center">Tidak ada data</td>
-                                                        </tr>
-                                                    <?php endif ?>
+                                                    <?php endforeach ?>
+                                                    <tr>
+                                                        <td style="text-align:center" colspan="4"><strong>Total</stong>
+                                                        </td>
+                                                        <td><strong><?= number_to_currency($total, 'IDR') ?></strong></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
-
                                         </div>
                                     </div>
                                 </div>
-
-                            <?php endforeach ?>
+                            </div>
                         <?php else : ?>
                             <center>
                                 <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
                             </center>
+
                         <?php endif ?>
+
                     </div>
                 </div>
             </div>
+            <!-- END PAGE CONTENT -->
         </div>
-        <!-- END PAGE CONTENT -->
-    </div>
-    <!-- END PAGE CONTAINER -->
+        <!-- END PAGE CONTAINER -->
 
 
 
-    <?= $this->endSection(); ?>
+        <?= $this->endSection(); ?>
