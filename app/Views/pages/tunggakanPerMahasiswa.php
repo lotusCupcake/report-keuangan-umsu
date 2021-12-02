@@ -20,7 +20,11 @@
         <!-- END BREADCRUMB  ->getBody()-->
         <div class="row">
             <div class="col-md-12">
-                <?php if (!empty(session()->getFlashdata('success'))) : ?>
+                <?php
+
+                use phpDocumentor\Reflection\Types\Null_;
+
+                if (!empty(session()->getFlashdata('success'))) : ?>
                     <div class="alert alert-success" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <?php echo session()->getFlashdata('success'); ?>
@@ -78,7 +82,7 @@
                                     <div class="panel-heading">
                                         <h3 class="panel-title">Tunggakan <strong><?= $student[0]->Full_Name ?></strong></h3>
                                         <form action="/tunggakanPerMahasiswa/cetak" method="post">
-                                            <input type="hidden" name="tahunAjar" value="">
+                                            <input type="hidden" name="filter" value="<?= ($student != Null) ? $student[0]->Nim : '' ?>">
                                             <ul class="panel-controls"><button style="display: inline-block; " type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                                     Export</button></ul>
                                         </form>

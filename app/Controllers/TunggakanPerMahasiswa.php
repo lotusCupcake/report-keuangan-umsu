@@ -87,6 +87,7 @@ class TunggakanPerMahasiswa extends BaseController
 
     public function cetakTunggakanPerMahasiswa()
     {
+        // dd($_POST);
         $filter = $this->request->getPost('filter');
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getBillStudent", [
@@ -100,8 +101,35 @@ class TunggakanPerMahasiswa extends BaseController
 
         $spreadsheet = new Spreadsheet();
 
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . 1, "Total Tunggakan Mahasiswa")->mergeCells("A" . 1 . ":" . "E" . 1)->getStyle("A" . 1 . ":" . "E" . 1)->getFont()->setBold(true);
+        $konten = 1;
+        $konten = $konten + 1;
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A' . $konten, 'No.')
+            ->setCellValue('B' . $konten, 'Tahun')
+            ->setCellValue('C' . $konten, 'Nama Tagihan')
+            ->setCellValue('D' . $konten, 'Tahap')
+            ->setCellValue('E' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "E" . $konten)->getFont()->setBold(true);
+
+        $konten = $konten + 1;
+        $total = 0;
+        $no = 1;
+        foreach (json_decode($response->getBody())->data as $data) {
+            $total = $total + $data->Amount;
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $konten, $no++)
+                ->setCellValue('B' . $konten, $data->Term_Year_Bill_id)
+                ->setCellValue('C' . $konten, $data->Cost_Item_Name)
+                ->setCellValue('D' . $konten, $data->Payment_Order)
+                ->setCellValue('E' . $konten, number_to_currency($data->Amount, 'IDR'))->getStyle("A" . $konten . ":" . "E" . $konten);
+            $konten++;
+        }
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "D" . $konten)->getStyle("A" . $konten . ":" . "D" . $konten)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('E' . $konten, number_to_currency($total, 'IDR'))->getStyle('E' . $konten)->getFont()->setBold(true);
+
+
         $writer = new Xlsx($spreadsheet);
-        $fileName = 'Data Total Tunggakan Mahasiswa';
+        $fileName = 'Data Tunggakan Mahasiswa';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
