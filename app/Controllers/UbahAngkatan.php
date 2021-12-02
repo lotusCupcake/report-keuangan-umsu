@@ -78,12 +78,12 @@ class UbahAngkatan extends BaseController
             return redirect()->to('ubahAngkatan')->withInput();
         }
 
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
-        $payment_order = $this->request->getPost('tahap');
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
+        $payment_order = trim($this->request->getPost('tahap'));
         $filter = '';
-        $startDate = $this->request->getPost('tahapTanggalAwal') . ' 00:00:00.000';
-        $endDate = $this->request->getPost('tahapTanggalAkhir') . ' 23:59:00.000';
+        $startDate = trim($this->request->getPost('tahapTanggalAwal')) . ' 00:00:00.000';
+        $endDate = trim($this->request->getPost('tahapTanggalAkhir')) . ' 23:59:00.000';
 
         $responseData = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getDataTanggalTahap", [
             "headers" => [

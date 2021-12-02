@@ -87,10 +87,10 @@ class PembayaranDetail extends BaseController
             return redirect()->to('pembayaranDetail')->withInput();
         }
 
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
-        $payment_order = $this->request->getPost('tahap');
-        $bank = $this->request->getPost('bank');
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
+        $payment_order = trim($this->request->getPost('tahap'));
+        $bank = trim($this->request->getPost('bank'));
         // dd($term_year_id, $entry_year_id, $payment_order, $bank);
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
@@ -133,10 +133,10 @@ class PembayaranDetail extends BaseController
 
     public function cetakPembayaranDetailProdi()
     {
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
-        $payment_order = $this->request->getPost('tahap');
-        $bank = $this->request->getPost('bank');
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
+        $payment_order = trim($this->request->getPost('tahap'));
+        $bank = trim($this->request->getPost('bank'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [
@@ -215,10 +215,10 @@ class PembayaranDetail extends BaseController
 
     public function cetakPembayaranDetailSeluruh()
     {
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
-        $payment_order = $this->request->getPost('tahap');
-        $bank = $this->request->getPost('bank');
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
+        $payment_order = trim($this->request->getPost('tahap'));
+        $bank = trim($this->request->getPost('bank'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [

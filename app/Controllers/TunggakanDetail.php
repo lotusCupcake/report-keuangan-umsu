@@ -72,9 +72,9 @@ class TunggakanDetail extends BaseController
             return redirect()->to('tunggakanDetail')->withInput();
         }
 
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
-        $payment_order = $this->request->getPost('tahap');
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
+        $payment_order = trim($this->request->getPost('tahap'));
         // dd($term_year_id, $entry_year_id, $payment_order);
 
 
@@ -116,9 +116,9 @@ class TunggakanDetail extends BaseController
 
     public function cetakTunggakanDetailProdi()
     {
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
-        $payment_order = $this->request->getPost('tahap');
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
+        $payment_order = trim($this->request->getPost('tahap'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
             "headers" => [
@@ -207,9 +207,9 @@ class TunggakanDetail extends BaseController
 
     public function cetakTunggakanDetailSeluruh()
     {
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
-        $payment_order = $this->request->getPost('tahap');
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
+        $payment_order = trim($this->request->getPost('tahap'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
             "headers" => [

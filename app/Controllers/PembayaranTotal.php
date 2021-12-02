@@ -82,9 +82,9 @@ class PembayaranTotal extends BaseController
             return redirect()->to('pembayaranTotal')->withInput();
         }
 
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $payment_order = $this->request->getPost('tahap');
-        $bank = $this->request->getPost('bank');
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $payment_order = trim($this->request->getPost('tahap'));
+        $bank = trim($this->request->getPost('bank'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanTotalPembayaran", [
             "headers" => [
@@ -144,9 +144,9 @@ class PembayaranTotal extends BaseController
 
     public function cetakPembayaranTotal()
     {
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $payment_order = $this->request->getPost('tahap');
-        $bank = $this->request->getPost('bank');
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $payment_order = trim($this->request->getPost('tahap'));
+        $bank = trim($this->request->getPost('bank'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanTotalPembayaran", [
             "headers" => [

@@ -57,7 +57,7 @@ class TunggakanPerMahasiswa extends BaseController
         }
 
         // dd($_POST);
-        $filter = $this->request->getPost('filter');
+        trim($filter = $this->request->getPost('filter'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getBillStudent", [
             "headers" => [
@@ -88,7 +88,7 @@ class TunggakanPerMahasiswa extends BaseController
     public function cetakTunggakanPerMahasiswa()
     {
         // dd($_POST);
-        $filter = $this->request->getPost('filter');
+        $filter = trim($this->request->getPost('filter'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getBillStudent", [
             "headers" => [

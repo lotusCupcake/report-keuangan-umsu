@@ -92,12 +92,12 @@ class UbahFakultasPascasarjana extends BaseController
             return redirect()->to('ubahFakultasPascasarjana')->withInput();
         }
 
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
-        $payment_order = $this->request->getPost('tahap');
-        $filter = ($this->request->getPost('fakultas') == '') ? 'Pascasarjana' : $this->request->getPost('fakultas');
-        $startDate = $this->request->getPost('tahapTanggalAwal') . ' 00:00:00.000';
-        $endDate = $this->request->getPost('tahapTanggalAkhir') . ' 23:59:00.000';
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
+        $payment_order = trim($this->request->getPost('tahap'));
+        $filter = trim($this->request->getPost('fakultas') == '') ? 'Pascasarjana' : trim($this->request->getPost('fakultas'));
+        $startDate = trim($this->request->getPost('tahapTanggalAwal')) . ' 00:00:00.000';
+        $endDate = trim($this->request->getPost('tahapTanggalAkhir')) . ' 23:59:00.000';
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/updTanggalTahap", [
             "headers" => [

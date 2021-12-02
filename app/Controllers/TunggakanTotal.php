@@ -66,8 +66,8 @@ class TunggakanTotal extends BaseController
             return redirect()->to('tunggakanTotal')->withInput();
         }
 
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $payment_order = $this->request->getPost('tahap');
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $payment_order = trim($this->request->getPost('tahap'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getTotalTunggakan", [
             "headers" => [
@@ -122,8 +122,8 @@ class TunggakanTotal extends BaseController
 
     public function cetakTunggakanTotal()
     {
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $payment_order = $this->request->getPost('tahap');
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $payment_order = trim($this->request->getPost('tahap'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getTotalTunggakan", [
             "headers" => [

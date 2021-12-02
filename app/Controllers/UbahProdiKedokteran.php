@@ -99,12 +99,12 @@ class UbahProdiKedokteran extends BaseController
         }
 
         // dd($_POST);
-        $term_year_id = $this->request->getPost('tahunAjar');
-        $entry_year_id = $this->request->getPost('tahunAngkatan');
-        $payment_order = $this->request->getPost('tahap');
-        $filter = $this->request->getPost('prodi');
-        $startDate = $this->request->getPost('tahapTanggalAwal') . ' 00:00:00.000';
-        $endDate = $this->request->getPost('tahapTanggalAkhir') . ' 23:59:00.000';
+        $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
+        $payment_order = trim($this->request->getPost('tahap'));
+        $filter = trim($this->request->getPost('prodi'));
+        $startDate = trim($this->request->getPost('tahapTanggalAwal')) . ' 00:00:00.000';
+        $endDate = trim($this->request->getPost('tahapTanggalAkhir')) . ' 23:59:00.000';
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/updTanggalTahap", [
             "headers" => [
