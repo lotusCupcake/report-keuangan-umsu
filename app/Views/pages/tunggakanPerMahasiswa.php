@@ -20,14 +20,22 @@
         <!-- END BREADCRUMB  ->getBody()-->
         <div class="row">
             <div class="col-md-12">
-                <?php
-
-                use phpDocumentor\Reflection\Types\Null_;
-
-                if (!empty(session()->getFlashdata('success'))) : ?>
+                <?php if (!empty(session()->getFlashdata('success'))) : ?>
                     <div class="alert alert-success" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <?php echo session()->getFlashdata('success'); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty(session()->getFlashdata('failed'))) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <?php echo session()->getFlashdata('failed'); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty(session()->getFlashdata('successBiodata'))) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <?php echo session()->getFlashdata('successBiodata'); ?>
                     </div>
                 <?php endif; ?>
                 <?php if ($validation->hasError('filter')) : ?>
@@ -36,7 +44,6 @@
                         <strong>Failed ! </strong><?= $validation->getError('filter'); ?>
                     </div>
                 <?php endif; ?>
-
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <form autocomplete="off" action="/tunggakanPerMahasiswa" method="POST">
@@ -54,9 +61,8 @@
                             </div>
                         </form>
                     </div>
-
                     <div class="panel-body col-md-12">
-                        <?php if ($tunggakan != null && $student != null) : ?>
+                        <?php if ($student != null) : ?>
                             <div class="col-md-2">
                                 <div class="panel panel-default">
                                     <div class="panel-body profile">
@@ -77,12 +83,35 @@
                                     </div>
                                 </div>
                             </div>
+                        <?php else : ?>
+                            <div class="col-md-2">
+                                <div class="panel panel-default">
+                                    <div class="panel-body profile">
+                                        <div class="profile-image"><img src="theme/assets/images/users/no-image.jpg" alt="Foto Mahasiswa" />
+                                        </div>
+                                        <div class="profile-data">
+                                            <div class="profile-data-name">-</div>
+                                            <div class="profile-data-title">-</div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="contact-info">
+                                            <p><small>Fakultas</small><br />-</p>
+                                            <p><small>Prodi</small><br />-</p>
+                                            <p><small>Kelas</small><br />-</p>
+                                            <p><small>Program Kuliah</small><br />-</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif  ?>
+                        <?php if ($tunggakan != null) : ?>
                             <div class="col-md-10">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title">Tunggakan <strong><?= $student[0]->Full_Name ?></strong></h3>
+                                        <h3 class="panel-title">Tunggakan <strong>Mahasiswa</strong></h3>
                                         <form action="/tunggakanPerMahasiswa/cetak" method="post">
-                                            <input type="hidden" name="filter" value="<?= ($student != Null) ? $student[0]->Nim : '' ?>">
+                                            <input type="hidden" name="filter" value="<?= $student[0]->Nim  ?>">
                                             <ul class="panel-controls"><button style="display: inline-block; " type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                                     Export</button></ul>
                                         </form>
@@ -123,12 +152,34 @@
                                 </div>
                             </div>
                         <?php else : ?>
-                            <center>
-                                <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
-                            </center>
-
+                            <div class="col-md-10">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Tunggakan <strong>Mahasiswa</strong></h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-actions">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>Tahun</th>
+                                                        <th>Nama Tagihan</th>
+                                                        <th>Tahap</th>
+                                                        <th>Nominal</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="text-align:center" colspan="5">Tidak ada tagihan</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <?php endif ?>
-
                     </div>
                 </div>
             </div>

@@ -21,7 +21,7 @@ class TunggakanPerMahasiswa extends BaseController
             'title' => "Tunggakan Per Mahasiswa",
             'appName' => "UMSU",
             'breadcrumb' => ['Home', 'Laporan Tunggakan', 'Tunggakan Per Mahasiswa'],
-            'tunggakan' => [],
+            'tunggakan' => null,
             'filter' => null,
             'student' => null,
             'validation' => \Config\Services::validation(),
@@ -57,7 +57,7 @@ class TunggakanPerMahasiswa extends BaseController
         }
 
         // dd($_POST);
-        trim($filter = $this->request->getPost('filter'));
+        $filter =  trim($this->request->getPost('filter'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getBillStudent", [
             "headers" => [
@@ -81,8 +81,27 @@ class TunggakanPerMahasiswa extends BaseController
             'validation' => \Config\Services::validation(),
         ];
 
-        session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');
-        return view('pages/tunggakanPerMahasiswa', $data);
+        if (json_decode($response->getBody())->student != null && json_decode($response->getBody())->data != null) {
+            session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');
+            return view('pages/tunggakanPerMahasiswa', $data);
+        }
+
+        if (json_decode($response->getBody())->student != null && json_decode($response->getBody())->data == null) {
+            session()->setFlashdata('successBiodata', 'Data Tunggakan Kosong !');
+            return view('pages/tunggakanPerMahasiswa', $data);
+        }
+
+        if (json_decode($response->getBody())->student == null && json_decode($response->getBody())->data == null) {
+            session()->setFlashdata('failed', 'NPM / Nama Mahasiswa Salah !');
+            return view('pages/tunggakanPerMahasiswa', $data);
+        }
+        // if (json_decode($response->getBody())->data == true) {
+        //     session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');
+        //     return view('pages/tunggakanPerMahasiswa', $data);
+        // } else {
+        //     session()->setFlashdata('failed', 'Data Tunggakan Tidak Ditemukan !');
+        //     return redirect()->to('tunggakanPerMahasiswa');
+        // }
     }
 
     public function cetakTunggakanPerMahasiswa()
