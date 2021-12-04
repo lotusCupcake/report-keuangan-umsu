@@ -33,8 +33,8 @@
                 <div class="mb-footer">
                     <div class="pull-right">
                         <form action="logout" method="POST">
-                            <button style="display: inline-block" type="submit" class="btn btn-success btn-lg">Yes</button>
-                            <button style="display: inline-block" class=" btn btn-default btn-lg mb-control-close">No</button>
+                            <button type="submit" class="btn btn-success btn-lg">Yes</button>
+                            <button class=" btn btn-default btn-lg mb-control-close">No</button>
                         </form>
                     </div>
                 </div>
