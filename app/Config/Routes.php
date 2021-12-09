@@ -67,6 +67,12 @@ $routes->get('/pembayaranTotal/(:any)', 'PembayaranTotal::index');
 $routes->post('/pembayaranTotal/cetak', 'PembayaranTotal::cetakPembayaranTotal');
 $routes->post('/pembayaranTotal', "PembayaranTotal::prosesPembayaranTotal");
 
+// Route Pembayaran Lain-Lain
+$routes->get('/pembayaranLain/(:any)', 'PembayaranLain::index');
+$routes->post('/pembayaranLainProdi/cetak', 'PembayaranLain::cetakPembayaranLainProdi');
+$routes->post('/pembayaranLainSeluruh/cetak', 'PembayaranLain::cetakPembayaranLainSeluruh');
+$routes->post('/pembayaranLain', "PembayaranLain::prosesPembayaranLain");
+
 // Route Ubah Tanggal Tahap Angkatan
 $routes->get('/ubahAngkatan/(:any)', 'UbahAngkatan::index');
 $routes->post('/ubahAngkatan', "UbahAngkatan::proses");

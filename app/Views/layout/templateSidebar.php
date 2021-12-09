@@ -36,8 +36,9 @@
         <li class="xn-openable">
             <a href="#"><span class="fa fa-money"></span><span class="xn-text">Laporan Pembayaran</span></a>
             <ul>
-                <li><a href=" /pembayaranDetail"><span class="xn-text">Detail Pembayaran</span></a></li>
-                <li><a href=" /pembayaranTotal"><span class="xn-text">Total Pembayaran</span></a></li>
+                <li><a href=" /pembayaranDetail"><span class="xn-text">Detail Pembayaran Pokok</span></a></li>
+                <li><a href=" /pembayaranTotal"><span class="xn-text">Total Pembayaran Pokok</span></a></li>
+                <li><a href=" /pembayaranLain"><span class="xn-text">Pembayaran Lain-Lain</span></a></li>
             </ul>
         </li>
         <li class="xn-title">Setting</li>

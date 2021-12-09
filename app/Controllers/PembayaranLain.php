@@ -6,7 +6,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
-class PembayaranDetail extends BaseController
+class PembayaranLain extends BaseController
 {
     protected $curl;
     public function __construct()
@@ -19,35 +19,19 @@ class PembayaranDetail extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Detail Pembayaran Pokok",
+            'title' => "Pembayaran Lain-Lain",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Pembayaran Pokok', 'Detail Pembayaran Pokok'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Pembayaran Lain-Lain'],
             'pembayaran' => [],
             'termYear' => null,
-            'entryYear' => null,
-            'paymentOrder' => null,
-            'bank' => null,
             'listTermYear' => $this->getTermYear(),
-            'listBank' => $this->getBank(),
             'prodi' => [],
             'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'validation' => \Config\Services::validation(),
         ];
         // dd($data);
 
-        return view('pages/pembayaranDetail', $data);
-    }
-
-    public function getBank()
-    {
-        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getBank", [
-            "headers" => [
-                "Accept" => "application/json"
-            ],
-
-        ]);
-
-        return json_decode($response->getBody())->data;
+        return view('pages/pembayaranLain', $data);
     }
 
     public function getTermYear()
@@ -62,35 +46,26 @@ class PembayaranDetail extends BaseController
         return json_decode($response->getBody())->data;
     }
 
-    public function prosesPembayaranDetail()
+    public function prosesPembayaranLain()
     {
         if (!$this->validate([
+            'jenis' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jenis Pembayaran Harus Diisi !',
+                ]
+            ],
             'tahap' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Pembayaran Tahap Harus Diisi !',
                 ]
             ],
-            'tahunAngkatan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Tahun Angkatan Harus Diisi !',
-                ]
-            ],
-            'tahunAjar' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Tahun Ajar Harus Diisi !',
-                ]
-            ],
         ])) {
-            return redirect()->to('pembayaranDetail')->withInput();
+            return redirect()->to('pembayaranLain')->withInput();
         }
 
         $term_year_id = trim($this->request->getPost('tahunAjar'));
-        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
-        $payment_order = trim($this->request->getPost('tahap'));
-        $bank = trim($this->request->getPost('bank'));
         // dd($term_year_id, $entry_year_id, $payment_order, $bank);
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
@@ -98,10 +73,7 @@ class PembayaranDetail extends BaseController
                 "Accept" => "application/json"
             ],
             "form_params" => [
-                "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
-                "tahap" => $payment_order,
-                "bank" => $bank
             ]
         ]);
 
@@ -113,40 +85,30 @@ class PembayaranDetail extends BaseController
         }
 
         $data = [
-            'title' => "Detail Pembayaran Pokok",
+            'title' => "Pembayaran Lain-Lain",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Detail Pembayaran Pokok'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Pembayaran Lain-Lain'],
             'termYear' => $term_year_id,
-            'entryYear' => $entry_year_id,
-            'paymentOrder' => $payment_order,
-            'bank' => $bank,
             'pembayaran' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
-            'listBank' => $this->getBank(),
             'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Pembayaran, Klik Export Untuk Download !');
-        return view('pages/pembayaranDetail', $data);
+        return view('pages/pembayaranLain', $data);
     }
 
-    public function cetakPembayaranDetailProdi()
+    public function cetakPembayaranLainProdi()
     {
         $term_year_id = trim($this->request->getPost('tahunAjar'));
-        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
-        $payment_order = trim($this->request->getPost('tahap'));
-        $bank = trim($this->request->getPost('bank'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [
                 "Accept" => "application/json"
             ],
             "form_params" => [
-                "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
-                "tahap" => $payment_order,
-                "bank" => $bank
             ]
         ]);
 
@@ -203,7 +165,7 @@ class PembayaranDetail extends BaseController
         }
 
         $writer = new Xlsx($spreadsheet);
-        $fileName = 'Data Detail Pembayaran Pokok Mahasiswa - Prodi';
+        $fileName = 'Data Pembayaran Lain-Lain Mahasiswa - Prodi';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
@@ -213,22 +175,16 @@ class PembayaranDetail extends BaseController
         $writer->save('php://output');
     }
 
-    public function cetakPembayaranDetailSeluruh()
+    public function cetakPembayaranLainSeluruh()
     {
         $term_year_id = trim($this->request->getPost('tahunAjar'));
-        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
-        $payment_order = trim($this->request->getPost('tahap'));
-        $bank = trim($this->request->getPost('bank'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [
                 "Accept" => "application/json"
             ],
             "form_params" => [
-                "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
-                "tahap" => $payment_order,
-                "bank" => $bank
             ]
         ]);
 
@@ -278,7 +234,7 @@ class PembayaranDetail extends BaseController
         $konten = $konten + 1;
 
         $writer = new Xlsx($spreadsheet);
-        $fileName = 'Data Detail Pembayaran Pokok Mahasiswa - Seluruh';
+        $fileName = 'Data Pembayaran Lain-Lain Mahasiswa - Seluruh';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');

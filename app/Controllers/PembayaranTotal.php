@@ -18,9 +18,9 @@ class PembayaranTotal extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Total Pembayaran",
+            'title' => "Total Pembayaran Pokok",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Total Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Total Pembayaran Pokok'],
             'pembayaran' => [],
             'termYear' => null,
             'entryYear' => null,
@@ -121,9 +121,9 @@ class PembayaranTotal extends BaseController
         }
 
         $data = [
-            'title' => "Total Pembayaran",
+            'title' => "Total Pembayaran Pokok",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Total Pembayaran'],
+            'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Total Pembayaran Pokok'],
             'termYear' => $term_year_id,
             'paymentOrder' => $payment_order,
             'bank' => $bank,
@@ -234,7 +234,7 @@ class PembayaranTotal extends BaseController
 
 
         $writer = new Xlsx($spreadsheet);
-        $fileName = 'Data Total Pembayaran Mahasiswa';
+        $fileName = 'Data Total Pembayaran Pokok PokokMahasiswa';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
