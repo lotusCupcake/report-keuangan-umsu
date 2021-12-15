@@ -9,7 +9,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class PembayaranLain extends BaseController
 {
     protected $curl;
-    protected $jenis,$json;
+    protected $jenis, $json;
 
     public function __construct()
     {
@@ -23,21 +23,21 @@ class PembayaranLain extends BaseController
             array(
                 "value" => "kompri",
                 "text" => "Kompri"
-            ),array(
+            ), array(
                 "value" => "sidang",
                 "text" => "Sidang"
             ),
             array(
                 "value" => "seminar",
                 "text" => "Seminar"
-            ),array(
+            ), array(
                 "value" => "praktikum",
                 "text" => "Praktikum"
             ),
             array(
                 "value" => "remedial",
                 "text" => "Remedial"
-            ),array(
+            ), array(
                 "value" => "ujian_susulan",
                 "text" => "Ujian Susulan"
             ),
@@ -46,7 +46,7 @@ class PembayaranLain extends BaseController
                 "text" => "Kelas Malam"
             )
         );
-        $this->json= json_encode(array_values($this->jenis));
+        $this->json = json_encode(array_values($this->jenis));
     }
 
 
@@ -61,6 +61,7 @@ class PembayaranLain extends BaseController
             'termYear' => null,
             'listTermYear' => $this->getTermYear(),
             'prodi' => [],
+            'tagihan' => null,
             'jenis' => json_decode($this->json),
             'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'validation' => \Config\Services::validation(),
@@ -83,7 +84,7 @@ class PembayaranLain extends BaseController
     }
 
     public function prosesPembayaranLain()
-    { 
+    {
         if (!$this->validate([
             'jenis' => [
                 'rules' => 'required',
@@ -126,6 +127,7 @@ class PembayaranLain extends BaseController
             'appName' => "UMSU",
             'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Pembayaran Lain-Lain'],
             'termYear' => $term_year_id,
+            'tagihan' => $jenis,
             'pembayaran' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
             'prodi' => $prodi,
@@ -139,14 +141,16 @@ class PembayaranLain extends BaseController
 
     public function cetakPembayaranLainProdi()
     {
+        $jenis = trim($this->request->getPost('jenis'));
         $term_year_id = trim($this->request->getPost('tahunAjar'));
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getPembayaranLain", [
             "headers" => [
                 "Accept" => "application/json"
             ],
             "form_params" => [
-                "termYearId" => $term_year_id,
+                "jenis" => $jenis,
+                "termYearId" => $term_year_id
             ]
         ]);
 
@@ -174,8 +178,7 @@ class PembayaranLain extends BaseController
                 ->setCellValue('F' . $konten, 'Angkatan')
                 ->setCellValue('G' . $konten, 'Nama Biaya')
                 ->setCellValue('H' . $konten, 'Bank')
-                ->setCellValue('I' . $konten, 'Tahap')
-                ->setCellValue('J' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "J" . $konten)->getFont()->setBold(true);
+                ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
 
             $konten = $konten + 1;
             $total = 0;
@@ -192,13 +195,12 @@ class PembayaranLain extends BaseController
                         ->setCellValue('F' . $konten, $data->ANGKATAN)
                         ->setCellValue('G' . $konten, $data->NAMA_BIAYA)
                         ->setCellValue('H' . $konten, $data->BANK_NAMA)
-                        ->setCellValue('I' . $konten, ($data->TAHAP == 0) ? "Lunas" : "Tahap " . $data->TAHAP)
-                        ->setCellValue('J' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "J" . $konten);
+                        ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "I" . $konten);
                     $konten++;
                 }
             }
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('J' . $konten, number_to_currency($total, 'IDR'))->getStyle('J' . $konten)->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "H" . $konten)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . $konten, number_to_currency($total, 'IDR'))->getStyle('I' . $konten)->getFont()->setBold(true);
             $konten = $konten + 1;
         }
 
@@ -215,14 +217,16 @@ class PembayaranLain extends BaseController
 
     public function cetakPembayaranLainSeluruh()
     {
+        $jenis = trim($this->request->getPost('jenis'));
         $term_year_id = trim($this->request->getPost('tahunAjar'));
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getPembayaranLain", [
             "headers" => [
                 "Accept" => "application/json"
             ],
             "form_params" => [
-                "termYearId" => $term_year_id,
+                "jenis" => $jenis,
+                "termYearId" => $term_year_id
             ]
         ]);
 
@@ -246,8 +250,7 @@ class PembayaranLain extends BaseController
             ->setCellValue('F' . $konten, 'Angkatan')
             ->setCellValue('G' . $konten, 'Nama Biaya')
             ->setCellValue('H' . $konten, 'Bank')
-            ->setCellValue('I' . $konten, 'Tahap')
-            ->setCellValue('J' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "J" . $konten)->getFont()->setBold(true);
+            ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
 
         $konten = $konten + 1;
         $total = 0;
@@ -263,12 +266,11 @@ class PembayaranLain extends BaseController
                 ->setCellValue('F' . $konten, $data->ANGKATAN)
                 ->setCellValue('G' . $konten, $data->NAMA_BIAYA)
                 ->setCellValue('H' . $konten, $data->BANK_NAMA)
-                ->setCellValue('I' . $konten, ($data->TAHAP == 0) ? "Lunas" : "Tahap " . $data->TAHAP)
-                ->setCellValue('J' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "J" . $konten);
+                ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "I" . $konten);
             $konten++;
         }
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('J' . $konten, number_to_currency($total, 'IDR'))->getStyle('J' . $konten)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "H" . $konten)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . $konten, number_to_currency($total, 'IDR'))->getStyle('I' . $konten)->getFont()->setBold(true);
         $konten = $konten + 1;
 
         $writer = new Xlsx($spreadsheet);

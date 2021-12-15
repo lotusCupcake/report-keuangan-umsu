@@ -45,8 +45,8 @@
                                 <label>Jenis Tagihan</label>
                                 <select class="form-control select" name="jenis">
                                     <option value="">-- Select --</option>
-                                    <?php foreach ($jenis as $jns) :?>
-                                        <option value="<?= $jns->value ?>"><?= $jns->text ?></option>
+                                    <?php foreach ($jenis as $jns) : ?>
+                                        <option value="<?= $jns->value ?>" <?php if ($jns->value == $tagihan) echo "selected" ?>><?= $jns->text ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -67,15 +67,17 @@
                     </div>
                     <div class="panel-body col-md-12">
                         <?php if ($prodi != null) : ?>
-                            <?php if ($termYear != null) : ?>
+                            <?php if ($tagihan != null && $termYear != null) : ?>
                                 <form action="/pembayaranLainProdi/cetak" method="post">
+                                    <input type="hidden" name="jenis" value="<?= $tagihan; ?>">
                                     <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
                                     <ul class="panel-controls"><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                             Export Prodi</button></ul>
                                 </form>
                                 <span>
                                     <form action="/pembayaranLainSeluruh/cetak" method="post">
-                                        <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">\
+                                        <input type="hidden" name="jenis" value="<?= $tagihan; ?>">
+                                        <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
                                         <ul class="panel-controls"><button style="display: inline-block; margin-right: 11px; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                                 Export Seluruh</button></ul>
                                     </form>
@@ -114,7 +116,7 @@
                                                                     <td><?= $rows->NAMA_LENGKAP ?></td>
                                                                     <td><?= $rows->ANGKATAN ?></td>
                                                                     <td><?= $rows->NAMA_BIAYA ?></td>
-                                                                    <td><?= ($rows->BANK_NAMA==null) ? "BAK" : $rows->BANK_NAMA ?></td>
+                                                                    <td><?= ($rows->BANK_NAMA == null) ? "BAK" : $rows->BANK_NAMA ?></td>
                                                                     <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
                                                                 </tr>
                                                             <?php endif ?>
