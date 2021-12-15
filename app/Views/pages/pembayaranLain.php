@@ -45,6 +45,9 @@
                                 <label>Jenis Tagihan</label>
                                 <select class="form-control select" name="jenis">
                                     <option value="">-- Select --</option>
+                                    <?php foreach ($jenis as $jns) :?>
+                                        <option value="<?= $jns->value ?>"><?= $jns->text ?></option>
+                                    <?php endforeach ?>
                                 </select>
                             </div>
                             <div class="col-md-2">
@@ -95,7 +98,6 @@
                                                         <th>Angkatan</th>
                                                         <th>Nama Biaya</th>
                                                         <th>Bank</th>
-                                                        <th>Tahap</th>
                                                         <th>Nominal</th>
                                                     </tr>
                                                 </thead>
@@ -112,14 +114,13 @@
                                                                     <td><?= $rows->NAMA_LENGKAP ?></td>
                                                                     <td><?= $rows->ANGKATAN ?></td>
                                                                     <td><?= $rows->NAMA_BIAYA ?></td>
-                                                                    <td><?= $rows->BANK_NAMA ?></td>
-                                                                    <td><?= ($rows->TAHAP == 0) ? "Lunas" : "Tahap " . $rows->TAHAP ?></td>
+                                                                    <td><?= ($rows->BANK_NAMA==null) ? "BAK" : $rows->BANK_NAMA ?></td>
                                                                     <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
                                                                 </tr>
                                                             <?php endif ?>
                                                         <?php endforeach ?>
                                                         <tr>
-                                                            <td colspan=8 style="text-align: center;"><strong>Total Amount</strong></td>
+                                                            <td colspan=7 style="text-align: center;"><strong>Total Amount</strong></td>
                                                             <td><strong><?= number_to_currency($total, 'IDR') ?></strong></td>
                                                         </tr>
                                                     <?php else : ?>

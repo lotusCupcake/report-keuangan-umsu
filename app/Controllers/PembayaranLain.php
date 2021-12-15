@@ -9,9 +9,44 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class PembayaranLain extends BaseController
 {
     protected $curl;
+    protected $jenis,$json;
+
     public function __construct()
     {
         $this->curl = service('curlrequest');
+
+        $this->jenis = array(
+            array(
+                "value" => "wisuda",
+                "text" => "Wisuda"
+            ),
+            array(
+                "value" => "kompri",
+                "text" => "Kompri"
+            ),array(
+                "value" => "sidang",
+                "text" => "Sidang"
+            ),
+            array(
+                "value" => "seminar",
+                "text" => "Seminar"
+            ),array(
+                "value" => "praktikum",
+                "text" => "Praktikum"
+            ),
+            array(
+                "value" => "remedial",
+                "text" => "Remedial"
+            ),array(
+                "value" => "ujian_susulan",
+                "text" => "Ujian Susulan"
+            ),
+            array(
+                "value" => "kelas_malam",
+                "text" => "Kelas Malam"
+            )
+        );
+        $this->json= json_encode(array_values($this->jenis));
     }
 
 
@@ -26,6 +61,7 @@ class PembayaranLain extends BaseController
             'termYear' => null,
             'listTermYear' => $this->getTermYear(),
             'prodi' => [],
+            'jenis' => json_decode($this->json),
             'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'validation' => \Config\Services::validation(),
         ];
@@ -47,7 +83,7 @@ class PembayaranLain extends BaseController
     }
 
     public function prosesPembayaranLain()
-    {
+    { 
         if (!$this->validate([
             'jenis' => [
                 'rules' => 'required',
@@ -55,25 +91,26 @@ class PembayaranLain extends BaseController
                     'required' => 'Jenis Pembayaran Harus Diisi !',
                 ]
             ],
-            'tahap' => [
+            'tahunAjar' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'Pembayaran Tahap Harus Diisi !',
+                    'required' => 'Tahun Ajar Harus Diisi !',
                 ]
             ],
         ])) {
             return redirect()->to('pembayaranLain')->withInput();
         }
 
+        $jenis = trim($this->request->getPost('jenis'));
         $term_year_id = trim($this->request->getPost('tahunAjar'));
-        // dd($term_year_id, $entry_year_id, $payment_order, $bank);
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getPembayaranLain", [
             "headers" => [
                 "Accept" => "application/json"
             ],
             "form_params" => [
-                "termYearId" => $term_year_id,
+                "jenis" => $jenis,
+                "termYearId" => $term_year_id
             ]
         ]);
 
@@ -92,6 +129,7 @@ class PembayaranLain extends BaseController
             'pembayaran' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
             'prodi' => $prodi,
+            'jenis' => json_decode($this->json),
             'validation' => \Config\Services::validation(),
         ];
 
