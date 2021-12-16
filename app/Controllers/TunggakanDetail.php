@@ -86,6 +86,8 @@ class TunggakanDetail extends BaseController
             return redirect()->to('tunggakanDetail')->withInput();
         }
 
+       
+
         $term_year_id = trim($this->request->getPost('tahunAjar'));
         $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
         $payment_order = trim($this->request->getPost('tahap'));
@@ -104,7 +106,6 @@ class TunggakanDetail extends BaseController
                 "filter" => $filter,
             ]
         ]);
-
 
         $prodi = [];
         foreach (json_decode($response->getBody())->data as $k) {
