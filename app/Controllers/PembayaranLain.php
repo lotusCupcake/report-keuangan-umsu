@@ -44,6 +44,10 @@ class PembayaranLain extends BaseController
             array(
                 "value" => "kelas_malam",
                 "text" => "Kelas Malam"
+            ),
+            array(
+                "value" => "konversi",
+                "text" => "Konversi Mata Kuliah"
             )
         );
         $this->json = json_encode(array_values($this->jenis));
