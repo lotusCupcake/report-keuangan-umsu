@@ -46,6 +46,12 @@
                     <div class="panel-heading">
                         <form autocomplete="off" action="/pembayaranDetail" method="POST">
                             <div class="col-md-2">
+                                <label>Pilih Fakultas</label>
+                                <select class="form-control select" name="fakultas">
+                                    <option value="">-- Select --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
                                     <option value="">-- Select --</option>
