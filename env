@@ -15,12 +15,13 @@
 #--------------------------------------------------------------------
 
 CI_ENVIRONMENT = development
+# CI_ENVIRONMENT = production
 
 #--------------------------------------------------------------------
 # APP
 #--------------------------------------------------------------------
 
-app.baseURL = 'http://localhost:8080/'
+app.baseURL = 'https://rekapkeuangan.umsu.ac.id/'
 # app.forceGlobalSecureRequests = false
 
 app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
@@ -37,10 +38,11 @@ app.sessionRegenerateDestroy = false
 # DATABASE
 #--------------------------------------------------------------------
 
-database.default.hostname = 222.124.3.203:8308
-database.default.database = client_mradiofm
-database.default.username = client_mradiofm
-database.default.password = wKz0AEqhNHUPKlfi
+database.default.hostname = rekapkeuangan.umsu.ac.id
+database.default.port = 8306
+database.default.database = web_rekapkeuangan
+database.default.username = web_rekapkeuangan
+database.default.password = .M1H7nI(V[@y27bh
 database.default.DBDriver = MySQLi
 database.default.DBPrefix =
 

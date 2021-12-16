@@ -32,10 +32,10 @@ class Database extends Config
      */
     public $default = [
         'DSN'      => '',
-        'hostname' => '222.124.3.203:8308',
-        'username' => 'client_mradiofm',
-        'password' => 'wKz0AEqhNHUPKlfi',
-        'database' => 'client_mradiofm',
+        'hostname' => 'rekapkeuangan.umsu.ac.id:8306',
+        'username' => 'web_rekapkeuangan',
+        'password' => '.M1H7nI(V[@y27bh',
+        'database' => 'web_rekapkeuangan',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
