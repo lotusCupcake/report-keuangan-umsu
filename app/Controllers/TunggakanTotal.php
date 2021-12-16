@@ -162,6 +162,7 @@ class TunggakanTotal extends BaseController
         $row = 1;
 
         $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $row, "Rekap Tunggakan")->mergeCells("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getAlignment()->setHorizontal('center');
         $row = $row + 1;
         $no = 0;
         $spreadsheet->setActiveSheetIndex(0)
