@@ -28,11 +28,25 @@ class TunggakanDetail extends BaseController
             'paymentOrder' => null,
             'listTermYear' => $this->getTermYear(),
             'prodi' => [],
+            'filter' => null,
+            'fakultas' => $this->getFakultas(),
             'validation' => \Config\Services::validation(),
         ];
         // dd($data);
 
         return view('pages/tunggakanDetail', $data);
+    }
+
+    public function getFakultas()
+    {
+        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getFakultas", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+
+        ]);
+
+        return json_decode($response->getBody())->data;
     }
 
     public function getTermYear()
@@ -75,6 +89,7 @@ class TunggakanDetail extends BaseController
         $term_year_id = trim($this->request->getPost('tahunAjar'));
         $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
         $payment_order = trim($this->request->getPost('tahap'));
+        $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
         // dd($term_year_id, $entry_year_id, $payment_order);
 
 
@@ -85,7 +100,8 @@ class TunggakanDetail extends BaseController
             "form_params" => [
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
-                "tahap" => $payment_order
+                "tahap" => $payment_order,
+                "filter" => $filter,
             ]
         ]);
 
@@ -105,6 +121,8 @@ class TunggakanDetail extends BaseController
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
+            'filter' => $filter,
+            'fakultas' => $this->getFakultas(),
             'listTermYear' => $this->getTermYear(),
             'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
@@ -119,6 +137,7 @@ class TunggakanDetail extends BaseController
         $term_year_id = trim($this->request->getPost('tahunAjar'));
         $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
         $payment_order = trim($this->request->getPost('tahap'));
+        $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu", [
             "headers" => [
@@ -127,7 +146,8 @@ class TunggakanDetail extends BaseController
             "form_params" => [
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
-                "tahap" => $payment_order
+                "tahap" => $payment_order,
+                "filter" => $filter,
             ]
         ]);
 
