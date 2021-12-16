@@ -279,8 +279,6 @@ class PembayaranLain extends BaseController
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
         header('Cache-Control: max-age=0');
-
-        // session()->setFlashdata('success', 'Berhasil Export Data Tunggakan !');
         $writer->save('php://output');
     }
 }
