@@ -220,6 +220,12 @@ class TunggakanTotal extends BaseController
             $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($a[$ang], 'IDR'))->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
             $no++;
         }
+        $row++;
+        $totalTunggakkan=0; 
+        foreach ($angkatan as $ang){
+            $totalTunggakkan= $totalTunggakkan+$a[$ang];
+        }
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $row, number_to_currency($totalTunggakkan, 'IDR'))->mergeCells("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
 
 
         $writer = new Xlsx($spreadsheet);
