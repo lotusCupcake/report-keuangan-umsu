@@ -46,6 +46,12 @@
                     <div class="panel-heading">
                         <form autocomplete="off" action="/tunggakanDetail" method="POST">
                             <div class="col-md-2">
+                                <label>Pilih Fakultas</label>
+                                <select class="form-control select" name="fakultas">
+                                    <option value="">-- Select --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
                                 <label>Tahun Ajar</label>
                                 <select class="form-control select" name="tahunAjar">
                                     <option value="">-- Select --</option>
@@ -121,7 +127,7 @@
                                                     $no = 1;
                                                     if (count($tunggakan) > 0) : ?>
                                                         <?php foreach ($tunggakan as $rows) : ?>
-                                                            <?php if ($rows->NOMINAL != 0) :?>
+                                                            <?php if ($rows->NOMINAL != 0) : ?>
                                                                 <?php if ($rows->NAMA_PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
                                                                     <tr>
                                                                         <td><?= $no++ ?></td>
