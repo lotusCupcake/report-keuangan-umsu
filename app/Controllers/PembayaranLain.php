@@ -62,8 +62,6 @@ class PembayaranLain extends BaseController
             'appName' => "UMSU",
             'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Pembayaran Lain-Lain'],
             'pembayaran' => [],
-            'termYear' => null,
-            'listTermYear' => $this->getTermYear(),
             'prodi' => [],
             'tagihan' => null,
             'jenis' => json_decode($this->json),
@@ -75,18 +73,6 @@ class PembayaranLain extends BaseController
         return view('pages/pembayaranLain', $data);
     }
 
-    public function getTermYear()
-    {
-        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getTermYear", [
-            "headers" => [
-                "Accept" => "application/json"
-            ],
-
-        ]);
-
-        return json_decode($response->getBody())->data;
-    }
-
     public function prosesPembayaranLain()
     {
         if (!$this->validate([
@@ -96,10 +82,16 @@ class PembayaranLain extends BaseController
                     'required' => 'Jenis Pembayaran Harus Diisi !',
                 ]
             ],
-            'tahunAjar' => [
+            'tanggalAwal' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'Tahun Ajar Harus Diisi !',
+                    'required' => 'Tanggal Awal Harus Diisi !',
+                ]
+            ],
+            'tanggalAkhir' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tanggal Akhir Harus Diisi !',
                 ]
             ],
         ])) {
@@ -107,7 +99,6 @@ class PembayaranLain extends BaseController
         }
 
         $jenis = trim($this->request->getPost('jenis'));
-        $term_year_id = trim($this->request->getPost('tahunAjar'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getPembayaranLain", [
             "headers" => [
@@ -115,7 +106,6 @@ class PembayaranLain extends BaseController
             ],
             "form_params" => [
                 "jenis" => $jenis,
-                "termYearId" => $term_year_id
             ]
         ]);
 
@@ -130,10 +120,8 @@ class PembayaranLain extends BaseController
             'title' => "Pembayaran Lain-Lain",
             'appName' => "UMSU",
             'breadcrumb' => ['Home', 'Laporan Pembayaran', 'Pembayaran Lain-Lain'],
-            'termYear' => $term_year_id,
             'tagihan' => $jenis,
             'pembayaran' => json_decode($response->getBody())->data,
-            'listTermYear' => $this->getTermYear(),
             'prodi' => $prodi,
             'jenis' => json_decode($this->json),
             'validation' => \Config\Services::validation(),
@@ -146,7 +134,6 @@ class PembayaranLain extends BaseController
     public function cetakPembayaranLainProdi()
     {
         $jenis = trim($this->request->getPost('jenis'));
-        $term_year_id = trim($this->request->getPost('tahunAjar'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getPembayaranLain", [
             "headers" => [
@@ -154,7 +141,6 @@ class PembayaranLain extends BaseController
             ],
             "form_params" => [
                 "jenis" => $jenis,
-                "termYearId" => $term_year_id
             ]
         ]);
 
@@ -222,7 +208,6 @@ class PembayaranLain extends BaseController
     public function cetakPembayaranLainSeluruh()
     {
         $jenis = trim($this->request->getPost('jenis'));
-        $term_year_id = trim($this->request->getPost('tahunAjar'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getPembayaranLain", [
             "headers" => [
@@ -230,7 +215,6 @@ class PembayaranLain extends BaseController
             ],
             "form_params" => [
                 "jenis" => $jenis,
-                "termYearId" => $term_year_id
             ]
         ]);
 

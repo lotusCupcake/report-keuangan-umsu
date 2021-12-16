@@ -32,10 +32,16 @@
                         <strong>Failed ! </strong><?= $validation->getError('jenis'); ?>
                     </div>
                 <?php endif; ?>
-                <?php if ($validation->hasError('tahunAjar')) : ?>
+                <?php if ($validation->hasError('tanggalAwal')) : ?>
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
+                        <strong>Failed ! </strong><?= $validation->getError('tanggalAwal'); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($validation->hasError('tanggalAkhir')) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Failed ! </strong><?= $validation->getError('tanggalAkhir'); ?>
                     </div>
                 <?php endif; ?>
                 <div class="panel panel-default">
@@ -51,13 +57,18 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <label>Tahun Ajar</label>
-                                <select class="form-control select" name="tahunAjar">
-                                    <option value="">-- Select --</option>
-                                    <?php foreach ($listTermYear as $rows) : ?>
-                                        <option value="<?= $rows->Term_Year_Id ?>" <?php if ($rows->Term_Year_Id == $termYear) echo "selected" ?>><?= $rows->Term_Year_Name ?></option>
-                                    <?php endforeach ?>
-                                </select>
+                                <label>Tanggal Awal</label>
+                                <div class="input-group date" id="dp-2" data-date-format="yyyy-mm-dd">
+                                    <input type="text" class="form-control datepicker" value="" name="tanggalAwal" />
+                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Tanggal Akhir</label>
+                                <div class="input-group date" id="dp-2" data-date-format="yyyy-mm-dd">
+                                    <input type="text" class="form-control datepicker" value="" name="tanggalAkhir" />
+                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
                             </div>
                             <ul class="panel-controls">
                                 <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-success"><span class="fa fa-search"></span>
@@ -70,14 +81,16 @@
                             <?php if ($tagihan != null && $termYear != null) : ?>
                                 <form action="/pembayaranLainProdi/cetak" method="post">
                                     <input type="hidden" name="jenis" value="<?= $tagihan; ?>">
-                                    <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                    <input type="hidden" name="tanggalAwal" value="">
+                                    <input type="hidden" name="tanggalAwal" value="">
                                     <ul class="panel-controls"><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                             Export Prodi</button></ul>
                                 </form>
                                 <span>
                                     <form action="/pembayaranLainSeluruh/cetak" method="post">
                                         <input type="hidden" name="jenis" value="<?= $tagihan; ?>">
-                                        <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                        <input type="hidden" name="tanggalAkhir" value="">
+                                        <input type="hidden" name="tanggalAkhir" value="">
                                         <ul class="panel-controls"><button style="display: inline-block; margin-right: 11px; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                                 Export Seluruh</button></ul>
                                     </form>
