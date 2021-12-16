@@ -100,7 +100,11 @@
                                                 </tr>
                                                 <tr>
                                                     <th></th>
-                                                    <?php foreach ($angkatan as $ang) : ?>
+                                                    <?php $a = [];
+                                                    foreach ($angkatan as $ang) : ?>
+                                                        <?php
+                                                        $a[$ang] = 0;
+                                                        ?>
                                                         <th style="text-align:center"><?= $ang ?></th>
                                                     <?php endforeach ?>
                                                 </tr>
@@ -124,6 +128,10 @@
                                                                     <?php $nilai = 0;
                                                                     foreach ($pembayaran as $pemb) : ?>
                                                                         <?php ($ang == $pemb->ANGKATAN && $prd['prodi'] == $pemb->PRODI) ? $nilai = $pemb->NOMINAL : $nilai = $nilai ?>
+                                                                        <?php if ($ang == $pemb->ANGKATAN && $prd['prodi'] == $pemb->PRODI) {
+                                                                            $a[$ang] = $a[$ang] + $pemb->NOMINAL;
+                                                                        }
+                                                                        ?>
                                                                     <?php endforeach ?>
                                                                     <td><?= number_to_currency($nilai, 'IDR') ?></td>
                                                                 <?php endforeach ?>
@@ -131,6 +139,22 @@
                                                         <?php endif ?>
                                                     <?php endforeach ?>
                                                 <?php endforeach ?>
+                                                <tr>
+                                                    <td></td>
+                                                    <td><strong>Pembayaran Per Angkatan</strong></td>
+                                                    <?php foreach ($angkatan as $ang) : ?>
+                                                        <td><strong><?= number_to_currency($a[$ang], 'IDR') ?></strong></td>
+                                                    <?php endforeach ?>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td><strong>Total Pembayaran</strong></td>
+                                                    <?php $totalPembayaran = 0;
+                                                    foreach ($angkatan as $ang) : ?>
+                                                        <?php $totalPembayaran = $totalPembayaran + $a[$ang]; ?>
+                                                    <?php endforeach ?>
+                                                    <td colspan="<?= count($angkatan); ?>" style="text-align:center"><strong><?= number_to_currency($totalPembayaran, 'IDR') ?></strong></td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

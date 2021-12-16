@@ -186,13 +186,16 @@ class PembayaranTotal extends BaseController
         $row = 1;
 
         $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $row, "Rekap Pembayaran")->mergeCells("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getAlignment()->setHorizontal('center');
         $row = $row + 1;
         $no = 0;
         $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A' . $row, 'No.')
             ->setCellValue('B' . $row, 'Fakultas / Prodi')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
 
+        $a = [];
         foreach ($angkatan as $ang) {
+            $a[$ang] = 0;
             $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, $ang)->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
             $no++;
         }
@@ -222,6 +225,9 @@ class PembayaranTotal extends BaseController
                         $nilai = 0;
                         foreach (json_decode($response->getBody())->data as $pemb) {
                             ($ang == $pemb->ANGKATAN && $prd['prodi'] == $pemb->PRODI) ? $nilai = $pemb->NOMINAL : $nilai = $nilai;
+                            if ($ang == $pemb->ANGKATAN && $prd['prodi'] == $pemb->PRODI) {
+                                $a[$ang] = $a[$ang] + $pemb->NOMINAL;
+                            }
                         }
                         $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($nilai, 'IDR'));
                         $no++;
@@ -232,9 +238,28 @@ class PembayaranTotal extends BaseController
             }
         }
 
+        $no = 0;
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A' . $row, '')
+            ->setCellValue('B' . $row, 'Pembayaran Per Angkatan')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
+        foreach ($angkatan as $ang) {
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($a[$ang], 'IDR'))->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
+            $no++;
+        }
+        $row++;
+        $totalPembayaran = 0;
+        foreach ($angkatan as $ang) {
+            $totalPembayaran = $totalPembayaran + $a[$ang];
+        }
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A' . $row, '')
+            ->setCellValue('B' . $row, 'Total Pembayaran')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('C' . $row, number_to_currency($totalPembayaran, 'IDR'))->mergeCells("C" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getStyle("C" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->getStyle("C" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getAlignment()->setHorizontal('center');
+
 
         $writer = new Xlsx($spreadsheet);
-        $fileName = 'Data Total Pembayaran Pokok PokokMahasiswa';
+        $fileName = 'Data Total Pembayaran Pokok Mahasiswa';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');

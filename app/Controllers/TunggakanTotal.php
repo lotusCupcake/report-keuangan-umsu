@@ -169,9 +169,9 @@ class TunggakanTotal extends BaseController
             ->setCellValue('A' . $row, 'No.')
             ->setCellValue('B' . $row, 'Fakultas / Prodi')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
 
-        $a=[];
+        $a = [];
         foreach ($angkatan as $ang) {
-            $a[$ang]=0;
+            $a[$ang] = 0;
             $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, $ang)->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
             $no++;
         }
@@ -201,8 +201,8 @@ class TunggakanTotal extends BaseController
                         $nilai = 0;
                         foreach (json_decode($response->getBody())->data as $tung) {
                             ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
-                            if($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI){
-                                $a[$ang]=$a[$ang]+$tung->NOMINAL;
+                            if ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) {
+                                $a[$ang] = $a[$ang] + $tung->NOMINAL;
                             }
                         }
                         $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($nilai, 'IDR'));
@@ -216,19 +216,19 @@ class TunggakanTotal extends BaseController
         $no = 0;
         $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A' . $row, '')
-            ->setCellValue('B' . $row, 'Tunggakan Per Fakultas')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
+            ->setCellValue('B' . $row, 'Tunggakan Per Angkatan')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
         foreach ($angkatan as $ang) {
             $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($a[$ang], 'IDR'))->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
             $no++;
         }
         $row++;
-        $totalTunggakkan=0; 
-        foreach ($angkatan as $ang){
-            $totalTunggakkan= $totalTunggakkan+$a[$ang];
+        $totalTunggakkan = 0;
+        foreach ($angkatan as $ang) {
+            $totalTunggakkan = $totalTunggakkan + $a[$ang];
         }
         $spreadsheet->setActiveSheetIndex(0)
-        ->setCellValue('A' . $row, '')
-        ->setCellValue('B' . $row, 'Total Tunggakan')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
+            ->setCellValue('A' . $row, '')
+            ->setCellValue('B' . $row, 'Total Tunggakan')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
         $spreadsheet->setActiveSheetIndex(0)->setCellValue('C' . $row, number_to_currency($totalTunggakkan, 'IDR'))->mergeCells("C" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getStyle("C" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
         $spreadsheet->setActiveSheetIndex(0)->getStyle("C" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getAlignment()->setHorizontal('center');
 
