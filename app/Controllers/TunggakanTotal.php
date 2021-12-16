@@ -168,7 +168,9 @@ class TunggakanTotal extends BaseController
             ->setCellValue('A' . $row, 'No.')
             ->setCellValue('B' . $row, 'Fakultas / Prodi')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
 
+        $a=[];
         foreach ($angkatan as $ang) {
+            $a[$ang]=0;
             $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, $ang)->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
             $no++;
         }
@@ -198,6 +200,9 @@ class TunggakanTotal extends BaseController
                         $nilai = 0;
                         foreach (json_decode($response->getBody())->data as $tung) {
                             ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
+                            if($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI){
+                                $a[$ang]=$a[$ang]+$tung->NOMINAL;
+                            }
                         }
                         $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($nilai, 'IDR'));
                         $no++;
@@ -206,6 +211,14 @@ class TunggakanTotal extends BaseController
                     $row++;
                 }
             }
+        }
+        $no = 0;
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A' . $row, '')
+            ->setCellValue('B' . $row, 'Tunggakan Per Fakultas')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
+        foreach ($angkatan as $ang) {
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($a[$ang], 'IDR'))->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
+            $no++;
         }
 
 
