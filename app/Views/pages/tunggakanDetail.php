@@ -48,7 +48,10 @@
                             <div class="col-md-2">
                                 <label>Pilih Fakultas</label>
                                 <select class="form-control select" name="fakultas">
-                                    <option value="">-- Select --</option>
+                                    <option value="">Semua Fakultas</option>
+                                    <?php foreach ($fakultas as $rows) : ?>
+                                        <option value="<?= $rows->Faculty_Acronym ?>" <?php if ($rows->Faculty_Acronym == $filter) echo " selected" ?>><?= $rows->Faculty_Name ?></option>
+                                    <?php endforeach ?>
                                 </select>
                             </div>
                             <div class="col-md-2">
