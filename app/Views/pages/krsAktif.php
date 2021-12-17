@@ -33,12 +33,12 @@
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form autocomplete="off" action="/tunggakanTotal" method="POST">
+                        <form autocomplete="off" action="/krsAktif" method="POST">
                             <div class="col-md-2">
                                 <label>Pilih Fakultas</label>
                                 <select class="form-control select" name="fakultas">
                                     <option value="">Semua Fakultas</option>
-                                    <?php foreach ($fakultas as $rows) : ?>
+                                    <?php foreach ($fakultasFilter as $rows) : ?>
                                         <option value="<?= $rows->Faculty_Acronym ?>" <?php if ($rows->Faculty_Acronym == $filter) echo " selected" ?>><?= $rows->Faculty_Name ?></option>
                                     <?php endforeach ?>
                                 </select>
@@ -59,9 +59,60 @@
                         </form>
                     </div>
                     <div class="panel-body col-md-12">
+                        <?php if ($krsAktif != null) :?>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-actions">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" style="text-align:center" valign="center">No.</th>
+                                            <th style="text-align:center">Fakultas / Prodi</th>
+                                            <th colspan=<?= count($angkatan) ?> style="text-align:center">Stambuk</th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <?php $a = [];
+                                            foreach ($angkatan as $ang) : ?>
+                                                <?php
+                                                $a[$ang] = 0;
+                                                ?>
+                                                <th style="text-align:center"><?= $ang ?></th>
+                                            <?php endforeach ?>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($fakultas as $fak) : ?>
+                                            <tr>
+                                                <td></td>
+                                                <td><strong><?= $fak ?></strong></td>
+                                                <?php foreach ($angkatan as $ang) : ?>
+                                                    <td></td>
+                                                <?php endforeach ?>
+                                            </tr>
+                                            <?php $no = 1;
+                                            foreach ($prodi as $prd) : ?>
+                                                <?php if ($fak == $prd['fakultas']) : ?>
+                                                    <tr>
+                                                        <td><?= $no++ ?></td>
+                                                        <td><?= $prd['prodi'] ?></td>
+                                                        <?php foreach ($angkatan as $ang) : ?>
+                                                            <?php $nilai = 0;
+                                                            foreach ($krsAktif as $krsAkt) : ?>
+                                                                <?php ($ang == $krsAkt->ANGKATAN && $prd['prodi'] == $krsAkt->NAMA_PRODI) ? $nilai = $krsAkt->JUMLAH : $nilai = $nilai ?>
+                                                            <?php endforeach ?>
+                                                            <td><?= $nilai ?></td>
+                                                        <?php endforeach ?>
+                                                    </tr>
+                                                <?php endif ?>
+                                            <?php endforeach ?>
+                                        <?php endforeach ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php else :?>
                         <center>
                             <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_xwgclkyh.json" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
                         </center>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>

@@ -102,8 +102,8 @@ $routes->get('/ubahProdiPascasarjana/(:any)', 'UbahProdiPascasarjana::index');
 $routes->post('/ubahProdiPascasarjana', "UbahProdiPascasarjana::proses");
 
 // Route KRS Aktif
-$routes->get('/krsAktif/(:any)', 'krsAktif::index');
-$routes->post('/krsAktif', "krsAktif::proses");
+$routes->get('/krsAktif/(:any)', 'KrsAktif::index');
+$routes->post('/krsAktif', 'KrsAktif::prosesKrsAktif');
 
 
 
