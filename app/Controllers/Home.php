@@ -6,6 +6,10 @@ class Home extends BaseController
 {
     public function index()
     {
+        $file = "public/menu/menu.json";
+        $menu=file_get_contents(ROOTPATH.$file);
+
+        dd(json_decode($menu, true));
         $data = [
             'title' => "Home",
             'appName' => "UMSU",
@@ -18,7 +22,8 @@ class Home extends BaseController
 
     public function fetchMenu()
     {
-        # code...
+        $file = "/public/menu/menu.json";
+        dd(file_get_contents($file));
     }
 
     public function fetchSubMenu()
