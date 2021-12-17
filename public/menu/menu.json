@@ -1,8 +1,41 @@
 {
     "items": [{
-        "id": "",
-        "nama": "",
-        "parent": "",
+        "id": "1",
+        "nama": "Dashboard",
+        "parent": "0",
+        "status": true,
+        "pages": "/home"
+    },{
+        "id": "2",
+        "nama": "Laporan Tunggakan",
+        "parent": "0",
+        "status": "",
+        "pages": ""
+    },{
+        "id": "3",
+        "nama": "Laporan Pembayaran",
+        "parent": "0",
+        "status": "",
+        "pages": ""
+    },
+    {
+        "id": "4",
+        "nama": "Jumlah KRS Aktif",
+        "parent": "0",
+        "status": "",
+        "pages": ""
+    },
+    {
+        "id": "4",
+        "nama": "Setting Tanggal Tahap",
+        "parent": "0",
+        "status": "",
+        "pages": ""
+    },
+    {
+        "id": "4",
+        "nama": "Tunggakan Per Mahasiswa",
+        "parent": "2",
         "status": "",
         "pages": ""
     }]
