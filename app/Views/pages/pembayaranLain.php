@@ -82,14 +82,14 @@
                                 <form action="/pembayaranLainProdi/cetak" method="post">
                                     <input type="hidden" name="jenis" value="<?= $tagihan; ?>">
                                     <input type="hidden" name="tanggalAwal" value="">
-                                    <input type="hidden" name="tanggalAwal" value="">
+                                    <input type="hidden" name="tanggalAkhir" value="">
                                     <ul class="panel-controls"><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                             Export Prodi</button></ul>
                                 </form>
                                 <span>
                                     <form action="/pembayaranLainSeluruh/cetak" method="post">
                                         <input type="hidden" name="jenis" value="<?= $tagihan; ?>">
-                                        <input type="hidden" name="tanggalAkhir" value="">
+                                        <input type="hidden" name="tanggalAwal" value="">
                                         <input type="hidden" name="tanggalAkhir" value="">
                                         <ul class="panel-controls"><button style="display: inline-block; margin-right: 11px; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                                 Export Seluruh</button></ul>
