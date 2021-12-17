@@ -8,34 +8,83 @@
         "id": "2",
         "nama": "Laporan Tunggakan",
         "parent": "0",
-        "status": "",
-        "pages": ""
+        "status": true,
+        "pages": "#"
     }, {
         "id": "3",
         "nama": "Laporan Pembayaran",
         "parent": "0",
-        "status": "",
-        "pages": ""
+        "status": true,
+        "pages": "#"
     },
     {
         "id": "4",
         "nama": "Jumlah KRS Aktif",
         "parent": "0",
-        "status": "",
-        "pages": ""
+        "status": true,
+        "pages": "/krsAktif"
     },
     {
         "id": "5",
         "nama": "Setting Tanggal Tahap",
         "parent": "0",
-        "status": "",
-        "pages": ""
+        "status": true,
+        "pages": "#"
     },
     {
         "id": "6",
         "nama": "Tunggakan Per Mahasiswa",
         "parent": "2",
-        "status": "",
-        "pages": ""
+        "status": true,
+        "pages": "tunggakanPerMahasiswa"
+    },
+    {
+        "id": "7",
+        "nama": "Detail Tunggakan",
+        "parent": "2",
+        "status": true,
+        "pages": "tunggakanDetail"
+    },
+    {
+        "id": "8",
+        "nama": "Total Tunggakan",
+        "parent": "2",
+        "status": true,
+        "pages": "tunggakanTotal"
+    },
+    {
+        "id": "9",
+        "nama": "Detail Pembayaran Pokok",
+        "parent": "3",
+        "status": true,
+        "pages": "pembayaranDetail"
+    },
+    {
+        "id": "10",
+        "nama": "Total Pembayaran Pokok",
+        "parent": "3",
+        "status": true,
+        "pages": "pembayaranTotal"
+    },
+    {
+        "id": "11",
+        "nama": "Pembayaran Lain-Lain",
+        "parent": "3",
+        "status": true,
+        "pages": "pembayaraLain"
+    },
+    {
+        "id": "12",
+        "nama": "Detail Pembayaran Pokok",
+        "parent": "3",
+        "status": true,
+        "pages": "pembayaranDetail"
+    },
+    {
+        "id": "13",
+        "nama": "Per Angkatan",
+        "parent": "3",
+        "status": true,
+        "pages": "pembayaranDetail"
     }
 ]
