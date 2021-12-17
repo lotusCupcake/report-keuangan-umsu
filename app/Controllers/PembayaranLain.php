@@ -99,6 +99,8 @@ class PembayaranLain extends BaseController
         }
 
         $jenis = trim($this->request->getPost('jenis'));
+        $startDate = trim($this->request->getPost('tanggalAwal')) . ' 00:00:00.000';
+        $endDate = trim($this->request->getPost('tanggalAkhir')) . ' 23:59:00.000';
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getPembayaranLain", [
             "headers" => [
@@ -106,6 +108,8 @@ class PembayaranLain extends BaseController
             ],
             "form_params" => [
                 "jenis" => $jenis,
+                "startDate"=> $startDate,
+                "endDate"=>$endDate
             ]
         ]);
 
@@ -134,6 +138,8 @@ class PembayaranLain extends BaseController
     public function cetakPembayaranLainProdi()
     {
         $jenis = trim($this->request->getPost('jenis'));
+        $startDate = trim($this->request->getPost('tanggalAwal')) . ' 00:00:00.000';
+        $endDate = trim($this->request->getPost('tanggalAkhir')) . ' 23:59:00.000';
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getPembayaranLain", [
             "headers" => [
@@ -141,6 +147,8 @@ class PembayaranLain extends BaseController
             ],
             "form_params" => [
                 "jenis" => $jenis,
+                "startDate"=> $startDate,
+                "endDate"=>$endDate
             ]
         ]);
 
