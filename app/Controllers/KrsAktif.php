@@ -18,9 +18,9 @@ class KrsAktif extends BaseController
     public function index()
     {
         $data = [
-            'title' => "KRS Aktif",
+            'title' => "Jumlah KRS Aktif",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'KRS Aktif'],
+            'breadcrumb' => ['Home', 'Jumlah KRS Aktif'],
             'krsAktif' => [],
             'termYear' => null,
             'paymentOrder' => null,
@@ -87,7 +87,7 @@ class KrsAktif extends BaseController
 
             ]
         ]);
-        
+
 
         $fakultas = [];
         foreach (json_decode($response->getBody())->data as $f) {
@@ -113,9 +113,9 @@ class KrsAktif extends BaseController
         }
 
         $data = [
-            'title' => "KRS Aktif",
+            'title' => "Jumlah KRS Aktif",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'KRS Aktif'],
+            'breadcrumb' => ['Home', 'Jumlah KRS Aktif'],
             'krsAktif' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
             'listTermYear' => $this->getTermYear(),
@@ -127,22 +127,23 @@ class KrsAktif extends BaseController
             'validation' => \Config\Services::validation(),
         ];
 
-        session()->setFlashdata('success', 'Berhasil Memuat Data KRS Aktif, Klik Export Untuk Download !');
+        session()->setFlashdata('success', 'Berhasil Memuat Data Jumlah KRS Aktif, Klik Export Untuk Download !');
         return view('pages/krsAktif', $data);
     }
 
-    public function cetakTunggakanTotal()
+    public function cetakKrsAktif()
     {
         $term_year_id = trim($this->request->getPost('tahunAjar'));
-        $payment_order = trim($this->request->getPost('tahap'));
+        $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getTotalTunggakan", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getKrsAktif", [
             "headers" => [
                 "Accept" => "application/json"
             ],
             "form_params" => [
-                "termYearId" => $term_year_id,
-                "tahap" => $payment_order
+                "tahunAjar" => $term_year_id,
+                "filter" => $filter,
+
             ]
         ]);
 
@@ -172,7 +173,8 @@ class KrsAktif extends BaseController
         $col =   array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
         $row = 1;
 
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $row, "Rekap Tunggakan")->mergeCells("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $row, "Jumlah KRS Aktif
+        ")->mergeCells("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
         $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getAlignment()->setHorizontal('center');
         $row = $row + 1;
         $no = 0;
@@ -210,13 +212,10 @@ class KrsAktif extends BaseController
                     $no = 0;
                     foreach ($angkatan as $ang) {
                         $nilai = 0;
-                        foreach (json_decode($response->getBody())->data as $tung) {
-                            ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) ? $nilai = $tung->NOMINAL : $nilai = $nilai;
-                            if ($ang == $tung->ANGKATAN && $prd['prodi'] == $tung->NAMA_PRODI) {
-                                $a[$ang] = $a[$ang] + $tung->NOMINAL;
-                            }
+                        foreach (json_decode($response->getBody())->data as $krsAkt) {
+                            ($ang == $krsAkt->ANGKATAN && $prd['prodi'] == $krsAkt->NAMA_PRODI) ? $nilai = $krsAkt->JUMLAH : $nilai = $nilai;
                         }
-                        $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($nilai, 'IDR'));
+                        $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, $nilai);
                         $no++;
                     }
                     $urut++;
@@ -224,25 +223,6 @@ class KrsAktif extends BaseController
                 }
             }
         }
-        $no = 0;
-        $spreadsheet->setActiveSheetIndex(0)
-            ->setCellValue('A' . $row, '')
-            ->setCellValue('B' . $row, 'Tunggakan Per Angkatan')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
-        foreach ($angkatan as $ang) {
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue($col[2 + ($no)] . $row, number_to_currency($a[$ang], 'IDR'))->getStyle($col[2 + ($no)] . $row)->getFont()->setBold(true);
-            $no++;
-        }
-        $row++;
-        $totalTunggakkan = 0;
-        foreach ($angkatan as $ang) {
-            $totalTunggakkan = $totalTunggakkan + $a[$ang];
-        }
-        $spreadsheet->setActiveSheetIndex(0)
-            ->setCellValue('A' . $row, '')
-            ->setCellValue('B' . $row, 'Total Tunggakan')->getStyle("A" . $row . ":" . "B" . $row)->getFont()->setBold(true);
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('C' . $row, number_to_currency($totalTunggakkan, 'IDR'))->mergeCells("C" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getStyle("C" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getFont()->setBold(true);
-        $spreadsheet->setActiveSheetIndex(0)->getStyle("C" . $row . ":" . $col[2 + (count($angkatan) - 1)] . $row)->getAlignment()->setHorizontal('center');
-
 
         $writer = new Xlsx($spreadsheet);
         $fileName = 'Data Total Tunggakan Mahasiswa';

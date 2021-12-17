@@ -41,7 +41,7 @@
                 <li><a href=" /pembayaranLain"><span class="xn-text">Pembayaran Lain-Lain</span></a></li>
             </ul>
         </li>
-        <li><a href="/krsAktif"><span class="glyphicon glyphicon-book"></span><span class="xn-text">Jumlah KRS Aktif</span></a></li>
+        <li><a href="/krsAktif"><span class="glyphicon glyphicon-user"></span><span class="xn-text">Jumlah KRS Aktif</span></a></li>
         <li class="xn-title">Setting</li>
         <li class="xn-openable">
             <a href="#"><span class="fa fa-edit"></span><span class="xn-text">Setting Tanggal Tahap</span></a>
