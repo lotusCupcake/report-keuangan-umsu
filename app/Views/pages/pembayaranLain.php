@@ -59,14 +59,14 @@
                             <div class="col-md-2">
                                 <label>Tanggal Awal</label>
                                 <div class="input-group date" id="dp-2" data-date-format="yyyy-mm-dd">
-                                    <input type="text" class="form-control datepicker" value="" name="tanggalAwal" />
+                                    <input type="text" class="form-control datepicker" value="<?= date("Y-m-d", strtotime(($startDate != null) ? $startDate : "now"));  ?>" name="tanggalAwal" />
                                     <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <label>Tanggal Akhir</label>
                                 <div class="input-group date" id="dp-2" data-date-format="yyyy-mm-dd">
-                                    <input type="text" class="form-control datepicker" value="" name="tanggalAkhir" />
+                                    <input type="text" class="form-control datepicker" value="<?= date("Y-m-d", strtotime(($endDate != null) ? $endDate : "+1 week"));  ?>" name="tanggalAkhir" />
                                     <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -78,19 +78,19 @@
                     </div>
                     <div class="panel-body col-md-12">
                         <?php if ($prodi != null) : ?>
-                            <?php if ($tagihan != null && $termYear != null) : ?>
+                            <?php if ($tagihan != null) : ?>
                                 <form action="/pembayaranLainProdi/cetak" method="post">
                                     <input type="hidden" name="jenis" value="<?= $tagihan; ?>">
-                                    <input type="hidden" name="tanggalAwal" value="">
-                                    <input type="hidden" name="tanggalAkhir" value="">
+                                    <input type="hidden" name="tanggalAwal" value="<?= $startDate; ?>">
+                                    <input type="hidden" name="tanggalAkhir" value="<?= $endDate; ?>">
                                     <ul class="panel-controls"><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                             Export Prodi</button></ul>
                                 </form>
                                 <span>
                                     <form action="/pembayaranLainSeluruh/cetak" method="post">
                                         <input type="hidden" name="jenis" value="<?= $tagihan; ?>">
-                                        <input type="hidden" name="tanggalAwal" value="">
-                                        <input type="hidden" name="tanggalAkhir" value="">
+                                        <input type="hidden" name="tanggalAwal" value="<?= $startDate; ?>">
+                                        <input type="hidden" name="tanggalAkhir" value="<?= $endDate; ?>">
                                         <ul class="panel-controls"><button style="display: inline-block; margin-right: 11px; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                                 Export Seluruh</button></ul>
                                     </form>
@@ -113,6 +113,7 @@
                                                         <th>Angkatan</th>
                                                         <th>Nama Biaya</th>
                                                         <th>Bank</th>
+                                                        <th>Tanggal Pembayaran</th>
                                                         <th>Nominal</th>
                                                     </tr>
                                                 </thead>
@@ -130,12 +131,13 @@
                                                                     <td><?= $rows->ANGKATAN ?></td>
                                                                     <td><?= $rows->NAMA_BIAYA ?></td>
                                                                     <td><?= ($rows->BANK_NAMA == null) ? "BAK" : $rows->BANK_NAMA ?></td>
+                                                                    <td><?= date_format(date_create($rows->TANGGAL_BAYAR), "d/m/Y") ?></td>
                                                                     <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
                                                                 </tr>
                                                             <?php endif ?>
                                                         <?php endforeach ?>
                                                         <tr>
-                                                            <td colspan=7 style="text-align: center;"><strong>Total Amount</strong></td>
+                                                            <td colspan=8 style="text-align: center;"><strong>Total Amount</strong></td>
                                                             <td><strong><?= number_to_currency($total, 'IDR') ?></strong></td>
                                                         </tr>
                                                     <?php else : ?>
