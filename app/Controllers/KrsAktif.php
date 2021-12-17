@@ -21,13 +21,14 @@ class KrsAktif extends BaseController
             'title' => "KRS Aktif",
             'appName' => "UMSU",
             'breadcrumb' => ['Home', 'KRS Aktif'],
-            'tunggakan' => [],
+            'krsAktif' => [],
             'termYear' => null,
             'paymentOrder' => null,
             'listTermYear' => $this->getTermYear(),
             'prodi' => [],
             'filter' => null,
-            'fakultas' => $this->getFakultas(),
+            'fakultas' => [],
+            'fakultasFilter' => $this->getFakultas(),
             'angkatan' => [],
             'validation' => \Config\Services::validation(),
         ];
@@ -76,16 +77,17 @@ class KrsAktif extends BaseController
         $term_year_id = trim($this->request->getPost('tahunAjar'));
         $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getTotalTunggakan", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getKrsAktif", [
             "headers" => [
                 "Accept" => "application/json"
             ],
             "form_params" => [
-                "termYearId" => $term_year_id,
+                "tahunAjar" => $term_year_id,
                 "filter" => $filter,
 
             ]
         ]);
+        
 
         $fakultas = [];
         foreach (json_decode($response->getBody())->data as $f) {
@@ -102,6 +104,7 @@ class KrsAktif extends BaseController
             ]);
         }
 
+
         $angkatan = [];
         foreach (json_decode($response->getBody())->data as $a) {
             if (!in_array($a->ANGKATAN, $angkatan)) {
@@ -109,17 +112,17 @@ class KrsAktif extends BaseController
             }
         }
 
-
         $data = [
             'title' => "KRS Aktif",
             'appName' => "UMSU",
             'breadcrumb' => ['Home', 'KRS Aktif'],
-            'tunggakan' => json_decode($response->getBody())->data,
+            'krsAktif' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
             'listTermYear' => $this->getTermYear(),
             'prodi' => array_unique($prodi, SORT_REGULAR),
             'filter' => $filter,
-            'fakultas' => $this->getFakultas(),
+            'fakultas' => $fakultas,
+            'fakultasFilter' => $this->getFakultas(),
             'angkatan' => $angkatan,
             'validation' => \Config\Services::validation(),
         ];
