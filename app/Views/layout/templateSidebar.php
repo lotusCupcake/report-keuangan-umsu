@@ -28,7 +28,7 @@
         <li class="xn-openable">
             <a href=" #"><span class="fa fa-ban"></span><span class="xn-text">Laporan Tunggakan</span></a>
             <ul>
-                <li><a href=" /tunggakanPerMahasiswa"><span class="xn-text">Tunggakan Per Mahasiswa</span></a></li>
+                <li><a href="/tunggakanPerMahasiswa"><span class="xn-text">Tunggakan Per Mahasiswa</span></a></li>
                 <li><a href="/tunggakanDetail"><span class="xn-text">Detail Tunggakan</span></a></li>
                 <li><a href="/tunggakanTotal"><span class="xn-text">Total Tunggakan</span></a></li>
             </ul>
