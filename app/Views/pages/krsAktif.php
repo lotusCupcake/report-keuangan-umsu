@@ -110,7 +110,7 @@
                             </div>
                         <?php else :?>
                         <center>
-                            <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_xwgclkyh.json" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
+                            <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_JMptQA.json" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
                         </center>
                         <?php endif ?>
                     </div>
