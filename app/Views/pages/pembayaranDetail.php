@@ -49,6 +49,9 @@
                                 <label>Pilih Fakultas</label>
                                 <select class="form-control select" name="fakultas">
                                     <option value="">-- Select --</option>
+                                    <?php foreach ($fakultas as $rows) : ?>
+                                        <option value="<?= $rows->Faculty_Acronym ?>" <?php if ($rows->Faculty_Acronym == $filter) echo " selected" ?>><?= $rows->Faculty_Name ?></option>
+                                    <?php endforeach ?>
                                 </select>
                             </div>
                             <div class="col-md-2">
@@ -101,6 +104,7 @@
                                     <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
                                     <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
                                     <input type="hidden" name="bank" value="<?= $bank; ?>">
+                                    <input type="hidden" name="fakultas" value="<?= $filter; ?>">
                                     <ul class="panel-controls"><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                             Export Prodi</button></ul>
                                 </form>
@@ -110,6 +114,7 @@
                                         <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
                                         <input type="hidden" name="tahap" value="<?= $paymentOrder; ?>">
                                         <input type="hidden" name="bank" value="<?= $bank; ?>">
+                                        <input type="hidden" name="fakultas" value="<?= $filter; ?>">
                                         <ul class="panel-controls"><button style="display: inline-block; margin-right: 11px; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                                 Export Seluruh</button></ul>
                                     </form>

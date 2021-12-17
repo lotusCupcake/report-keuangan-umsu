@@ -30,12 +30,26 @@ class PembayaranDetail extends BaseController
             'listTermYear' => $this->getTermYear(),
             'listBank' => $this->getBank(),
             'prodi' => [],
+            'filter' => null,
+            'fakultas' => $this->getFakultas(),
             'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'validation' => \Config\Services::validation(),
         ];
         // dd($data);
 
         return view('pages/pembayaranDetail', $data);
+    }
+
+    public function getFakultas()
+    {
+        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getFakultas", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+
+        ]);
+
+        return json_decode($response->getBody())->data;
     }
 
     public function getBank()
@@ -91,6 +105,7 @@ class PembayaranDetail extends BaseController
         $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
         $payment_order = trim($this->request->getPost('tahap'));
         $bank = trim($this->request->getPost('bank'));
+        $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
         // dd($term_year_id, $entry_year_id, $payment_order, $bank);
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
@@ -101,7 +116,8 @@ class PembayaranDetail extends BaseController
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
                 "tahap" => $payment_order,
-                "bank" => $bank
+                "bank" => $bank,
+                "filter" => $filter,
             ]
         ]);
 
@@ -111,7 +127,7 @@ class PembayaranDetail extends BaseController
                 array_push($prodi, $k->PRODI);
             }
         }
-
+        dd(json_decode($response->getBody())->data);
         $data = [
             'title' => "Detail Pembayaran Pokok",
             'appName' => "UMSU",
@@ -119,6 +135,8 @@ class PembayaranDetail extends BaseController
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
             'paymentOrder' => $payment_order,
+            'filter' => $filter,
+            'fakultas' => $this->getFakultas(),
             'bank' => $bank,
             'pembayaran' => json_decode($response->getBody())->data,
             'listTermYear' => $this->getTermYear(),
@@ -137,6 +155,7 @@ class PembayaranDetail extends BaseController
         $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
         $payment_order = trim($this->request->getPost('tahap'));
         $bank = trim($this->request->getPost('bank'));
+        $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [
@@ -146,7 +165,8 @@ class PembayaranDetail extends BaseController
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
                 "tahap" => $payment_order,
-                "bank" => $bank
+                "bank" => $bank,
+                "filter" => $filter,
             ]
         ]);
 
@@ -218,6 +238,7 @@ class PembayaranDetail extends BaseController
         $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
         $payment_order = trim($this->request->getPost('tahap'));
         $bank = trim($this->request->getPost('bank'));
+        $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [
@@ -227,7 +248,8 @@ class PembayaranDetail extends BaseController
                 "entryYearId" => $entry_year_id,
                 "termYearId" => $term_year_id,
                 "tahap" => $payment_order,
-                "bank" => $bank
+                "bank" => $bank,
+                "filter" => $filter,
             ]
         ]);
 
