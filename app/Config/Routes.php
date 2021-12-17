@@ -40,6 +40,9 @@ $routes->setAutoRoute(true);
 // Route Home
 $routes->get('/home/(:any)', 'Home::index');
 
+// Route Maintenance
+$routes->get('/maintenance/(:any)', 'Maintenance::index');
+
 // Route  Tunggakan PerMahasiswa
 $routes->get('/tunggakanPerMahasiswa/(:any)', 'TunggakanPerMahasiswa::index');
 $routes->post('/tunggakanPerMahasiswa/cetak', 'TunggakanPerMahasiswa::cetakTunggakanPerMahasiswa');
