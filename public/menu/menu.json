@@ -1,5 +1,4 @@
-[
-    {
+[{
         "id": "1",
         "nama": "Dashboard",
         "parent": "0",
@@ -37,55 +36,104 @@
         "nama": "Tunggakan Per Mahasiswa",
         "parent": "2",
         "status": true,
-        "pages": "tunggakanPerMahasiswa"
+        "pages": "/tunggakanPerMahasiswa"
     },
     {
         "id": "7",
         "nama": "Detail Tunggakan",
         "parent": "2",
         "status": true,
-        "pages": "tunggakanDetail"
+        "pages": "/tunggakanDetail"
     },
     {
         "id": "8",
         "nama": "Total Tunggakan",
         "parent": "2",
         "status": true,
-        "pages": "tunggakanTotal"
+        "pages": "/tunggakanTotal"
     },
     {
         "id": "9",
         "nama": "Detail Pembayaran Pokok",
         "parent": "3",
         "status": true,
-        "pages": "pembayaranDetail"
+        "pages": "/pembayaranDetail"
     },
     {
         "id": "10",
         "nama": "Total Pembayaran Pokok",
         "parent": "3",
         "status": true,
-        "pages": "pembayaranTotal"
+        "pages": "/pembayaranTotal"
     },
     {
         "id": "11",
         "nama": "Pembayaran Lain-Lain",
         "parent": "3",
         "status": true,
-        "pages": "pembayaraLain"
+        "pages": "/pembayaranLain"
     },
     {
         "id": "12",
-        "nama": "Detail Pembayaran Pokok",
-        "parent": "3",
+        "nama": "Per Angkatan",
+        "parent": "5",
         "status": true,
-        "pages": "pembayaranDetail"
+        "pages": "/ubahAngkatan"
     },
     {
         "id": "13",
-        "nama": "Per Angkatan",
-        "parent": "3",
+        "nama": "Per Fakultas",
+        "parent": "5",
         "status": true,
-        "pages": "pembayaranDetail"
+        "pages": "#"
+    },
+    {
+        "id": "14",
+        "nama": "Per Prodi",
+        "parent": "5",
+        "status": true,
+        "pages": "#"
+    },
+    {
+        "id": "15",
+        "nama": "Fakultas Non Kedokteran",
+        "parent": "13",
+        "status": true,
+        "pages": "/ubahFakultasNonKedokteran"
+    },
+    {
+        "id": "16",
+        "nama": "Fakultas Kedokteran",
+        "parent": "13",
+        "status": true,
+        "pages": "/ubahFakultasKedokteran"
+    },
+    {
+        "id": "17",
+        "nama": "Fakultas Pascasarjana",
+        "parent": "13",
+        "status": true,
+        "pages": "/ubahFakultasPascasarjana"
+    },
+    {
+        "id": "18",
+        "nama": "Prodi Non Kedokteran",
+        "parent": "14",
+        "status": true,
+        "pages": "/ubahProdiNonKedokteran"
+    },
+    {
+        "id": "19",
+        "nama": "Prodi Kedokteran",
+        "parent": "14",
+        "status": true,
+        "pages": "/ubahProdiKedokteran"
+    },
+    {
+        "id": "20",
+        "nama": "Prodi Pascasarjana",
+        "parent": "14",
+        "status": true,
+        "pages": "/ubahProdiPascasarjana"
     }
 ]
