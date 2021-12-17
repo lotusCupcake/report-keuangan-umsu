@@ -26,13 +26,26 @@ class KrsAktif extends BaseController
             'paymentOrder' => null,
             'listTermYear' => $this->getTermYear(),
             'prodi' => [],
-            'fakultas' => [],
+            'filter' => null,
+            'fakultas' => $this->getFakultas(),
             'angkatan' => [],
             'validation' => \Config\Services::validation(),
         ];
         // dd($data);
 
         return view('pages/krsAktif', $data);
+    }
+
+    public function getFakultas()
+    {
+        $response = $this->curl->request("GET", "https://api.umsu.ac.id/Laporankeu/getFakultas", [
+            "headers" => [
+                "Accept" => "application/json"
+            ],
+
+        ]);
+
+        return json_decode($response->getBody())->data;
     }
 
     public function getTermYear()
@@ -61,7 +74,7 @@ class KrsAktif extends BaseController
         }
 
         $term_year_id = trim($this->request->getPost('tahunAjar'));
-        $payment_order = trim($this->request->getPost('tahap'));
+        $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getTotalTunggakan", [
             "headers" => [
@@ -69,7 +82,8 @@ class KrsAktif extends BaseController
             ],
             "form_params" => [
                 "termYearId" => $term_year_id,
-                "tahap" => $payment_order
+                "filter" => $filter,
+
             ]
         ]);
 
@@ -102,10 +116,10 @@ class KrsAktif extends BaseController
             'breadcrumb' => ['Home', 'KRS Aktif'],
             'tunggakan' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
-            'paymentOrder' => $payment_order,
             'listTermYear' => $this->getTermYear(),
             'prodi' => array_unique($prodi, SORT_REGULAR),
-            'fakultas' => $fakultas,
+            'filter' => $filter,
+            'fakultas' => $this->getFakultas(),
             'angkatan' => $angkatan,
             'validation' => \Config\Services::validation(),
         ];
