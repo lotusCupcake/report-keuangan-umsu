@@ -106,7 +106,7 @@ class PembayaranDetail extends BaseController
         $payment_order = trim($this->request->getPost('tahap'));
         $bank = trim($this->request->getPost('bank'));
         $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
-        // dd($term_year_id, $entry_year_id, $payment_order, $bank);
+        // dd($term_year_id, $entry_year_id, $payment_order, $bank,$filter);
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [
@@ -120,14 +120,15 @@ class PembayaranDetail extends BaseController
                 "filter" => $filter,
             ]
         ]);
-
+        
         $prodi = [];
         foreach (json_decode($response->getBody())->data as $k) {
             if (!in_array($k->PRODI, $prodi)) {
                 array_push($prodi, $k->PRODI);
             }
         }
-        dd(json_decode($response->getBody())->data);
+        $pembayaran = json_decode($response->getBody())->data;
+
         $data = [
             'title' => "Detail Pembayaran Pokok",
             'appName' => "UMSU",
@@ -138,7 +139,7 @@ class PembayaranDetail extends BaseController
             'filter' => $filter,
             'fakultas' => $this->getFakultas(),
             'bank' => $bank,
-            'pembayaran' => json_decode($response->getBody())->data,
+            'pembayaran' => $pembayaran,
             'listTermYear' => $this->getTermYear(),
             'listBank' => $this->getBank(),
             'prodi' => $prodi,
