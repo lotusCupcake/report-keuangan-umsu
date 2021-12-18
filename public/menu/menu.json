@@ -58,7 +58,7 @@
         "nama": "Jumlah KRS Aktif",
         "parent": "2",
         "level":"child",
-        "status": false,
+        "status": true,
         "icon":"glyphicon glyphicon-user",
         "pages": "/krsAktif"
     },
