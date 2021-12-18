@@ -30,6 +30,7 @@ class UbahFakultasKedokteran extends BaseController
             'fakultas' => $this->getFakultas(),
             'listTermYear' => $this->getTermYear(),
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
         // dd($data);
 
@@ -128,6 +129,7 @@ class UbahFakultasKedokteran extends BaseController
             'listTermYear' => $this->getTermYear(),
             'icon' => (json_decode($response->getBody())->status) ? 'https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json' : 'https://assets10.lottiefiles.com/packages/lf20_gO48yV.json',
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
 
         session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');

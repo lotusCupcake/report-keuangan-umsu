@@ -29,6 +29,7 @@ class TunggakanTotal extends BaseController
             'fakultas' => [],
             'angkatan' => [],
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
         // dd($data);
 
@@ -114,6 +115,7 @@ class TunggakanTotal extends BaseController
             'fakultas' => $fakultas,
             'angkatan' => $angkatan,
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');

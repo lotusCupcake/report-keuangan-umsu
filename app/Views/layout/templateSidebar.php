@@ -20,10 +20,11 @@
                 </div>
             </div>
         </li>
-        <li class="xn-title">Home</li>
-        <li>
-            <a href="/home"><span class="fa fa-home"></span><span class="xn-text">Dashboard <?= $data ?></span></a>
-        </li>
+        <?=$menus?>
+        <!-- <li class="xn-title">Home</li>
+            <li>
+                <a href="/home"><span class="fa fa-home"></span><span class="xn-text">Dashboard</span></a>
+            </li>
         <li class="xn-title">Laporan</li>
         <li class="xn-openable">
             <a href=" #"><span class="fa fa-ban"></span><span class="xn-text">Laporan Tunggakan</span></a>
@@ -64,7 +65,7 @@
                     </ul>
                 </li>
             </ul>
-        </li>
+        </li> -->
     </ul>
     <!-- END X-NAVIGATION -->
 </div>

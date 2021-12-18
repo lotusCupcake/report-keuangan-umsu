@@ -1,139 +1,209 @@
-[{
+[   
+    {
         "id": "1",
-        "nama": "Dashboard",
+        "nama": "Home",
         "parent": "0",
+        "level":"title",
         "status": true,
-        "pages": "/home"
-    }, {
-        "id": "2",
-        "nama": "Laporan Tunggakan",
-        "parent": "0",
-        "status": true,
+        "icon":"",
         "pages": "#"
-    }, {
-        "id": "3",
-        "nama": "Laporan Pembayaran",
+    },
+    {
+        "id": "2",
+        "nama": "Laporan",
         "parent": "0",
+        "level":"title",
         "status": true,
+        "icon":"",
+        "pages": "#"
+    },
+    {
+        "id": "3",
+        "nama": "Setting",
+        "parent": "0",
+        "level":"title",
+        "status": true,
+        "icon":"",
         "pages": "#"
     },
     {
         "id": "4",
-        "nama": "Jumlah KRS Aktif",
-        "parent": "0",
+        "nama": "Dashboard",
+        "parent": "1",
+        "level":"child",
         "status": true,
-        "pages": "/krsAktif"
+        "icon":" fa fa-home",
+        "pages": "/home"
     },
     {
         "id": "5",
-        "nama": "Setting Tanggal Tahap",
-        "parent": "0",
+        "nama": "Laporan Tunggakan",
+        "parent": "2",
+        "level":"parent",
         "status": true,
+        "icon":"fa fa-ban",
         "pages": "#"
-    },
+    }, 
     {
         "id": "6",
-        "nama": "Tunggakan Per Mahasiswa",
+        "nama": "Laporan Pembayaran",
         "parent": "2",
+        "level":"parent",
         "status": true,
-        "pages": "/tunggakanPerMahasiswa"
-    },
+        "icon":"fa fa-money",
+        "pages": "#"
+    }, 
     {
         "id": "7",
-        "nama": "Detail Tunggakan",
+        "nama": "Jumlah KRS Aktif",
         "parent": "2",
+        "level":"child",
         "status": true,
-        "pages": "/tunggakanDetail"
+        "icon":"glyphicon glyphicon-user",
+        "pages": "/krsAktif"
     },
     {
         "id": "8",
-        "nama": "Total Tunggakan",
-        "parent": "2",
+        "nama": "Setting Tanggal Tahap",
+        "parent": "3",
+        "level":"parent",
         "status": true,
-        "pages": "/tunggakanTotal"
+        "icon":"fa fa-edit",
+        "pages": "#"
     },
     {
         "id": "9",
-        "nama": "Detail Pembayaran Pokok",
-        "parent": "3",
+        "nama": "Tunggakan Per Mahasiswa",
+        "parent": "5",
+        "level":"child",
         "status": true,
-        "pages": "/pembayaranDetail"
+        "icon":"",
+        "pages": "/tunggakanPerMahasiswa"
     },
     {
         "id": "10",
-        "nama": "Total Pembayaran Pokok",
-        "parent": "3",
+        "nama": "Detail Tunggakan",
+        "parent": "5",
+        "level":"child",
         "status": true,
-        "pages": "/pembayaranTotal"
+        "icon":"",
+        "pages": "/tunggakanDetail"
     },
     {
         "id": "11",
-        "nama": "Pembayaran Lain-Lain",
-        "parent": "3",
+        "nama": "Total Tunggakan",
+        "parent": "5",
+        "level":"child",
         "status": true,
-        "pages": "/pembayaranLain"
+        "icon":"",
+        "pages": "/tunggakanTotal"
     },
     {
         "id": "12",
-        "nama": "Per Angkatan",
-        "parent": "5",
+        "nama": "Detail Pembayaran Pokok",
+        "parent": "6",
+        "level":"child",
         "status": true,
-        "pages": "/ubahAngkatan"
+        "icon":"",
+        "pages": "/pembayaranDetail"
     },
     {
         "id": "13",
-        "nama": "Per Fakultas",
-        "parent": "5",
+        "nama": "Total Pembayaran Pokok",
+        "parent": "6",
+        "level":"child",
         "status": true,
-        "pages": "#"
+        "icon":"",
+        "pages": "/pembayaranTotal"
     },
     {
         "id": "14",
-        "nama": "Per Prodi",
-        "parent": "5",
+        "nama": "Pembayaran Lain-Lain",
+        "parent": "6",
+        "level":"child",
         "status": true,
-        "pages": "#"
+        "icon":"",
+        "pages": "/pembayaranLain"
     },
     {
         "id": "15",
-        "nama": "Fakultas Non Kedokteran",
-        "parent": "13",
+        "nama": "Per Angkatan",
+        "parent": "8",
+        "level":"child",
         "status": true,
-        "pages": "/ubahFakultasNonKedokteran"
+        "icon":"",
+        "pages": "/ubahAngkatan"
     },
     {
         "id": "16",
-        "nama": "Fakultas Kedokteran",
-        "parent": "13",
+        "nama": "Per Fakultas",
+        "parent": "8",
+        "level":"child",
         "status": true,
-        "pages": "/ubahFakultasKedokteran"
+        "icon":"",
+        "pages": "#"
     },
     {
         "id": "17",
-        "nama": "Fakultas Pascasarjana",
-        "parent": "13",
+        "nama": "Per Prodi",
+        "parent": "8",
+        "level":"child",
         "status": true,
-        "pages": "/ubahFakultasPascasarjana"
+        "icon":"",
+        "pages": "#"
     },
     {
         "id": "18",
-        "nama": "Prodi Non Kedokteran",
-        "parent": "14",
+        "nama": "Fakultas Non Kedokteran",
+        "parent": "13",
+        "level":"child",
         "status": true,
-        "pages": "/ubahProdiNonKedokteran"
+        "icon":"",
+        "pages": "/ubahFakultasNonKedokteran"
     },
     {
         "id": "19",
-        "nama": "Prodi Kedokteran",
-        "parent": "14",
+        "nama": "Fakultas Kedokteran",
+        "parent": "13",
+        "level":"child",
         "status": true,
-        "pages": "/ubahProdiKedokteran"
+        "icon":"",
+        "pages": "/ubahFakultasKedokteran"
     },
     {
         "id": "20",
+        "nama": "Fakultas Pascasarjana",
+        "parent": "13",
+        "level":"child",
+        "status": true,
+        "icon":"",
+        "pages": "/ubahFakultasPascasarjana"
+    },
+    {
+        "id": "21",
+        "nama": "Prodi Non Kedokteran",
+        "parent": "14",
+        "level":"child",
+        "status": true,
+        "icon":"",
+        "pages": "/ubahProdiNonKedokteran"
+    },
+    {
+        "id": "22",
+        "nama": "Prodi Kedokteran",
+        "parent": "14",
+        "level":"child",
+        "status": true,
+        "icon":"",
+        "pages": "/ubahProdiKedokteran"
+    },
+    {
+        "id": "23",
         "nama": "Prodi Pascasarjana",
         "parent": "14",
+        "level":"child",
         "status": true,
+        "icon":"",
         "pages": "/ubahProdiPascasarjana"
     }
 ]

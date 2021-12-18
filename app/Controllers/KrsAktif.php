@@ -31,6 +31,7 @@ class KrsAktif extends BaseController
             'fakultasFilter' => $this->getFakultas(),
             'angkatan' => [],
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
         // dd($data);
 
@@ -125,6 +126,7 @@ class KrsAktif extends BaseController
             'fakultasFilter' => $this->getFakultas(),
             'angkatan' => $angkatan,
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Jumlah KRS Aktif, Klik Export Untuk Download !');

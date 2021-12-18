@@ -34,6 +34,7 @@ class PembayaranDetail extends BaseController
             'fakultas' => $this->getFakultas(),
             'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
         // dd($data);
 
@@ -106,8 +107,6 @@ class PembayaranDetail extends BaseController
         $payment_order = trim($this->request->getPost('tahap'));
         $bank = trim($this->request->getPost('bank'));
         $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
-        // dd($term_year_id, $entry_year_id, $payment_order, $bank,$filter);
-
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getLaporanPembayaran", [
             "headers" => [
                 "Accept" => "application/json"
@@ -144,6 +143,7 @@ class PembayaranDetail extends BaseController
             'listBank' => $this->getBank(),
             'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Pembayaran, Klik Export Untuk Download !');
