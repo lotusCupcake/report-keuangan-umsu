@@ -25,6 +25,7 @@ class TunggakanPerMahasiswa extends BaseController
             'filter' => null,
             'student' => null,
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
         // dd($data);
 
@@ -79,6 +80,7 @@ class TunggakanPerMahasiswa extends BaseController
             'student' => json_decode($response->getBody())->student,
             'tunggakan' => json_decode($response->getBody())->data,
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
 
         if (json_decode($response->getBody())->student != null && json_decode($response->getBody())->data != null) {

@@ -31,6 +31,7 @@ class TunggakanDetail extends BaseController
             'filter' => null,
             'fakultas' => $this->getFakultas(),
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
         // dd($data);
 
@@ -125,6 +126,7 @@ class TunggakanDetail extends BaseController
             'listTermYear' => $this->getTermYear(),
             'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Tunggakan, Klik Export Untuk Download !');

@@ -3,7 +3,7 @@
 <?= $this->section('content'); ?>
 <!-- START PAGE CONTAINER -->
 <div class="page-container">
-    <?= view('layout/templateSidebar',['data'=>$menu]); ?>
+    <?= view('layout/templateSidebar',['menus'=>$menu]); ?>
     <!-- PAGE CONTENT -->
     <div class="page-content">
         <?= $this->include('layout/templateHead'); ?>

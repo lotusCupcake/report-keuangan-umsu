@@ -4,7 +4,7 @@
 <!-- START PAGE CONTAINER -->
 <div class="page-container">
 
-    <?= $this->include('layout/templateSidebar'); ?>
+    <?= view('layout/templateSidebar',['menus'=>$menu]); ?>
 
     <!-- PAGE CONTENT -->
     <div class="page-content">

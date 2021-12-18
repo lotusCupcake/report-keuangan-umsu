@@ -33,6 +33,7 @@ class PembayaranTotal extends BaseController
             'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'angkatan' => [],
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
         // dd($data);
 
@@ -134,6 +135,7 @@ class PembayaranTotal extends BaseController
             'prodi' => array_unique($prodi, SORT_REGULAR),
             'angkatan' => $angkatan,
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
 
         // dd($data);

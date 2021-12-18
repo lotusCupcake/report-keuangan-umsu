@@ -69,6 +69,7 @@ class PembayaranLain extends BaseController
             'jenis' => json_decode($this->json),
             'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
         // dd($data);
 
@@ -133,6 +134,7 @@ class PembayaranLain extends BaseController
             'prodi' => $prodi,
             'jenis' => json_decode($this->json),
             'validation' => \Config\Services::validation(),
+            'menu'=>$this->fetchMenu()
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Pembayaran, Klik Export Untuk Download !');
