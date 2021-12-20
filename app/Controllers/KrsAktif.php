@@ -31,7 +31,7 @@ class KrsAktif extends BaseController
             'fakultasFilter' => $this->getFakultas(),
             'angkatan' => [],
             'validation' => \Config\Services::validation(),
-            'menu'=>$this->fetchMenu()
+            'menu' => $this->fetchMenu()
         ];
         // dd($data);
 
@@ -126,7 +126,7 @@ class KrsAktif extends BaseController
             'fakultasFilter' => $this->getFakultas(),
             'angkatan' => $angkatan,
             'validation' => \Config\Services::validation(),
-            'menu'=>$this->fetchMenu()
+            'menu' => $this->fetchMenu()
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Jumlah KRS Aktif, Klik Export Untuk Download !');
@@ -227,7 +227,7 @@ class KrsAktif extends BaseController
         }
 
         $writer = new Xlsx($spreadsheet);
-        $fileName = 'Data Total Tunggakan Mahasiswa';
+        $fileName = 'Data Jumlah KRS Aktif';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
