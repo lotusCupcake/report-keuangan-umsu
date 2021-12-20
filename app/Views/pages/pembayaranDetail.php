@@ -149,7 +149,7 @@
                                                             <?php if ($rows->PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
                                                                 <tr>
                                                                     <td><?= $no++ ?></td>
-                                                                    <td><?= $rows->NO_REGISTER . " " . count($pembayaran) ?></td>
+                                                                    <td><?= $rows->NO_REGISTER ?></td>
                                                                     <td><?= $rows->Npm ?></td>
                                                                     <td><?= $rows->NAMA_LENGKAP ?></td>
                                                                     <td><?= $rows->ANGKATAN ?></td>

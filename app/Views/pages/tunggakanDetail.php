@@ -4,7 +4,7 @@
 <!-- START PAGE CONTAINER -->
 <div class="page-container">
 
-    <?= view('layout/templateSidebar',['menus'=>$menu]); ?>
+    <?= view('layout/templateSidebar', ['menus' => $menu]); ?>
 
     <!-- PAGE CONTENT -->
     <div class="page-content">
@@ -136,7 +136,7 @@
                                                                 <?php if ($rows->NAMA_PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
                                                                     <tr>
                                                                         <td><?= $no++ ?></td>
-                                                                        <td><?= $rows->NO_REGISTER . " " . count($tunggakan) ?></td>
+                                                                        <td><?= $rows->NO_REGISTER ?></td>
                                                                         <td><?= $rows->Npm ?></td>
                                                                         <td><?= $rows->NAMA_LENGKAP ?></td>
                                                                         <td><?= $rows->ANGKATAN ?></td>

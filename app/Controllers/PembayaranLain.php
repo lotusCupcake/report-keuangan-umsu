@@ -69,7 +69,7 @@ class PembayaranLain extends BaseController
             'jenis' => json_decode($this->json),
             'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'validation' => \Config\Services::validation(),
-            'menu'=>$this->fetchMenu()
+            'menu' => $this->fetchMenu()
         ];
         // dd($data);
 
@@ -134,7 +134,7 @@ class PembayaranLain extends BaseController
             'prodi' => $prodi,
             'jenis' => json_decode($this->json),
             'validation' => \Config\Services::validation(),
-            'menu'=>$this->fetchMenu()
+            'menu' => $this->fetchMenu()
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Pembayaran, Klik Export Untuk Download !');
@@ -176,11 +176,11 @@ class PembayaranLain extends BaseController
             $konten = $konten + 1;
             $spreadsheet->setActiveSheetIndex(0)
                 ->setCellValue('A' . $konten, 'No.')
-                ->setCellValue('B' . $konten, 'No Register')
-                ->setCellValue('C' . $konten, 'NPM')
-                ->setCellValue('D' . $konten, 'Nama Lengkap')
-                ->setCellValue('E' . $konten, 'Angkatan')
-                ->setCellValue('F' . $konten, 'Nama Biaya')
+                ->setCellValue('B' . $konten, 'NPM')
+                ->setCellValue('C' . $konten, 'Nama Lengkap')
+                ->setCellValue('D' . $konten, 'Angkatan')
+                ->setCellValue('E' . $konten, 'Nama Biaya')
+                ->setCellValue('F' . $konten, 'Mata Kuliah')
                 ->setCellValue('G' . $konten, 'Bank')
                 ->setCellValue('H' . $konten, 'Tanggal Pembayaran')
                 ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
@@ -193,12 +193,12 @@ class PembayaranLain extends BaseController
                     $total = $total + $data->NOMINAL;
                     $spreadsheet->setActiveSheetIndex(0)
                         ->setCellValue('A' . $konten, $no++)
-                        ->setCellValue('B' . $konten, $data->NO_REGISTER)
-                        ->setCellValue('C' . $konten, $data->Npm)
-                        ->setCellValue('D' . $konten, $data->NAMA_LENGKAP)
-                        ->setCellValue('E' . $konten, $data->ANGKATAN)
-                        ->setCellValue('F' . $konten, $data->NAMA_BIAYA)
-                        ->setCellValue('G' . $konten, $data->BANK_NAMA)
+                        ->setCellValue('B' . $konten, $data->Npm)
+                        ->setCellValue('C' . $konten, $data->NAMA_LENGKAP)
+                        ->setCellValue('D' . $konten, $data->ANGKATAN)
+                        ->setCellValue('E' . $konten, $data->NAMA_BIAYA)
+                        ->setCellValue('F' . $konten, ($data->MATA_KULIAH == null) ? "-" : $data->MATA_KULIAH)
+                        ->setCellValue('G' . $konten, ($data->BANK_NAMA == null) ? "Biro Keuangan UMSU" : $data->BANK_NAMA)
                         ->setCellValue('H' . $konten, date_format(date_create($data->TANGGAL_BAYAR), "d/m/Y"))
                         ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "I" . $konten);
                     $konten++;
@@ -251,12 +251,12 @@ class PembayaranLain extends BaseController
         $konten = $konten + 1;
         $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A' . $konten, 'No.')
-            ->setCellValue('B' . $konten, 'No Register')
-            ->setCellValue('C' . $konten, 'NPM')
-            ->setCellValue('D' . $konten, 'Nama Lengkap')
-            ->setCellValue('E' . $konten, 'Prodi')
-            ->setCellValue('F' . $konten, 'Angkatan')
-            ->setCellValue('G' . $konten, 'Nama Biaya')
+            ->setCellValue('B' . $konten, 'NPM')
+            ->setCellValue('C' . $konten, 'Nama Lengkap')
+            ->setCellValue('D' . $konten, 'Prodi')
+            ->setCellValue('E' . $konten, 'Angkatan')
+            ->setCellValue('F' . $konten, 'Nama Biaya')
+            ->setCellValue('G' . $konten, 'Mata Kuliah')
             ->setCellValue('H' . $konten, 'Bank')
             ->setCellValue('I' . $konten, 'Tanggal Pembayaran')
             ->setCellValue('J' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "J" . $konten)->getFont()->setBold(true);
@@ -268,13 +268,13 @@ class PembayaranLain extends BaseController
             $total = $total + $data->NOMINAL;
             $spreadsheet->setActiveSheetIndex(0)
                 ->setCellValue('A' . $konten, $no++)
-                ->setCellValue('B' . $konten, $data->NO_REGISTER)
-                ->setCellValue('C' . $konten, $data->Npm)
-                ->setCellValue('D' . $konten, $data->NAMA_LENGKAP)
-                ->setCellValue('E' . $konten, $data->PRODI)
-                ->setCellValue('F' . $konten, $data->ANGKATAN)
-                ->setCellValue('G' . $konten, $data->NAMA_BIAYA)
-                ->setCellValue('H' . $konten, $data->BANK_NAMA)
+                ->setCellValue('B' . $konten, $data->Npm)
+                ->setCellValue('C' . $konten, $data->NAMA_LENGKAP)
+                ->setCellValue('D' . $konten, $data->PRODI)
+                ->setCellValue('E' . $konten, $data->ANGKATAN)
+                ->setCellValue('F' . $konten, $data->NAMA_BIAYA)
+                ->setCellValue('G' . $konten, ($data->MATA_KULIAH == null) ? "-" : $data->MATA_KULIAH)
+                ->setCellValue('H' . $konten, ($data->BANK_NAMA == null) ? "Biro Keuangan UMSU" : $data->BANK_NAMA)
                 ->setCellValue('I' . $konten, date_format(date_create($data->TANGGAL_BAYAR), "d/m/Y"))
                 ->setCellValue('J' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "J" . $konten);
             $konten++;

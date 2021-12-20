@@ -4,7 +4,7 @@
 <!-- START PAGE CONTAINER -->
 <div class="page-container">
 
-    <?= view('layout/templateSidebar',['menus'=>$menu]); ?>
+    <?= view('layout/templateSidebar', ['menus' => $menu]); ?>
 
     <!-- PAGE CONTENT -->
     <div class="page-content">
@@ -107,11 +107,11 @@
                                                 <thead>
                                                     <tr>
                                                         <th>No.</th>
-                                                        <th>No Register</th>
                                                         <th>NPM</th>
                                                         <th>Nama Lengkap</th>
                                                         <th>Angkatan</th>
                                                         <th>Nama Biaya</th>
+                                                        <th>Mata Kuliah</th>
                                                         <th>Bank</th>
                                                         <th>Tanggal Pembayaran</th>
                                                         <th>Nominal</th>
@@ -125,12 +125,12 @@
                                                             <?php if ($rows->PRODI == $prd) : $total = $total + $rows->NOMINAL ?>
                                                                 <tr>
                                                                     <td><?= $no++ ?></td>
-                                                                    <td><?= $rows->NO_REGISTER . " " . count($pembayaran) ?></td>
                                                                     <td><?= $rows->Npm ?></td>
                                                                     <td><?= $rows->NAMA_LENGKAP ?></td>
                                                                     <td><?= $rows->ANGKATAN ?></td>
                                                                     <td><?= $rows->NAMA_BIAYA ?></td>
-                                                                    <td><?= ($rows->BANK_NAMA == null) ? "BAK" : $rows->BANK_NAMA ?></td>
+                                                                    <td><?= ($rows->MATA_KULIAH == null) ? "-" : $rows->MATA_KULIAH ?></td>
+                                                                    <td><?= ($rows->BANK_NAMA == null) ? "Biro Keuangan UMSU" : $rows->BANK_NAMA ?></td>
                                                                     <td><?= date_format(date_create($rows->TANGGAL_BAYAR), "d/m/Y") ?></td>
                                                                     <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
                                                                 </tr>
