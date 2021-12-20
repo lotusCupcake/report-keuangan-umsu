@@ -97,6 +97,24 @@ class BaseController extends Controller
                             }
                         }
                     }
+
+                    foreach ($parents as $subParent) {
+                        if ($parent->id == $subParent->parent) {
+                            if ($subParent->status) {
+                                $menu .= '<li class="xn-openable"><a href="#"><span class="xn-text">'.$subParent->nama.'</span></a><ul>';
+                                foreach ($childs as $child) {
+                                    if ($subParent->id == $child->parent) {
+                                        if ($child->status) {
+                                            $menu .= '<li><a href="'.$child->pages.'"><span class="xn-text">'.$child->nama.'</span></a></li>';
+                                        } else {
+                                            $menu .= '<li><a href="/maintenance"><span class="xn-text">'.$child->nama.'</span></a></li>';
+                                        }
+                                    }
+                                }
+                                $menu .= '</ul></li>';
+                            }
+                        }
+                    }
                     $menu .= '</ul></li>';
                 }
             }
