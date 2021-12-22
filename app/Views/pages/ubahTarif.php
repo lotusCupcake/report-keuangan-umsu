@@ -14,9 +14,7 @@
         <!-- START BREADCRUMB -->
         <ul class="breadcrumb">
             <li><a href="/home"><?= $breadcrumb[0]; ?></a></li>
-            <li><a href="/ubahFakultasNonKedokteran"><?= $breadcrumb[1]; ?></a></li>
-            <li><a href="/ubahFakultasNonKedokteran"><?= $breadcrumb[2]; ?></a></li>
-            <li class="active"><?= $breadcrumb[3]; ?></li>
+            <li class="active"><?= $breadcrumb[1]; ?></li>
         </ul>
         <!-- END BREADCRUMB  ->getBody()-->
         <div class="row">
@@ -53,7 +51,7 @@
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form autocomplete="off" class="form-horizontal" action="/ubahFakultasNonKedokteran" method="POST">
+                        <form autocomplete="off" class="form-horizontal" action="/ubahTarif" method="POST">
                             <div class="col-md-2">
                                 <label>Pilih Fakultas</label>
                                 <select class="form-control select" name="fakultas">
@@ -76,7 +74,7 @@
                                 <label>Tahun Angkatan</label>
                                 <select class="form-control select" name="tahunAngkatan">
                                     <option value="">Semua Angkatan</option>
-                                    <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
+                                    <?php for ($i = date("Y"); $i >= 2016; $i--) : ?>
                                         <option value="<?= $i ?>" <?php if ($i == $entryYear) echo " selected" ?>><?= $i ?></option>
                                     <?php endfor ?>
                                 </select>
