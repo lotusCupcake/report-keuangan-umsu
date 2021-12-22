@@ -4,7 +4,7 @@
 <!-- START PAGE CONTAINER -->
 <div class="page-container">
 
-    <?= view('layout/templateSidebar',['menus'=>$menu]); ?>
+    <?= view('layout/templateSidebar', ['menus' => $menu]); ?>
 
     <!-- PAGE CONTENT -->
     <div class="page-content">
@@ -66,7 +66,7 @@
                                 <label>Tahun Angkatan</label>
                                 <select class="form-control select" name="tahunAngkatan">
                                     <option value="">Semua Angkatan</option>
-                                    <?php for ($i = 2016; $i <= date("Y"); $i++) : ?>
+                                    <?php for ($i = date("Y"); $i >= 2016; $i--) : ?>
                                         <option value="<?= $i ?>" <?php if ($i == $entryYear) echo " selected" ?>><?= $i ?></option>
                                     <?php endfor ?>
                                 </select>
