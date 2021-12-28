@@ -25,7 +25,7 @@ class TunggakanPerMahasiswa extends BaseController
             'filter' => null,
             'student' => null,
             'validation' => \Config\Services::validation(),
-            'menu'=>$this->fetchMenu()
+            'menu' => $this->fetchMenu()
         ];
         // dd($data);
 
@@ -80,7 +80,7 @@ class TunggakanPerMahasiswa extends BaseController
             'student' => json_decode($response->getBody())->student,
             'tunggakan' => json_decode($response->getBody())->data,
             'validation' => \Config\Services::validation(),
-            'menu'=>$this->fetchMenu()
+            'menu' => $this->fetchMenu()
         ];
 
         if (json_decode($response->getBody())->student != null && json_decode($response->getBody())->data != null) {
@@ -148,9 +148,9 @@ class TunggakanPerMahasiswa extends BaseController
         $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "D" . $konten)->getStyle("A" . $konten . ":" . "D" . $konten)->getFont()->setBold(true);
         $spreadsheet->setActiveSheetIndex(0)->setCellValue('E' . $konten, number_to_currency($total, 'IDR'))->getStyle('E' . $konten)->getFont()->setBold(true);
 
-
+        $student = json_decode($response->getBody())->student;
         $writer = new Xlsx($spreadsheet);
-        $fileName = 'Data Tunggakan Mahasiswa';
+        $fileName = 'Data Tunggakan' . ' ' . $student[0]->Full_Name . '-' . $student[0]->Nim;
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');

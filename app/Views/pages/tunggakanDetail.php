@@ -47,7 +47,7 @@
                         <form autocomplete="off" action="/tunggakanDetail" method="POST">
                             <div class="col-md-2">
                                 <label>Pilih Fakultas</label>
-                                <select class="form-control select" name="fakultas">
+                                <select id="fakultas" class="form-control select" name="fakultas" onchange="update()">
                                     <option value="">Semua Fakultas</option>
                                     <?php foreach ($fakultas as $rows) : ?>
                                         <option value="<?= $rows->Faculty_Acronym ?>" <?php if ($rows->Faculty_Acronym == $filter) echo " selected" ?>><?= $rows->Faculty_Name ?></option>
@@ -74,7 +74,7 @@
                             </div>
                             <div class="col-md-2">
                                 <label>Tunggakan Tahap</label>
-                                <select class="form-control select" name="tahap">
+                                <select id="tahap" class="form-control select" name="tahap">
                                     <option value="">-- Select --</option>
                                     <?php for ($i = 1; $i <= 4; $i++) : ?>
                                         <option value="<?= $i ?>" <?php if ($i == $paymentOrder) echo " selected" ?>><?= $i ?></option>

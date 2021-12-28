@@ -136,6 +136,27 @@
         }
     </script>
 
+    <!-- <script type="text/javascript">
+        function update() {
+
+            var fakultas = document.getElementById("fakultas");
+            var tahap = document.getElementById("tahap");
+            var valueFakultas = fakultas.options[fakultas.selectedIndex].value;
+            var len = tahap.length;
+            if (valueFakultas == 'FK') {
+                for (let i = 0; i < tahap.length; i++) {
+                    if (tahap.options[i].value == '3' || tahap.options[i].value == '4') {
+                        console.log(tahap.options[i].value);
+                        tahap.remove(i);
+                    }
+                }
+            } else {
+                if (len == 2) {}
+            }
+            // console.log(len);
+        }
+    </script> -->
+
 
 </body>
 
