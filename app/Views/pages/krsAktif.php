@@ -108,16 +108,34 @@
                                                                 <td><?= $no++ ?></td>
                                                                 <td><?= $prd['prodi'] ?></td>
                                                                 <?php foreach ($angkatan as $ang) : ?>
+                                                                    
                                                                     <?php $nilai = 0;
                                                                     foreach ($krsAktif as $krsAkt) : ?>
                                                                         <?php ($ang == $krsAkt->ANGKATAN && $prd['prodi'] == $krsAkt->NAMA_PRODI) ? $nilai = $krsAkt->JUMLAH : $nilai = $nilai ?>
+                                                                        <?php  if ($ang == $krsAkt->ANGKATAN && $prd['prodi'] == $krsAkt->NAMA_PRODI) {
+                                                                            $a[$ang] = $a[$ang] + $krsAkt->JUMLAH;
+                                                                        }
+                                                                        ?>
                                                                     <?php endforeach ?>
                                                                     <td><?= $nilai ?></td>
                                                                 <?php endforeach ?>
                                                             </tr>
                                                         <?php endif ?>
-                                                    <?php endforeach ?>
+                                                        <?php endforeach ?>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td><strong>Jumlah Per Fakultas</strong></td>
+                                                            <?php foreach ($angkatan as $ang) : ?>
+                                                                <td><strong><?= $a[$ang] ?></strong></td>
+                                                                <?php $a[$ang]=0; ?>
+                                                            <?php endforeach ?>
+                                                        </tr>
                                                 <?php endforeach ?>
+                                                <tr>
+                                                    <td></td>
+                                                    <td><strong>Total KRS Aktif</strong></td>
+                                                    <td colspan="<?= count($angkatan); ?>" style="text-align:center"><strong><?= $totalKrsAktif ?></strong></td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
