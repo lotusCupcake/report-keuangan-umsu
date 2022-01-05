@@ -5,7 +5,7 @@ namespace App\Controllers;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class KrsAktif extends BaseController
+class MahasiswaKrsAktif extends BaseController
 {
     protected $curl;
     public function __construct()
@@ -18,9 +18,9 @@ class KrsAktif extends BaseController
     public function index()
     {
         $data = [
-            'title' => "Jumlah KRS Aktif",
+            'title' => "Mahasiswa KRS Aktif",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Laporan KRS Aktif', 'Jumlah KRS Aktif'],
+            'breadcrumb' => ['Home', 'Laporan KRS Aktif', 'Mahasiswa KRS Aktif'],
             'krsAktif' => [],
             'termYear' => null,
             'paymentOrder' => null,
