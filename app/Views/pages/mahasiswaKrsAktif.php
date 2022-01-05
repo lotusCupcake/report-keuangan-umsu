@@ -32,6 +32,12 @@
                         <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
                     </div>
                 <?php endif; ?>
+                <?php if ($validation->hasError('tahunAngkatan')) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Failed ! </strong><?= $validation->getError('tahunAngkatan'); ?>
+                    </div>
+                <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <form autocomplete="off" action="/krsAktif" method="POST">
@@ -53,6 +59,15 @@
                                     <?php endforeach ?>
                                 </select>
                             </div>
+                            <div class="col-md-2">
+                                <label>Tahun Angkatan</label>
+                                <select class="form-control select" name="tahunAngkatan">
+                                    <option value="">-- Select --</option>
+                                    <?php for ($i = date("Y"); $i >= 2016; $i--) : ?>
+                                        <option value="<?= $i ?>" <?php if ($i == $entryYear) echo " selected" ?>><?= $i ?></option>
+                                    <?php endfor ?>
+                                </select>
+                            </div>
                             <ul class="panel-controls">
                                 <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-success"><span class="fa fa-search"></span>
                                     Cari</button>
@@ -65,6 +80,7 @@
                                 <form action="/krsAktif/cetak" method="post">
                                     <input type="hidden" name="fakultas" value="<?= $filter; ?>">
                                     <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
+                                    <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
                                     <ul class="panel-controls"><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                             Export</button></ul>
                                 </form>
@@ -132,6 +148,11 @@
                                                         <?php endforeach ?>
                                                     </tr>
                                                 <?php endforeach ?>
+                                                <tr>
+                                                    <td></td>
+                                                    <td><strong>Total KRS Aktif</strong></td>
+                                                    <td colspan="<?= count($angkatan); ?>" style="text-align:center"><strong><?= $totalKrsAktif ?></strong></td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
