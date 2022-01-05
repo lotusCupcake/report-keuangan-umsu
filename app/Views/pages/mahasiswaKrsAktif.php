@@ -40,7 +40,7 @@
                 <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form autocomplete="off" action="/krsAktif" method="POST">
+                        <form autocomplete="off" action="/mahasiswaKrsAktif" method="POST">
                             <div class="col-md-2">
                                 <label>Pilih Fakultas</label>
                                 <select class="form-control select" name="fakultas">
@@ -77,7 +77,7 @@
                     <div class="panel-body col-md-12">
                         <?php if ($krsAktif != null) : ?>
                             <?php if ($termYear != null && $filter != null) : ?>
-                                <form action="/krsAktif/cetak" method="post">
+                                <form action="/mahasiswaKrsAktif/cetak" method="post">
                                     <input type="hidden" name="fakultas" value="<?= $filter; ?>">
                                     <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
                                     <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
@@ -94,65 +94,24 @@
                                         <table class="table table-bordered table-striped table-actions">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="2" style="text-align:center" valign="center">No.</th>
-                                                    <th style="text-align:center">Fakultas / Prodi</th>
-                                                    <th colspan=<?= count($angkatan) ?> style="text-align:center">Stambuk</th>
-                                                </tr>
-                                                <tr>
-                                                    <th></th>
-                                                    <?php $a = [];
-                                                    foreach ($angkatan as $ang) : ?>
-                                                        <?php
-                                                        $a[$ang] = 0;
-                                                        ?>
-                                                        <th style="text-align:center"><?= $ang ?></th>
-                                                    <?php endforeach ?>
+                                                    <th style="text-align:center" valign="center">No.</th>
+                                                    <th style="text-align:center">Npm</th>
+                                                    <th style="text-align:center">Nama Lengkap</th>
+                                                    <th style="text-align:center">Fakultas</th>
+                                                    <th style="text-align:center">Prodi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($fakultas as $fak) : ?>
+                                                <?php $no = 1;
+                                                foreach ($krsAktif as $row) : ?>
                                                     <tr>
-                                                        <td></td>
-                                                        <td><strong><?= $fak ?></strong></td>
-                                                        <?php foreach ($angkatan as $ang) : ?>
-                                                            <td></td>
-                                                        <?php endforeach ?>
-                                                    </tr>
-                                                    <?php $no = 1;
-                                                    foreach ($prodi as $prd) : ?>
-                                                        <?php if ($fak == $prd['fakultas']) : ?>
-                                                            <tr>
-                                                                <td><?= $no++ ?></td>
-                                                                <td><?= $prd['prodi'] ?></td>
-                                                                <?php foreach ($angkatan as $ang) : ?>
-
-                                                                    <?php $nilai = 0;
-                                                                    foreach ($krsAktif as $krsAkt) : ?>
-                                                                        <?php ($ang == $krsAkt->ANGKATAN && $prd['prodi'] == $krsAkt->NAMA_PRODI) ? $nilai = $krsAkt->JUMLAH : $nilai = $nilai ?>
-                                                                        <?php if ($ang == $krsAkt->ANGKATAN && $prd['prodi'] == $krsAkt->NAMA_PRODI) {
-                                                                            $a[$ang] = $a[$ang] + $krsAkt->JUMLAH;
-                                                                        }
-                                                                        ?>
-                                                                    <?php endforeach ?>
-                                                                    <td><?= $nilai ?></td>
-                                                                <?php endforeach ?>
-                                                            </tr>
-                                                        <?php endif ?>
-                                                    <?php endforeach ?>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td><strong>Jumlah Per Fakultas</strong></td>
-                                                        <?php foreach ($angkatan as $ang) : ?>
-                                                            <td><strong><?= $a[$ang] ?></strong></td>
-                                                            <?php $a[$ang] = 0; ?>
-                                                        <?php endforeach ?>
+                                                        <td><?= $no++; ?></td>
+                                                        <td><?= $row->NPM; ?></td>
+                                                        <td><?= $row->NAMA_LENGKAP; ?></td>
+                                                        <td><?= $row->FAKULTAS; ?></td>
+                                                        <td><?= $row->NAMA_PRODI; ?></td>
                                                     </tr>
                                                 <?php endforeach ?>
-                                                <tr>
-                                                    <td></td>
-                                                    <td><strong>Total KRS Aktif</strong></td>
-                                                    <td colspan="<?= count($angkatan); ?>" style="text-align:center"><strong><?= $totalKrsAktif ?></strong></td>
-                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

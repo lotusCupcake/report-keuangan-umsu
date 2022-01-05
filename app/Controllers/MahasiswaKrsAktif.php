@@ -65,6 +65,7 @@ class MahasiswaKrsAktif extends BaseController
 
     public function prosesKrsAktif()
     {
+        // dd($_POST);
         if (!$this->validate([
             'tahunAjar' => [
                 'rules' => 'required',
@@ -86,7 +87,7 @@ class MahasiswaKrsAktif extends BaseController
         $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
         $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getKrsAktif", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getMhsKrsAktif", [
             "headers" => [
                 "Accept" => "application/json"
             ],
@@ -98,6 +99,7 @@ class MahasiswaKrsAktif extends BaseController
             ]
         ]);
 
+        // dd(json_decode($response->getBody())->data);
 
         $fakultas = [];
         foreach (json_decode($response->getBody())->data as $f) {
@@ -125,7 +127,7 @@ class MahasiswaKrsAktif extends BaseController
         $data = [
             'title' => "Jumlah KRS Aktif",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Jumlah KRS Aktif'],
+            'breadcrumb' => ['Home', 'Laporan KRS Aktif', 'Mahasiswa KRS Aktif'],
             'krsAktif' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
             'entryYear' => $entry_year_id,
@@ -149,7 +151,7 @@ class MahasiswaKrsAktif extends BaseController
         $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
         $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
 
-        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getKrsAktif", [
+        $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getMhsKrsAktif", [
             "headers" => [
                 "Accept" => "application/json"
             ],
