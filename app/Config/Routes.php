@@ -111,9 +111,8 @@ $routes->post('/krsAktif', 'KrsAktif::prosesKrsAktif');
 
 // Route Mahasiswa KRS Aktif
 $routes->get('/mahasiswaKrsAktif/(:any)', 'MahasiswaKrsAktif::index');
-$routes->post('/mahasiswaKrsAktifProdi/cetak', 'MahasiswaKrsAktif::cetakKrsAktifProdi');
-$routes->post('/mahasiswaKrsAktifSeluruh/cetak', 'MahasiswaKrsAktif::cetakKrsAktifSeluruh');
-$routes->post('/mahasiswaKrsAktif', 'MahasiswaKrsAktif::prosesKrsAktif');
+$routes->post('/mahasiswaKrsAktif/cetak', 'MahasiswaKrsAktif::cetakMahasiswaKrsAktif');
+$routes->post('/mahasiswaKrsAktif', 'MahasiswaKrsAktif::prosesMahasiswaKrsAktif');
 
 // Route Ubah Tanggal Tarif
 $routes->get('/ubahTarif/(:any)', 'UbahTarif::index');

@@ -94,11 +94,11 @@
                                         <table class="table table-bordered table-striped table-actions">
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align:center" valign="center">No.</th>
-                                                    <th style="text-align:center">Npm</th>
-                                                    <th style="text-align:center">Nama Lengkap</th>
-                                                    <th style="text-align:center">Fakultas</th>
-                                                    <th style="text-align:center">Prodi</th>
+                                                    <th>No.</th>
+                                                    <th>NPM</th>
+                                                    <th>Nama Lengkap</th>
+                                                    <th>Fakultas</th>
+                                                    <th>Prodi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
