@@ -4,7 +4,7 @@
 <!-- START PAGE CONTAINER -->
 <div class="page-container">
 
-    <?= view('layout/templateSidebar',['menus'=>$menu]); ?>
+    <?= view('layout/templateSidebar', ['menus' => $menu]); ?>
 
     <!-- PAGE CONTENT -->
     <div class="page-content">
@@ -125,9 +125,12 @@
                                                                 <td><?= $no++ ?></td>
                                                                 <td><?= $prd['prodi'] ?></td>
                                                                 <?php foreach ($angkatan as $ang) : ?>
+
+                                                                    <!-- pembayaran total tabel pivot salah -->
+
                                                                     <?php $nilai = 0;
                                                                     foreach ($pembayaran as $pemb) : ?>
-                                                                        <?php ($ang == $pemb->ANGKATAN && $prd['prodi'] == $pemb->PRODI) ? $nilai = $pemb->NOMINAL : $nilai = $nilai ?>
+                                                                        <?php ($ang == $pemb->ANGKATAN && $prd['prodi'] == $pemb->PRODI) ? $nilai = $pemb->NOMINAL + $nilai : $nilai = $nilai ?>
                                                                         <?php if ($ang == $pemb->ANGKATAN && $prd['prodi'] == $pemb->PRODI) {
                                                                             $a[$ang] = $a[$ang] + $pemb->NOMINAL;
                                                                         }
