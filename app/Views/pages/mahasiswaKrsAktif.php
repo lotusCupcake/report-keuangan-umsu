@@ -87,7 +87,7 @@
                             <?php endif ?>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Jumlah KRS Aktif</h3>
+                                    <h3 class="panel-title">Mahasiswa KRS Aktif</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
