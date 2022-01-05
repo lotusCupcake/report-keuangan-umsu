@@ -23,6 +23,7 @@ class MahasiswaKrsAktif extends BaseController
             'breadcrumb' => ['Home', 'Laporan KRS Aktif', 'Mahasiswa KRS Aktif'],
             'krsAktif' => [],
             'termYear' => null,
+            'entryYear' => null,
             'paymentOrder' => null,
             'listTermYear' => $this->getTermYear(),
             'prodi' => [],
@@ -35,7 +36,7 @@ class MahasiswaKrsAktif extends BaseController
         ];
         // dd($data);
 
-        return view('pages/krsAktif', $data);
+        return view('pages/mahasiswaKrsAktif', $data);
     }
 
     public function getFakultas()
@@ -71,11 +72,18 @@ class MahasiswaKrsAktif extends BaseController
                     'required' => 'Tahun Ajar Harus Diisi !',
                 ]
             ],
+            'tahunAngkatan' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tahun Angkatan Harus Diisi !',
+                ]
+            ],
         ])) {
-            return redirect()->to('krsAktif')->withInput();
+            return redirect()->to('mahasiswaKrsAktif')->withInput();
         }
 
         $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
         $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getKrsAktif", [
@@ -83,6 +91,7 @@ class MahasiswaKrsAktif extends BaseController
                 "Accept" => "application/json"
             ],
             "form_params" => [
+                "entryYearId" => $entry_year_id,
                 "tahunAjar" => $term_year_id,
                 "filter" => $filter,
 
@@ -119,6 +128,7 @@ class MahasiswaKrsAktif extends BaseController
             'breadcrumb' => ['Home', 'Jumlah KRS Aktif'],
             'krsAktif' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
+            'entryYear' => $entry_year_id,
             'listTermYear' => $this->getTermYear(),
             'prodi' => array_unique($prodi, SORT_REGULAR),
             'filter' => $filter,
@@ -130,12 +140,13 @@ class MahasiswaKrsAktif extends BaseController
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Jumlah KRS Aktif, Klik Export Untuk Download !');
-        return view('pages/krsAktif', $data);
+        return view('pages/mahasiswaKrsAktif', $data);
     }
 
     public function cetakKrsAktif()
     {
         $term_year_id = trim($this->request->getPost('tahunAjar'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
         $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
 
         $response = $this->curl->request("POST", "https://api.umsu.ac.id/Laporankeu/getKrsAktif", [
@@ -143,7 +154,8 @@ class MahasiswaKrsAktif extends BaseController
                 "Accept" => "application/json"
             ],
             "form_params" => [
-                "tahunAjar" => $term_year_id,
+                "entryYearId" => $entry_year_id,
+                "termYearId" => $term_year_id,
                 "filter" => $filter,
 
             ]
