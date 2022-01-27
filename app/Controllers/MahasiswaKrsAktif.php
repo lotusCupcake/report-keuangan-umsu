@@ -195,7 +195,8 @@ class MahasiswaKrsAktif extends BaseController
             ->setCellValue('B' . $konten, 'NPM')
             ->setCellValue('C' . $konten, 'Nama Lengkap	')
             ->setCellValue('D' . $konten, 'Fakultas')
-            ->setCellValue('E' . $konten, 'Prodi')->getStyle("A" . $konten . ":" . "E" . $konten)->getFont()->setBold(true);
+            ->setCellValue('E' . $konten, 'Prodi')
+            ->setCellValue('F' . $konten, 'Status')->getStyle("A" . $konten . ":" . "F" . $konten)->getFont()->setBold(true);
 
         $konten = $konten + 1;
         // $total = 0;
@@ -207,7 +208,8 @@ class MahasiswaKrsAktif extends BaseController
                 ->setCellValue('B' . $konten, $krsAkt->NPM)
                 ->setCellValue('C' . $konten, $krsAkt->NAMA_LENGKAP)
                 ->setCellValue('D' . $konten, $krsAkt->FAKULTAS)
-                ->setCellValue('E' . $konten, $krsAkt->NAMA_PRODI)->getStyle("A" . $konten . ":" . "E" . $konten);
+                ->setCellValue('E' . $konten, $krsAkt->NAMA_PRODI)
+                ->setCellValue('F' . $konten, $krsAkt->STATUS)->getStyle("A" . $konten . ":" . "F" . $konten);
             $konten++;
         }
 
