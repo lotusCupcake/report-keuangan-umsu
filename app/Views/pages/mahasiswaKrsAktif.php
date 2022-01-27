@@ -99,6 +99,7 @@
                                                     <th>Nama Lengkap</th>
                                                     <th>Fakultas</th>
                                                     <th>Prodi</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -110,6 +111,7 @@
                                                         <td><?= $row->NAMA_LENGKAP; ?></td>
                                                         <td><?= $row->FAKULTAS; ?></td>
                                                         <td><?= $row->NAMA_PRODI; ?></td>
+                                                        <td><?= $row->STATUS; ?></td>
                                                     </tr>
                                                 <?php endforeach ?>
                                             </tbody>
