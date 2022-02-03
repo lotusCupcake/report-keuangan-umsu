@@ -155,7 +155,7 @@
                             <?php endforeach ?>
                         <?php else : ?>
                             <center>
-                                <lottie-player src="<?= $icon ?>" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
+                                <lottie-player src="<?= $icon ?>" background="transparent" speed="1" style="width: 100%; height: 500px;" loop autoplay></lottie-player>
                             </center>
                         <?php endif ?>
                     </div>

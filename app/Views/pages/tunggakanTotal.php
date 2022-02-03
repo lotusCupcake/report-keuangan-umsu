@@ -4,7 +4,7 @@
 <!-- START PAGE CONTAINER -->
 <div class="page-container">
 
-    <?= view('layout/templateSidebar',['menus'=>$menu]); ?>
+    <?= view('layout/templateSidebar', ['menus' => $menu]); ?>
 
     <!-- PAGE CONTENT -->
     <div class="page-content">
@@ -152,7 +152,7 @@
 
                         <?php else : ?>
                             <center>
-                                <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json" background="transparent" speed="1" style="width: 500px; height: 500px;" loop autoplay></lottie-player>
+                                <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json" background="transparent" speed="1" style="width: 100%; height: 500px;" loop autoplay></lottie-player>
                             </center>
                         <?php endif ?>
                     </div>
