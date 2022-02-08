@@ -64,7 +64,7 @@ class TunggakanDetail extends BaseController
 
     public function prosesTunggakanDetail()
     {
-        dd($_POST);
+        // dd($_POST);
         if (!$this->validate([
             'tahunAngkatan' => [
                 'rules' => 'required',
