@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-striped table-actions">
+                                        <table class="table table-bordered table-striped table-actions datatable">
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
