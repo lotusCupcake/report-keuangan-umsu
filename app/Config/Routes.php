@@ -118,6 +118,12 @@ $routes->post('/mahasiswaKrsAktif', 'MahasiswaKrsAktif::prosesMahasiswaKrsAktif'
 $routes->get('/ubahTarif/(:any)', 'UbahTarif::index');
 $routes->post('/ubahTarif', "UbahTarif::proses");
 
+// Route Mahasiswa KRS Aktif Kelas Malam
+$routes->get('/mahasiswaMalam/(:any)', 'MahasiswaMalam::index');
+$routes->post('/mahasiswaMalam/cetak', 'MahasiswaMalam::cetakMahasiswaMalam');
+$routes->post('/mahasiswaMalam', 'MahasiswaMalam::prosesMahasiswaMalam');
+
+
 
 
 /*
