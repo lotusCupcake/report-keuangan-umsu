@@ -116,7 +116,7 @@ class KrsAktif extends BaseController
         $data = [
             'title' => "Jumlah KRS Aktif",
             'appName' => "UMSU",
-            'breadcrumb' => ['Home', 'Jumlah KRS Aktif'],
+            'breadcrumb' => ['Home', 'Laporan KRS Aktif', 'Jumlah KRS Aktif'],
             'krsAktif' => json_decode($response->getBody())->data,
             'termYear' => $term_year_id,
             'listTermYear' => $this->getTermYear(),

@@ -122,7 +122,8 @@
                                                                 <?php endforeach ?>
                                                             </tr>
                                                         <?php endif ?>
-                                                    <?php endforeach ?>
+                                                    <?php
+                                                    endforeach ?>
                                                     <tr>
                                                         <td></td>
                                                         <td><strong>Jumlah Per Fakultas</strong></td>

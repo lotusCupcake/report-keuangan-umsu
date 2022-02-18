@@ -112,7 +112,6 @@
                                                         <th>Angkatan</th>
                                                         <th>Nama Biaya</th>
                                                         <th>Mata Kuliah</th>
-                                                        <th>Bank</th>
                                                         <th>Tanggal Pembayaran</th>
                                                         <th>Nominal</th>
                                                     </tr>
@@ -130,14 +129,13 @@
                                                                     <td><?= $rows->ANGKATAN ?></td>
                                                                     <td><?= $rows->NAMA_BIAYA ?></td>
                                                                     <td><?= ($rows->MATA_KULIAH == null) ? "-" : $rows->MATA_KULIAH ?></td>
-                                                                    <td><?= ($rows->BANK_NAMA == null) ? "Biro Keuangan UMSU" : $rows->BANK_NAMA ?></td>
                                                                     <td><?= date_format(date_create($rows->TANGGAL_BAYAR), "d/m/Y") ?></td>
                                                                     <td><?= number_to_currency($rows->NOMINAL, 'IDR') ?></td>
                                                                 </tr>
                                                             <?php endif ?>
                                                         <?php endforeach ?>
                                                         <tr>
-                                                            <td colspan=8 style="text-align: center;"><strong>Total Amount</strong></td>
+                                                            <td colspan=7 style="text-align: center;"><strong>Total Amount</strong></td>
                                                             <td><strong><?= number_to_currency($total, 'IDR') ?></strong></td>
                                                         </tr>
                                                     <?php else : ?>

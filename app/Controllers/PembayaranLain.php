@@ -172,7 +172,7 @@ class PembayaranLain extends BaseController
         $konten = 0;
         foreach ($prodi as $prd) {
             $konten = $default + $konten;
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, $prd)->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, $prd)->mergeCells("A" . $konten . ":" . "H" . $konten)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
             $konten = $konten + 1;
             $spreadsheet->setActiveSheetIndex(0)
                 ->setCellValue('A' . $konten, 'No.')
@@ -181,9 +181,8 @@ class PembayaranLain extends BaseController
                 ->setCellValue('D' . $konten, 'Angkatan')
                 ->setCellValue('E' . $konten, 'Nama Biaya')
                 ->setCellValue('F' . $konten, 'Mata Kuliah')
-                ->setCellValue('G' . $konten, 'Bank')
-                ->setCellValue('H' . $konten, 'Tanggal Pembayaran')
-                ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
+                ->setCellValue('G' . $konten, 'Tanggal Pembayaran')
+                ->setCellValue('H' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
 
             $konten = $konten + 1;
             $total = 0;
@@ -198,15 +197,14 @@ class PembayaranLain extends BaseController
                         ->setCellValue('D' . $konten, $data->ANGKATAN)
                         ->setCellValue('E' . $konten, $data->NAMA_BIAYA)
                         ->setCellValue('F' . $konten, ($data->MATA_KULIAH == null) ? "-" : $data->MATA_KULIAH)
-                        ->setCellValue('G' . $konten, ($data->BANK_NAMA == null) ? "Biro Keuangan UMSU" : $data->BANK_NAMA)
-                        ->setCellValue('H' . $konten, date_format(date_create($data->TANGGAL_BAYAR), "d/m/Y"))
-                        ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "I" . $konten);
+                        ->setCellValue('G' . $konten, date_format(date_create($data->TANGGAL_BAYAR), "d/m/Y"))
+                        ->setCellValue('H' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "H" . $konten);
                     $konten++;
                 }
             }
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "H" . $konten)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
-            $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $konten . ":" . "H" . $konten)->getAlignment()->setHorizontal('center');
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . $konten, number_to_currency($total, 'IDR'))->getStyle('I' . $konten)->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "G" . $konten)->getStyle("A" . $konten . ":" . "G" . $konten)->getFont()->setBold(true);
+            $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $konten . ":" . "G" . $konten)->getAlignment()->setHorizontal('center');
+            $spreadsheet->setActiveSheetIndex(0)->setCellValue('H' . $konten, number_to_currency($total, 'IDR'))->getStyle('H' . $konten)->getFont()->setBold(true);
             $konten = $konten + 1;
         }
 
@@ -256,10 +254,9 @@ class PembayaranLain extends BaseController
             ->setCellValue('D' . $konten, 'Prodi')
             ->setCellValue('E' . $konten, 'Angkatan')
             ->setCellValue('F' . $konten, 'Nama Biaya')
-            ->setCellValue('G' . $konten, 'Mata Kuliah')
-            ->setCellValue('H' . $konten, 'Bank')
-            ->setCellValue('I' . $konten, 'Tanggal Pembayaran')
-            ->setCellValue('J' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . "J" . $konten)->getFont()->setBold(true);
+            ->setCellValue('G' . $konten, 'Bank')
+            ->setCellValue('H' . $konten, 'Tanggal Pembayaran')
+            ->setCellValue('I' . $konten, 'Nominal')->getStyle("A" . $konten . ":" . 'I' . $konten)->getFont()->setBold(true);
 
         $konten = $konten + 1;
         $total = 0;
@@ -274,14 +271,13 @@ class PembayaranLain extends BaseController
                 ->setCellValue('E' . $konten, $data->ANGKATAN)
                 ->setCellValue('F' . $konten, $data->NAMA_BIAYA)
                 ->setCellValue('G' . $konten, ($data->MATA_KULIAH == null) ? "-" : $data->MATA_KULIAH)
-                ->setCellValue('H' . $konten, ($data->BANK_NAMA == null) ? "Biro Keuangan UMSU" : $data->BANK_NAMA)
-                ->setCellValue('I' . $konten, date_format(date_create($data->TANGGAL_BAYAR), "d/m/Y"))
-                ->setCellValue('J' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . "J" . $konten);
+                ->setCellValue('H' . $konten, date_format(date_create($data->TANGGAL_BAYAR), "d/m/Y"))
+                ->setCellValue('I' . $konten, number_to_currency($data->NOMINAL, 'IDR'))->getStyle("A" . $konten . ":" . 'I' . $konten);
             $konten++;
         }
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "I" . $konten)->getStyle("A" . $konten . ":" . "I" . $konten)->getFont()->setBold(true);
-        $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $konten . ":" . "I" . $konten)->getAlignment()->setHorizontal('center');
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('J' . $konten, number_to_currency($total, 'IDR'))->getStyle('J' . $konten)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $konten, 'Total Amount')->mergeCells("A" . $konten . ":" . "H" . $konten)->getStyle("A" . $konten . ":" . "H" . $konten)->getFont()->setBold(true);
+        $spreadsheet->setActiveSheetIndex(0)->getStyle("A" . $konten . ":" . "H" . $konten)->getAlignment()->setHorizontal('center');
+        $spreadsheet->setActiveSheetIndex(0)->setCellValue('I' . $konten, number_to_currency($total, 'IDR'))->getStyle('I' . $konten)->getFont()->setBold(true);
         $konten = $konten + 1;
 
         $writer = new Xlsx($spreadsheet);
