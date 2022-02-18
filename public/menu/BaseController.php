@@ -8,7 +8,6 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
-use App\Models\AkunModel;
 
 /**
  * Class BaseController
@@ -28,7 +27,6 @@ class BaseController extends Controller
      * @var CLIRequest|IncomingRequest
      */
     protected $request;
-    protected $akunModel;
 
     /**
      * An array of helpers to be loaded automatically upon
@@ -55,12 +53,8 @@ class BaseController extends Controller
 
     public function fetchMenu()
     {
-        $this->akunModel = new AkunModel();
-        $id_loggedin = user()->id;
-
-        $usr = $this->akunModel->getSpecificUser(['users.id' => $id_loggedin])->getResult()[0]->name;
-        // dd($usr);
-        $data = file_get_contents(ROOTPATH . $this->getFile($usr));
+        $file = "public/menu/menu.json";
+        $data = file_get_contents(ROOTPATH . $file);
 
         $data = json_decode($data, false);
 
@@ -136,17 +130,5 @@ class BaseController extends Controller
         }
 
         return $menu;
-    }
-
-    public function getFile($usr)
-    {
-        switch ($usr) {
-            case "keuangan":
-                $file = "public/menu/menuKeuangan.json";
-                break;
-            case "fakultas":
-                $file = "public/menu/menuFakultas.json";
-        }
-        return $file;
     }
 }
