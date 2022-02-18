@@ -8,6 +8,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use App\Models\UserModel;
 
 /**
  * Class BaseController
@@ -27,6 +28,7 @@ class BaseController extends Controller
      * @var CLIRequest|IncomingRequest
      */
     protected $request;
+    protected $userModel;
 
     /**
      * An array of helpers to be loaded automatically upon
@@ -35,7 +37,7 @@ class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = ['auth','number'];
+    protected $helpers = ['auth', 'number'];
 
     /**
      * Constructor.
@@ -53,47 +55,51 @@ class BaseController extends Controller
 
     public function fetchMenu()
     {
-        $file = "public/menu/menu.json";
-        $data = file_get_contents(ROOTPATH.$file);
+        $this->userModel = new UserModel();
+        $id_loggedin = user()->id;
+
+        $usr = $this->userModel->getSpecificUser(['users.id' => $id_loggedin])->getResult()[0]->name;
+        // dd($usr);
+        $data = file_get_contents(ROOTPATH . $this->getFile($usr));
 
         $data = json_decode($data, false);
 
-        $titles=[];
-        $parents=[];
-        $childs=[];
+        $titles = [];
+        $parents = [];
+        $childs = [];
 
-        foreach ($data as $resource){
-            if ($resource->parent == 0 && $resource->level=='title'){
+        foreach ($data as $resource) {
+            if ($resource->parent == 0 && $resource->level == 'title') {
                 $titles[] = $resource;
             }
 
-            if ($resource->parent != 0 && $resource->level=='parent'){
+            if ($resource->parent != 0 && $resource->level == 'parent') {
                 $parents[] = $resource;
             }
 
-            if ($resource->parent != 0 && $resource->level=='child'){
+            if ($resource->parent != 0 && $resource->level == 'child') {
                 $childs[] = $resource;
             }
         }
 
-        $menu="";
+        $menu = "";
         foreach ($titles as $title) {
-            $menu .= '<li class="xn-title">'.$title->nama.'</li>';
+            $menu .= '<li class="xn-title">' . $title->nama . '</li>';
 
             foreach ($parents as $parent) {
                 if ($title->id == $parent->parent) {
                     if ($parent->status) {
-                        $menu .= '<li class="xn-openable"><a href="'.$parent->pages.'"><span class="'.$parent->icon.'"></span><span class="xn-text">'.$parent->nama.'</span></a><ul>';
+                        $menu .= '<li class="xn-openable"><a href="' . $parent->pages . '"><span class="' . $parent->icon . '"></span><span class="xn-text">' . $parent->nama . '</span></a><ul>';
                     } else {
-                        $menu .= '<li class="xn-openable"><a href="/maintenance"><span class="'.$parent->icon.'"></span><span class="xn-text">'.$parent->nama.'</span></a><ul>';
+                        $menu .= '<li class="xn-openable"><a href="/maintenance"><span class="' . $parent->icon . '"></span><span class="xn-text">' . $parent->nama . '</span></a><ul>';
                     }
-                    
+
                     foreach ($childs as $child) {
                         if ($parent->id == $child->parent) {
                             if ($child->status) {
-                                $menu .= '<li><a href="'.$child->pages.'"><span class="xn-text">'.$child->nama.'</span></a></li>';
+                                $menu .= '<li><a href="' . $child->pages . '"><span class="xn-text">' . $child->nama . '</span></a></li>';
                             } else {
-                                $menu .= '<li><a href="/maintenance"><span class="xn-text">'.$child->nama.'</span></a></li>';
+                                $menu .= '<li><a href="/maintenance"><span class="xn-text">' . $child->nama . '</span></a></li>';
                             }
                         }
                     }
@@ -101,13 +107,13 @@ class BaseController extends Controller
                     foreach ($parents as $subParent) {
                         if ($parent->id == $subParent->parent) {
                             if ($subParent->status) {
-                                $menu .= '<li class="xn-openable"><a href="#"><span class="xn-text">'.$subParent->nama.'</span></a><ul>';
+                                $menu .= '<li class="xn-openable"><a href="#"><span class="xn-text">' . $subParent->nama . '</span></a><ul>';
                                 foreach ($childs as $child) {
                                     if ($subParent->id == $child->parent) {
                                         if ($child->status) {
-                                            $menu .= '<li><a href="'.$child->pages.'"><span class="xn-text">'.$child->nama.'</span></a></li>';
+                                            $menu .= '<li><a href="' . $child->pages . '"><span class="xn-text">' . $child->nama . '</span></a></li>';
                                         } else {
-                                            $menu .= '<li><a href="/maintenance"><span class="xn-text">'.$child->nama.'</span></a></li>';
+                                            $menu .= '<li><a href="/maintenance"><span class="xn-text">' . $child->nama . '</span></a></li>';
                                         }
                                     }
                                 }
@@ -119,17 +125,28 @@ class BaseController extends Controller
                 }
             }
             foreach ($childs as $child) {
-                if ($title->id==$child->parent) {
+                if ($title->id == $child->parent) {
                     if ($child->status) {
-                        $menu .= '<li><a href="'.$child->pages.'"><span class="'.$child->icon.'"></span><span class="xn-text">'.$child->nama.'</span></a></li>';
+                        $menu .= '<li><a href="' . $child->pages . '"><span class="' . $child->icon . '"></span><span class="xn-text">' . $child->nama . '</span></a></li>';
                     } else {
-                        $menu .= '<li><a href="/maintenance"><span class="'.$child->icon.'"></span><span class="xn-text">'.$child->nama.'</span></a></li>';
+                        $menu .= '<li><a href="/maintenance"><span class="' . $child->icon . '"></span><span class="xn-text">' . $child->nama . '</span></a></li>';
                     }
-                    
                 }
             }
         }
 
         return $menu;
+    }
+
+    public function getFile($usr)
+    {
+        switch ($usr) {
+            case "keuangan":
+                $file = "public/menu/menuKeuangan.json";
+                break;
+            case "fakultas":
+                $file = "public/menu/menuFakultas.json";
+        }
+        return $file;
     }
 }

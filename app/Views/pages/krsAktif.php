@@ -140,7 +140,7 @@
                             </div>
                         <?php else : ?>
                             <center>
-                                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_qozq0stb.json" background="transparent" speed="1" style="width: 700px; height: 700px;" loop autoplay></lottie-player>
+                                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_qozq0stb.json" background="transparent" speed="1" style="width: 100%; height: 600px;" loop autoplay></lottie-player>
                             </center>
                         <?php endif ?>
                     </div>

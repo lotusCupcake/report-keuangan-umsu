@@ -34,7 +34,7 @@ class PembayaranDetail extends BaseController
             'fakultas' => $this->getFakultas(),
             'icon' => 'https://assets2.lottiefiles.com/packages/lf20_yzoqyyqf.json',
             'validation' => \Config\Services::validation(),
-            'menu'=>$this->fetchMenu()
+            'menu' => $this->fetchMenu()
         ];
         // dd($data);
 
@@ -119,7 +119,7 @@ class PembayaranDetail extends BaseController
                 "filter" => $filter,
             ]
         ]);
-        
+
         $prodi = [];
         foreach (json_decode($response->getBody())->data as $k) {
             if (!in_array($k->PRODI, $prodi)) {
@@ -143,7 +143,7 @@ class PembayaranDetail extends BaseController
             'listBank' => $this->getBank(),
             'prodi' => $prodi,
             'validation' => \Config\Services::validation(),
-            'menu'=>$this->fetchMenu()
+            'menu' => $this->fetchMenu()
         ];
 
         session()->setFlashdata('success', 'Berhasil Memuat Data Pembayaran, Klik Export Untuk Download !');

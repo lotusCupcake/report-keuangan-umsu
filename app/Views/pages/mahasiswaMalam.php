@@ -14,7 +14,7 @@
         <!-- START BREADCRUMB -->
         <ul class="breadcrumb">
             <li><a href="/home"><?= $breadcrumb[0]; ?></a></li>
-            <li><a href="/krsAktif"><?= $breadcrumb[1]; ?></a></li>
+            <li><a href="/mahasiswaMalam"><?= $breadcrumb[1]; ?></a></li>
             <li><a href="active"><?= $breadcrumb[2]; ?></a></li>
         </ul>
         <!-- END BREADCRUMB  ->getBody()-->
@@ -32,15 +32,9 @@
                         <strong>Failed ! </strong><?= $validation->getError('tahunAjar'); ?>
                     </div>
                 <?php endif; ?>
-                <?php if ($validation->hasError('tahunAngkatan')) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Failed ! </strong><?= $validation->getError('tahunAngkatan'); ?>
-                    </div>
-                <?php endif; ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form autocomplete="off" action="/mahasiswaKrsAktif" method="POST">
+                        <form autocomplete="off" action="/mahasiswaMalam" method="POST">
                             <div class="col-md-2">
                                 <label>Pilih Fakultas</label>
                                 <select class="form-control select" name="fakultas">
@@ -59,15 +53,6 @@
                                     <?php endforeach ?>
                                 </select>
                             </div>
-                            <div class="col-md-2">
-                                <label>Tahun Angkatan</label>
-                                <select class="form-control select" name="tahunAngkatan">
-                                    <option value="">-- Select --</option>
-                                    <?php for ($i = date("Y"); $i >= 2016; $i--) : ?>
-                                        <option value="<?= $i ?>" <?php if ($i == $entryYear) echo " selected" ?>><?= $i ?></option>
-                                    <?php endfor ?>
-                                </select>
-                            </div>
                             <ul class="panel-controls">
                                 <button style="display: inline-block; margin-top: 11px;" type="submit" class="btn btn-success"><span class="fa fa-search"></span>
                                     Cari</button>
@@ -75,19 +60,18 @@
                         </form>
                     </div>
                     <div class="panel-body col-md-12">
-                        <?php if ($krsAktif != null) : ?>
-                            <?php if ($termYear != null && $filter != null) : ?>
-                                <form action="/mahasiswaKrsAktif/cetak" method="post">
+                        <?php if ($mahasiswaMalam != null) : ?>
+                            <?php if ($termYear != null) : ?>
+                                <form action="/mahasiswaMalam/cetak" method="post">
                                     <input type="hidden" name="fakultas" value="<?= $filter; ?>">
                                     <input type="hidden" name="tahunAjar" value="<?= $termYear; ?>">
-                                    <input type="hidden" name="tahunAngkatan" value="<?= $entryYear; ?>">
                                     <ul class="panel-controls"><button style="display: inline-block; margin-top:3px; margin-bottom: 18px;" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>
                                             Export</button></ul>
                                 </form>
                             <?php endif ?>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Mahasiswa KRS Aktif</h3>
+                                    <h3 class="panel-title">Mahasiswa KRS Aktif (Malam)</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
@@ -97,21 +81,21 @@
                                                     <th>No.</th>
                                                     <th>NPM</th>
                                                     <th>Nama Lengkap</th>
-                                                    <th>Fakultas</th>
                                                     <th>Prodi</th>
-                                                    <th>Status</th>
+                                                    <th>Kelas</th>
+                                                    <th>Tahun Ajaran</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $no = 1;
-                                                foreach ($krsAktif as $row) : ?>
+                                                foreach ($mahasiswaMalam as $row) : ?>
                                                     <tr>
                                                         <td><?= $no++; ?></td>
                                                         <td><?= $row->NPM; ?></td>
                                                         <td><?= $row->NAMA_LENGKAP; ?></td>
-                                                        <td><?= $row->FAKULTAS; ?></td>
-                                                        <td><?= $row->NAMA_PRODI; ?></td>
-                                                        <td><?= $row->STATUS; ?></td>
+                                                        <td><?= $row->PRODI; ?></td>
+                                                        <td><?= $row->KELAS; ?></td>
+                                                        <td><?= $row->TAHUN_SEMESTER; ?></td>
                                                     </tr>
                                                 <?php endforeach ?>
                                             </tbody>
