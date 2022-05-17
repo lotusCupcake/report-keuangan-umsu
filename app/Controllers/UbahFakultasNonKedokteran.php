@@ -31,7 +31,7 @@ class UbahFakultasNonKedokteran extends BaseController
             'fakultas' => $this->getFakultas(),
             'listTermYear' => $this->getTermYear(),
             'validation' => \Config\Services::validation(),
-            'menu'=>$this->fetchMenu()
+            'menu' => $this->fetchMenu()
         ];
         // dd($data);
 
@@ -64,6 +64,7 @@ class UbahFakultasNonKedokteran extends BaseController
 
     public function proses()
     {
+        // dd($_POST);
         if (!$this->validate([
             'tahap' => [
                 'rules' => 'required',
@@ -94,7 +95,7 @@ class UbahFakultasNonKedokteran extends BaseController
         }
 
         $term_year_id = trim($this->request->getPost('tahunAjar'));
-        $entry_year_id = trim($this->request->getPost('tahunAngkatan'));
+        $entry_year_id = trim($this->request->getPost('tahunAngkatan') == '') ? '999' : trim($this->request->getPost('tahunAngkatan'));
         $payment_order = trim($this->request->getPost('tahap'));
         $filter = trim($this->request->getPost('fakultas') == '') ? 'Non Kedokteran' : trim($this->request->getPost('fakultas'));
         $startDate = trim($this->request->getPost('tahapTanggalAwal')) . ' 00:00:00.000';
@@ -133,7 +134,7 @@ class UbahFakultasNonKedokteran extends BaseController
             'listTermYear' => $this->getTermYear(),
             'icon' => (json_decode($response->getBody())->status) ? 'https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json' : 'https://assets10.lottiefiles.com/packages/lf20_gO48yV.json',
             'validation' => \Config\Services::validation(),
-            'menu'=>$this->fetchMenu()
+            'menu' => $this->fetchMenu()
         ];
 
         session()->setFlashdata('success', 'Berhasil Mengubah Tanggal Tahap !');

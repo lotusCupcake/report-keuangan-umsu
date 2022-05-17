@@ -9,7 +9,7 @@ class Email extends BaseConfig
     /**
      * @var string
      */
-    public $fromEmail = 'mobile@umsu.ac.id';
+    public $fromEmail = 'mobile-noreply@umsu.ac.id';
 
     /**
      * @var string
@@ -54,7 +54,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPUser = 'mobile@umsu.ac.id';
+    public $SMTPUser = 'mobile-noreply@umsu.ac.id';
 
     /**
      * SMTP Password
